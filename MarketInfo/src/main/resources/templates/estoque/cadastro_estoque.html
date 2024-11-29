@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de estoque</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/cadastrarProdutos.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+<div class="form-box">
+    <p class="text-muted" id ="voltar"><a href="/home">< Voltar</a></p>
+    <h3>Cadastrar estoque</h3>
+    <div th:if="${mensagemSucesso}" class="alert alert-success">
+        <p th:text="${mensagemSucesso}"></p>
+    </div>
+    <div th:if="${mensagem}" class="alert alert-danger">
+        <p th:text="${mensagem}"></p>
+    </div>
+
+    <form id="formProduto" action="/salvarCadastroEstoque" method="POST">
+        <div class="form-group">
+            <label for="produtoEstoque">Produto</label>
+            <select class="form-control"id="produtoEstoque" name="produtoEstoque" required>
+                <option value="" disabled selected>Selecione o produto</option>
+                <option th:each="produto : ${produtos}"
+                        th:value="${produto.id}" th:text="${produto.nome}"></option>
+            </select>
+        </div>
+
+
+        <div class="form-group">
+            <label for="estoqueMinimo">Estoque mínimo</label>
+            <input type="text" id="estoqueMinimo" name="estoqueMinimo" class="form-control" placeholder="Informe o valor mínimo no estoque" required>
+        </div>
+
+        <button type="submit" class="btn-submit">Criar Produto</button>
+    </form>
+</div>
+
+</body>
+</html>
