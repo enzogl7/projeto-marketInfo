@@ -17,12 +17,14 @@
     <div class="table-box">
         <p class="text-muted" id ="voltar"><a href="/home">< Voltar</a></p>
         <h3>Listagem de Produtos</h3>
+
         <div th:if="${mensagemSucesso}" class="alert alert-success">
             <p th:text="${mensagemSucesso}"></p>
         </div>
         <div th:if="${mensagem}" class="alert alert-danger">
             <p th:text="${mensagem}"></p>
         </div>
+
         <div class="form-row mb-3">
             <div class="col-sm-5">
                 <label for="pesquisaNome">Pesquisar por Nome</label>
@@ -33,6 +35,7 @@
                 <input type="text" class="form-control" id="pesquisaMarca" placeholder="Digite a marca do produto">
             </div>
         </div>
+        
         <div class="table-responsive">
         <table class="table table-bordered table-striped ">
             <thead>
