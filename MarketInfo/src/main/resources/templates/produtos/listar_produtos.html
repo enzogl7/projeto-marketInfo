@@ -23,6 +23,16 @@
         <div th:if="${mensagem}" class="alert alert-danger">
             <p th:text="${mensagem}"></p>
         </div>
+        <div class="form-row mb-3">
+            <div class="col-sm-5">
+                <label for="pesquisaNome">Pesquisar por Nome</label>
+                <input type="text" class="form-control" id="pesquisaNome" placeholder="Digite o nome do produto">
+            </div>
+            <div class="col-sm-5">
+                <label for="pesquisaMarca">Pesquisar por Marca</label>
+                <input type="text" class="form-control" id="pesquisaMarca" placeholder="Digite a marca do produto">
+            </div>
+        </div>
         <div class="table-responsive">
         <table class="table table-bordered table-striped ">
             <thead>

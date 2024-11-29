@@ -40,6 +40,11 @@ public class EstoqueController {
                                         @RequestParam("estoqueAtual")String estoqueAtual,
                                         RedirectAttributes redirectAttributes) {
 
+        if (estoqueService.existeEstoqueParaEsseProduto(produtos)) {
+            redirectAttributes.addFlashAttribute("mensagem", "Este produto já possui estoque cadastrado!");
+            return "redirect:/gerenciamentoEstoque";
+        }
+
         Estoque estoque = new Estoque();
         estoque.setProduto(produtos);
         estoque.setQtdeEstoqueMinimo(Integer.valueOf(estoqueMinimo));
