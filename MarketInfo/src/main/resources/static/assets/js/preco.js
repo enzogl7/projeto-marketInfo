@@ -25,9 +25,13 @@ document.getElementById('formPreco').addEventListener('submit', function(event) 
 });
 
 document.getElementById('editarPrecoForm').addEventListener('submit', function(event) {
-    const precoAtualField = document.getElementById('precoAtual');
-    precoAtualField.value = precoAtualField.value.replace('R$', '').replace(/\./g, '').replace(',', '.');
+    var precoInputEdicao = document.getElementById('precoAtual');
+    var precoValorEdicao = precoInputEdicao.value;
+
+    precoValorEdicao = precoValorEdicao.replace('R$', '').replace(/\D/g, '');
+    precoInputEdicao.value = precoValorEdicao;
 });
+
 
 function modalEditarPreco(button) {
     var idPrecoEdicao = button.getAttribute('data-id');
@@ -35,6 +39,11 @@ function modalEditarPreco(button) {
     document.getElementById('idPrecoEdicao').value = idPrecoEdicao;
 
     applyCleave('#precoAtual');
+
+    const precoAtualField = document.getElementById('precoAtual');
+    if (precoAtualField && precoAtualField.value) {
+        precoAtualField.value = 'R$ ' + precoAtualField.value;
+    }
 }
 
 function modalExcluirPreco(button) {

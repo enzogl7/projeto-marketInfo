@@ -73,6 +73,9 @@ public class PrecoController {
                               @RequestParam("motivoAlteracaoPreco") String motivoAlteracaoPreco,
                               RedirectAttributes redirectAttributes) {
 
+        precoAtual = precoAtual.replace("R$", "").trim();
+
+        System.out.println("precooo " + precoAtual);
         Preco p = precoService.buscaPorId(Long.valueOf(idPrecoEdicao));
         p.setProduto(produtoPrecoEdicao);
         p.setPrecoAtual(Double.parseDouble(precoAtual));
