@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de produtos</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/cadastrarProdutos.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+<div class="form-box">
+    <p class="text-muted" id ="voltar"><a href="/home">< Voltar</a></p>
+    <h3>Cadastrar Novo Produto</h3>
+    <div th:if="${mensagemSucesso}" class="alert alert-success">
+        <p th:text="${mensagemSucesso}"></p>
+    </div>
+    <div th:if="${mensagem}" class="alert alert-danger">
+        <p th:text="${mensagem}"></p>
+    </div>
+
+    <form id="formProduto" action="/salvarCadastroProduto" method="POST">
+        <div class="form-group">
+            <label for="nomeProduto">Nome do Produto</label>
+            <input type="text" id="nomeProduto" name="nomeProduto" class="form-control" placeholder="Digite o nome do produto" required>
+        </div>
+
+        <div class="form-group">
+            <label for="categoria">Categoria</label>
+            <select id="categoria" name="categoria" class="form-control" required>
+                <option value="" disabled selected>Selecione a categoria</option>
+                <option value="ALIMENTOS">Alimentos</option>
+                <option value="BEBIDAS">Bebidas</option>
+                <option value="HIGIENE">Higiene</option>
+                <option value="LIMPEZA">Limpeza</option>
+                <option value="VESTUARIO">Vestuário</option>
+                <option value="CASA">Casa</option>
+                <option value="PET">Pet</option>
+                <option value="FARMACIA">Farmácia</option>
+                <option value="ELETRONICOS">Eletrônicos</option>
+                <option value="FRUTAS">Frutas</option>
+                <option value="VERDURAS">Verduras</option>
+                <option value="LEGUMES">Legumes</option>
+                <option value="CARNES">Carnes</option>
+                <option value="DOCES">Doces</option>
+                <option value="CAFÉ">Café</option>
+                <option value="CHÁ">Chá</option>
+                <option value="SAUDAVEIS">Saudáveis</option>
+                <option value="INSUMOS PARA COZINHA">Insumos de Cozinha</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="marca">Marca</label>
+            <input type="text" id="marca" name="marca" class="form-control" placeholder="Digite a marca do produto" required>
+        </div>
+
+        <button type="submit" class="btn-submit">Criar Produto</button>
+    </form>
+</div>
+
+</body>
+</html>
