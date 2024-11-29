@@ -36,6 +36,7 @@ public class ProdutosController {
         produto.setCategoria(categoria);
         produto.setMarca(marca);
         produto.setDataCadastro(LocalDate.now());
+        produto.setDataUltimaEdicao(null);
         produtosService.salvar(produto);
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Produto cadastrado com sucesso!");
@@ -61,6 +62,7 @@ public class ProdutosController {
         produto.setCategoria(categoriaEdicao);
         produto.setMarca(marcaEdicao);
         produto.setDataCadastro(produto.getDataCadastro());
+        produto.setDataUltimaEdicao(LocalDate.now());
         produtosService.salvar(produto);
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Produto editado com sucesso!");

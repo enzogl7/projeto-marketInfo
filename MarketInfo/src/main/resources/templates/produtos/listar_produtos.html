@@ -31,6 +31,7 @@
                 <th>Marca</th>
                 <th>Categoria</th>
                 <th>Data de Cadastro</th>
+                <th>Última edição</th>
                 <th>Ações</th>
             </tr>
             </thead>
@@ -41,6 +42,7 @@
                     <td th:text="${produto.marca}"></td>
                     <td th:text="${produto.categoria}"></td>
                     <td th:text="${produto.dataCadastro}"></td>
+                    <td th:text="${produto.dataUltimaEdicao != null ? produto.dataUltimaEdicao : '---'}"></td>
                     <td>
                         <button class="btn btn-warning btn-sm" id="edicaoProduto"
                                 th:data-id="${produto.id}" onclick="modalEditarProduto(this)">Editar</button>

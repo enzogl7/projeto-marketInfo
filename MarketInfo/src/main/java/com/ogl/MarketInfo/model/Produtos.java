@@ -24,6 +24,9 @@ public class Produtos {
     @Column
     private LocalDate dataCadastro;
 
+    @Column(nullable = true)
+    private LocalDate dataUltimaEdicao;
+
     public Long getId() {
         return id;
     }
@@ -62,5 +65,13 @@ public class Produtos {
 
     public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+
+    public LocalDate getDataUltimaEdicao() {
+        return dataUltimaEdicao;
+    }
+
+    public void setDataUltimaEdicao(LocalDate dataUltimaEdicao) {
+        this.dataUltimaEdicao = dataUltimaEdicao;
     }
 }
