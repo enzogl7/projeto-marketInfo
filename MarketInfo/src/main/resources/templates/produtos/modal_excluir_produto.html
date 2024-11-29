@@ -1,0 +1,21 @@
+<div id="modalExcluirProduto" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog  modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: #ff6f00">Exclusão de produto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="exclusaoProdutoForm" action="/excluirProduto" method="post">
+                    <input type="hidden" id="idProdutoExclusao" name="idProdutoExclusao">
+                    <p>Certeza que deseja excluir este produto?</p>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">Excluir</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

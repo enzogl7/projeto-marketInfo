@@ -11,29 +11,30 @@
 </head>
 <body>
 
+
 <div class="container">
-    <h1 class="display-4 mb-4">MarketInfo - Gestão de produtos</h1>
-    <p class="lead mb-4">Escolha uma das opções abaixo:</p>
+    <h1 class="display-4 mb-4 text-center">MarketInfo - Gestão de produtos</h1>
+    <div class="content-box">
+        <div class="button-grid">
+            <button id="cadastrarProdutos"
+                    class="btn btn-info btn-lg mb-3"
+                    onclick="window.location.href='/cadastrarProdutos';">Cadastrar produtos</button>
 
-    <div class="button-grid">
-        <button id="cadastrarProdutos"
-                class="btn btn-info btn-lg mb-3"
-                onclick="window.location.href='/cadastrarProdutos';">Cadastrar produtos</button>
+            <button id="listarProdutos"
+                    class="btn btn-info btn-lg mb-3"
+                    onclick="window.location.href='/listarProdutos';">Listar produtos</button>
 
-        <button id="listarProdutos"
-                class="btn btn-info btn-lg"
-                onclick="window.location.href='/listarProdutos';">Listar produtos</button>
+            <button id="gerenciarEstoque"
+                    class="btn btn-info btn-lg mb-3"
+                    onclick="window.location.href='/gerenciamentoEstoque';">Gerenciamento de estoque</button>
 
-
-        <button id="gerenciarEstoque"
-                class="btn btn-info btn-lg mb-3"
-                onclick="window.location.href='/gerenciamentoEstoque';">Gerenciamento de estoque</button>
-
-        <button id="gerenciarPrecos"
-                class="btn btn-info btn-lg mb-3"
-                onclick="window.location.href='/gerenciamentoPrecos';">Gerenciamento de preços</button>
+            <button id="gerenciarPrecos"
+                    class="btn btn-info btn-lg"
+                    onclick="window.location.href='/gerenciamentoPrecos';">Gerenciamento de preços</button>
+        </div>
     </div>
 </div>
+
 
 
 </body>

@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(to top, #dadada, white);
+    background: #dadada;
     background-size: cover;
     height: 100vh;
     display: flex;
@@ -9,7 +9,7 @@ body {
     font-family: 'Arial', sans-serif;
 }
 
-.form-box {
+.table-box {
     width: 1200px;
     height: 600px;
     margin: 50px auto;
@@ -20,7 +20,7 @@ body {
     animation: fadeIn 1s ease-in-out;
 }
 
-.form-box h3 {
+.table-box h3 {
     font-size: 2rem;
     color: #ff6f00;
     text-align: center;
@@ -32,30 +32,50 @@ body {
     100% { opacity: 1; }
 }
 
-.form-group input, .form-group select {
+.table {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
+    margin-bottom: 20px;
 }
 
-.btn-submit {
-    width: 100%;
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle;
     padding: 12px;
-    font-size: 1.1rem;
+}
+
+.table th {
     background-color: #ff6f00;
     color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.btn-submit:hover {
-    background-color: #ff8f00;
+.table td {
+    background-color: #fff;
 }
+
+.table button {
+    margin: 5px;
+}
+
+.btn-warning {
+    background-color: #ffcc00;
+    border-color: #ffcc00;
+}
+
+.btn-warning:hover {
+    background-color: #ffb700;
+    border-color: #ffb700;
+}
+
+.btn-danger {
+    background-color: #ff4040;
+    border-color: #ff4040;
+}
+
+.btn-danger:hover {
+    background-color: #ff1a1a;
+    border-color: #ff1a1a;
+}
+
 
 a {
     text-decoration: none;
