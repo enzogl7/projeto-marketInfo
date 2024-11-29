@@ -1,0 +1,59 @@
+<div id="modalEditarPreco" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog  modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: #ff6f00">Edição de preços</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editarPrecoForm" action="/editarPreco" method="post">
+
+                    <input type="hidden" id="idPrecoEdicao" name="idPrecoEdicao">
+
+                    <div class="form-group">
+                        <label for="produtoPrecoEdicao">Produto</label>
+                        <select class="form-control"id="produtoPrecoEdicao" name="produtoPrecoEdicao" required>
+                            <option value="" disabled selected>Selecione o produto</option>
+                            <option th:each="produto : ${produtos}"
+                                    th:value="${produto.id}"
+                                    th:text="${produto.nome + ' - ' + produto.marca}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="precoAtual">Preço novo</label>
+                        <input type="text" id="precoAtual" name="precoAtual"
+                               class="form-control" placeholder="Informe o novo preço desse produto" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dataInicioEdicao">Data inicial da vigência</label>
+                        <input type="date" id="dataInicioEdicao" name="dataInicioEdicao"
+                               class="form-control" placeholder="Informe a nova data inicial de vigência desse preço" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dataFinalEdicao">Data final da vigência</label>
+                        <input type="date" id="dataFinalEdicao" name="dataFinalEdicao"
+                               class="form-control" placeholder="Informe a nova data final de vigência desse preço" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="motivoAlteracaoPreco">Motivo da alteração</label>
+                        <input type="text" id="motivoAlteracaoPreco" name="motivoAlteracaoPreco"
+                               class="form-control" placeholder="Informe o motivo da alteração do preço" required>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" style="background-color: #ff6f00;">Salvar</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0/dist/cleave.min.js"></script>
+
+<script src="/assets/js/preco.js"></script>
