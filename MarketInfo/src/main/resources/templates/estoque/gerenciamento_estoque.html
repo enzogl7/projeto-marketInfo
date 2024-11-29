@@ -13,7 +13,15 @@
 
 
 <div class="container">
+    <p class="text-muted" id ="voltar"><a href="/home" style="text-decoration: none;
+    color: #ff6f00; ">< Voltar</a></p>
     <h1 class="display-4 mb-4 text-center">Gerenciamento de estoque</h1>
+    <div th:if="${mensagemSucesso}" class="alert alert-success">
+        <p th:text="${mensagemSucesso}"></p>
+    </div>
+    <div th:if="${mensagem}" class="alert alert-danger">
+        <p th:text="${mensagem}"></p>
+    </div>
     <div class="content-box">
         <div class="button-grid">
             <button id="cadastrarProdutos"

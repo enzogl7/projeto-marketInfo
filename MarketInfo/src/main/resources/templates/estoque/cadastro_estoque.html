@@ -14,13 +14,6 @@
 <div class="form-box">
     <p class="text-muted" id ="voltar"><a href="/home">< Voltar</a></p>
     <h3>Cadastrar estoque</h3>
-    <div th:if="${mensagemSucesso}" class="alert alert-success">
-        <p th:text="${mensagemSucesso}"></p>
-    </div>
-    <div th:if="${mensagem}" class="alert alert-danger">
-        <p th:text="${mensagem}"></p>
-    </div>
-
     <form id="formProduto" action="/salvarCadastroEstoque" method="POST">
         <div class="form-group">
             <label for="produtoEstoque">Produto</label>
@@ -34,10 +27,15 @@
 
         <div class="form-group">
             <label for="estoqueMinimo">Estoque mínimo</label>
-            <input type="text" id="estoqueMinimo" name="estoqueMinimo" class="form-control" placeholder="Informe o valor mínimo no estoque" required>
+            <input type="number" id="estoqueMinimo" name="estoqueMinimo" class="form-control" placeholder="Informe o valor mínimo para estoque" required>
         </div>
 
-        <button type="submit" class="btn-submit">Criar Produto</button>
+        <div class="form-group">
+            <label for="estoqueAtual">Estoque atual</label>
+            <input type="number" id="estoqueAtual" name="estoqueAtual" class="form-control" placeholder="Informe o valor atual do estoque" required>
+        </div>
+
+        <button type="submit" class="btn-submit">Adicionar estoque</button>
     </form>
 </div>
 
