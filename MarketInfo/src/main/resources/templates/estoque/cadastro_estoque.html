@@ -20,7 +20,7 @@
             <select class="form-control"id="produtoEstoque" name="produtoEstoque" required>
                 <option value="" disabled selected>Selecione o produto</option>
                 <option th:each="produto : ${produtos}"
-                        th:value="${produto.id}" th:text="${estoque.produto.nome + ' - ' + estoque.produto.marca}"></option>
+                        th:value="${produto.id}" th:text="${produto.nome + ' - ' + produto.marca}"></option>
             </select>
         </div>
 

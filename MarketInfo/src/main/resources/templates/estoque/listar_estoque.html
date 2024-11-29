@@ -37,7 +37,7 @@
                 <tbody id="tabelaEstoque">
                 <th:block th:each="estoque : ${estoques}">
                     <tr>
-                        <td th:text="${estoque.produto.nome}"></td>
+                        <td th:text="${estoque.produto.nome + ' - ' + estoque.produto.marca}"></td>
                         <td th:text="${estoque.qtdeEstoqueMinimo}"></td>
                         <td>
                             <span th:text="${estoque.qtdeEstoqueAtual}"></span>
