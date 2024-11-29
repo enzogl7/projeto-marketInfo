@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de preços</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/cadastrarProdutos.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0/dist/cleave.min.js"></script>
+
+</head>
+<body>
+
+<div class="form-box">
+    <p class="text-muted" id ="voltar"><a href="/home">< Voltar</a></p>
+    <h3>Cadastrar preço</h3>
+    <form id="formPreco" action="/salvarCadastroPreco" method="POST">
+
+        <div class="form-group">
+            <label for="produtoPreco">Produto</label>
+            <select class="form-control"id="produtoPreco" name="produtoPreco" required>
+                <option value="" disabled selected>Selecione o produto</option>
+                <option th:each="produto : ${produtos}"
+                        th:value="${produto.id}" th:text="${produto.nome + ' - ' + produto.marca}"></option>
+            </select>
+        </div>
+
+
+        <div class="form-group">
+            <label for="preco">Preço</label>
+            <input type="text" id="preco" name="preco" class="form-control" placeholder="Informe o preço desse produto" required>
+        </div>
+
+        <div class="form-group">
+            <label for="dataInicio">Data inicial da vigência</label>
+            <input type="date" id="dataInicio" name="dataInicio" class="form-control" placeholder="Informe a data inicial de vigência desse preço" required>
+        </div>
+
+        <div class="form-group">
+            <label for="dataFinal">Data final da vigência</label>
+            <input type="date" id="dataFinal" name="dataFinal" class="form-control" placeholder="Informe a data final de vigência desse preço" required>
+        </div>
+
+        <button type="submit" class="btn-submit">Adicionar preço</button>
+    </form>
+</div>
+
+
+<script src="/assets/js/preco.js"></script>
+</body>
+</html>

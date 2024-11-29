@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listagem de preços</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/listar_produtos.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+
+
+<div class="container">
+    <div class="table-box">
+        <p class="text-muted" id ="voltar"><a href="/home">< Voltar</a></p>
+        <h3>Listagem de preços</h3>
+        <div th:if="${mensagemSucesso}" class="alert alert-success">
+            <p th:text="${mensagemSucesso}"></p>
+        </div>
+        <div th:if="${mensagem}" class="alert alert-danger">
+            <p th:text="${mensagem}"></p>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped ">
+                <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Preço original</th>
+                    <th>Data início vigor</th>
+                    <th>Data final vigor</th>
+                    <th>Preço atual</th>
+                    <th>Motivo alteração</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody id="tabelaPrecos">
+                <th:block th:each="preco : ${precos}">
+                    <tr>
+                        <td th:text="${preco.produto.nome + ' - ' + preco.produto.marca}"></td>
+                        <td th:text="'R$ ' + ${preco.preco}"></td>
+                        <td th:text="${preco.dataInicioVigor}"></td>
+                        <td th:text="${preco.dataFimVigor}"></td>
+                        <td th:text="${preco.precoAtual != null && preco.precoAtual > 0
+                         ? 'R$ ' + preco.precoAtual : '---'}"></td>
+                        <td th:text="${preco.motivoAlteracao != null && preco.motivoAlteracao != ''
+                         ? preco.motivoAlteracao : '---'}"></td>
+
+                        <td>
+                            <button class="btn btn-warning btn-sm" id="edicaoEstoque"
+                                    th:data-id="${preco.id}" onclick="modalEditarEstoque(this)">Editar</button>
+                            <button class="btn btn-danger btn-sm" id="exclusaoEstoque"
+                                    th:data-id="${preco.id}" onclick="modalExcluirEstoque(this)">Excluir</button>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div th:replace="/estoque/modal_editar_estoque"></div>
+<div th:replace="/estoque/modal_excluir_estoque"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/estoque.js"></script>
+</body>
+</html>
