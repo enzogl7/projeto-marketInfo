@@ -1,0 +1,43 @@
+<div id="modalEditarEstoque" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog  modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: #ff6f00">Edição de estoque</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editarEstoqueForm" action="/editarEstoque" method="post">
+
+                    <input type="hidden" id="idEstoqueEdicao" name="idEstoqueEdicao">
+
+                    <div class="form-group">
+                        <label for="produtoEstoqueEdicao">Produto</label>
+                        <select class="form-control"id="produtoEstoqueEdicao" name="produtoEstoqueEdicao" required>
+                            <option value="" disabled selected>Selecione o produto</option>
+                            <option th:each="produto : ${produtos}"
+                                    th:value="${produto.id}"
+                                    th:text="${estoque.produto.nome + ' - ' + estoque.produto.marca}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estoqueMinimoEdicao">Estoque mínimo</label>
+                        <input type="number" id="estoqueMinimoEdicao" name="estoqueMinimoEdicao" class="form-control" placeholder="Informe o valor mínimo para estoque" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estoqueAtualEdicao">Estoque atual</label>
+                        <input type="number" id="estoqueAtualEdicao" name="estoqueAtualEdicao" class="form-control" placeholder="Informe o valor atual do estoque" required>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" style="background-color: #ff6f00;">Salvar</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

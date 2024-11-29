@@ -50,5 +50,38 @@ public class EstoqueController {
         return "redirect:/gerenciamentoEstoque";
     }
 
+    @GetMapping("/listarEstoque")
+    public String listarEstoque(Model model) {
+        model.addAttribute("produtos", produtosService.listarTodos());
+        model.addAttribute("estoques", estoqueService.findAll());
+        return "/estoque/listar_estoque";
+    }
+
+    @PostMapping("/editarEstoque")
+    public String editarEstoque(@RequestParam("idEstoqueEdicao") String idEstoqueEdicao,
+                                @RequestParam("produtoEstoqueEdicao") Produtos produtoEstoqueEdicao,
+                                @RequestParam("estoqueMinimoEdicao") String estoqueMinimoEdicao,
+                                @RequestParam("estoqueAtualEdicao") String estoqueAtualEdicao,
+                                RedirectAttributes redirectAttributes) {
+
+        Estoque estoque = estoqueService.findById(Long.valueOf(idEstoqueEdicao));
+        estoque.setProduto(produtoEstoqueEdicao);
+        estoque.setQtdeEstoqueMinimo(Integer.valueOf(estoqueMinimoEdicao));
+        estoque.setQtdeEstoqueAtual(Integer.valueOf(estoqueAtualEdicao));
+        estoqueService.salvar(estoque);
+
+        redirectAttributes.addFlashAttribute("mensagemSucesso", "Estoque editado com sucesso!");
+        return "redirect:/gerenciamentoEstoque";
+    }
+
+    @PostMapping("/excluirEstoque")
+    public String excluirEstoque(@RequestParam("idEstoqueExclusao") String idEstoqueExclusao,
+                                 RedirectAttributes redirectAttributes) {
+        estoqueService.excluirPorId(Long.valueOf(idEstoqueExclusao));
+
+        redirectAttributes.addFlashAttribute("mensagemSucesso", "Estoque excluído com sucesso!");
+        return "redirect:/gerenciamentoEstoque";
+    }
+
 
 }
