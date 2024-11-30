@@ -41,11 +41,27 @@
                 <thead>
                 <tr>
                     <th>Produto</th>
-                    <th>Preço original</th>
-                    <th>Data início vigor</th>
-                    <th>Data final vigor</th>
+                    <th>
+                        Preço original
+                        <button class="btn btn-link btn-sm" onclick="ordenarTabela(1, 'numero')">
+                            <i class="fas fa-sort"></i>
+                        </button>
+                    </th>
+                    <th>
+                        Data início vigor
+                        <button class="btn btn-link btn-sm" onclick="ordenarTabela(2, 'data')">
+                            <i class="fas fa-sort"></i>
+                        </button>
+                    </th>
+                    <th>
+                        Data final vigor
+                        <button class="btn btn-link btn-sm" onclick="ordenarTabela(3, 'data')">
+                            <i class="fas fa-sort"></i>
+                        </button>
+                    </th>
                     <th>Preço atual</th>
                     <th>Motivo alteração</th>
+                    <th>Data alteração</th>
                     <th>Ações</th>
                 </tr>
                 </thead>
@@ -56,11 +72,14 @@
                         <td th:text="'R$ ' + ${preco.preco}"></td>
                         <td th:text="${preco.dataInicioVigor}"></td>
                         <td th:text="${preco.dataFimVigor}"></td>
-                        <td th:text="${preco.precoAtual != null && preco.precoAtual > 0
-                         ? 'R$ ' + preco.precoAtual : '---'}"></td>
+                        <td th:text="${preco.precoAtual > 0
+                            ? preco.precoAtualFormatado + ' (R$ ' + preco.diferencaFormatada + ')'
+                            : '---'}">
+                        </td>
                         <td th:text="${preco.motivoAlteracao != null && preco.motivoAlteracao != ''
                          ? preco.motivoAlteracao : '---'}"></td>
-
+                        <td th:text="${preco.dataAlteracao != null && preco.dataAlteracao != ''
+                         ? preco.dataAlteracao : '---'}"></td>
                         <td>
                             <button class="btn btn-warning btn-sm" id="edicaoEstoque"
                                     th:data-id="${preco.id}" onclick="modalEditarPreco(this)">Editar</button>

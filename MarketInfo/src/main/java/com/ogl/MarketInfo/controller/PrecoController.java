@@ -75,17 +75,27 @@ public class PrecoController {
 
         precoAtual = precoAtual.replace("R$", "").trim();
 
-        System.out.println("precooo " + precoAtual);
+
         Preco p = precoService.buscaPorId(Long.valueOf(idPrecoEdicao));
         p.setProduto(produtoPrecoEdicao);
         p.setPrecoAtual(Double.parseDouble(precoAtual));
         p.setDataInicioVigor(LocalDate.parse(dataInicioEdicao));
         p.setDataFimVigor(LocalDate.parse(dataFinalEdicao));
         p.setMotivoAlteracao(motivoAlteracaoPreco);
+        p.setDataAlteracao(LocalDate.now());
         precoService.salvar(p);
 
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Preço editado com sucesso!");
+        return "redirect:/gerenciamentoPrecos";
+    }
+
+    @PostMapping("/excluirPreco")
+    public String excluirPreco(@RequestParam("idPrecoExclusao")String idPrecoExclusao,
+                               RedirectAttributes redirectAttributes) {
+        precoService.excluirPorId(idPrecoExclusao);
+
+        redirectAttributes.addFlashAttribute("mensagemSucesso", "Preço excluído com sucesso!");
         return "redirect:/gerenciamentoPrecos";
     }
 }

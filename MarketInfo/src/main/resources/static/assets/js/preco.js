@@ -1,4 +1,33 @@
 // INICIO ORDENACAO TABELA
+let ordemAscendente = true;
+
+function ordenarTabela(colunaIndex, tipo) {
+    const tabela = document.getElementById("tabelaPrecos");
+    const linhas = Array.from(tabela.querySelectorAll("tr"));
+
+    ordemAscendente = !ordemAscendente;
+
+    linhas.sort((a, b) => {
+        const valorA = a.children[colunaIndex]?.textContent.trim();
+        const valorB = b.children[colunaIndex]?.textContent.trim();
+
+        if (tipo === "numero") {
+            const numeroA = parseFloat(valorA.replace("R$", "").replace(",", "."));
+            const numeroB = parseFloat(valorB.replace("R$", "").replace(",", "."));
+            return ordemAscendente ? numeroA - numeroB : numeroB - numeroA;
+        }
+
+        if (tipo === "data") {
+            const dataA = new Date(valorA.split("/").reverse().join("-"));
+            const dataB = new Date(valorB.split("/").reverse().join("-"));
+            return ordemAscendente ? dataA - dataB : dataB - dataA;
+        }
+
+        return 0;
+    });
+
+    linhas.forEach((linha) => tabela.appendChild(linha));
+}
 // FIM ORDENACAO TABELA
 
 
@@ -78,6 +107,7 @@ function modalEditarPreco(button) {
     var idPrecoEdicao = button.getAttribute('data-id');
     $('#modalEditarPreco').modal('show');
     document.getElementById('idPrecoEdicao').value = idPrecoEdicao;
+    document.getElementById("precoAtual").value = "";
 
     applyCleave('#precoAtual');
 
