@@ -13,6 +13,7 @@ public class Usuario {
     private Long id;
 
     private String username;
+    private String email;
     private String password;
     private boolean enabled;
 
@@ -62,5 +63,13 @@ public class Usuario {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

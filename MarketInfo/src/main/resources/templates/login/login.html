@@ -13,6 +13,12 @@
 
 <div class="form-box">
     <h3>Bem-vindo!</h3>
+    <div th:if="${mensagemSucesso}" class="alert alert-success">
+        <p th:text="${mensagemSucesso}"></p>
+    </div>
+    <div th:if="${mensagem}" class="alert alert-danger">
+        <p th:text="${mensagem}"></p>
+    </div>
     <form id="formLogin" action="/login" method="POST">
         <div class="form-group">
             <label for="username">Username</label>
