@@ -71,7 +71,8 @@ public class PrecoController {
                               @RequestParam("dataInicioEdicao")String dataInicioEdicao,
                               @RequestParam("dataFinalEdicao")String dataFinalEdicao,
                               @RequestParam("motivoAlteracaoPreco") String motivoAlteracaoPreco,
-                              RedirectAttributes redirectAttributes) {
+                              RedirectAttributes redirectAttributes,
+                              Model model) {
 
         precoAtual = precoAtual.replace("R$", "").trim();
 

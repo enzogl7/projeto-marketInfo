@@ -82,7 +82,9 @@
                          ? preco.dataAlteracao : '---'}"></td>
                         <td>
                             <button class="btn btn-warning btn-sm" id="edicaoEstoque"
-                                    th:data-id="${preco.id}" onclick="modalEditarPreco(this)">Editar</button>
+                                    th:data-id="${preco.id}"
+                                    th:data-produto-id="${preco.produto.id}"
+                                    onclick="modalEditarPreco(this)">Editar</button>
                             <button class="btn btn-danger btn-sm" id="exclusaoEstoque"
                                     th:data-id="${preco.id}" onclick="modalExcluirPreco(this)">Excluir</button>
                         </td>

@@ -105,11 +105,21 @@ document.getElementById('pesquisaPreco').addEventListener('submit', function(eve
 // INICIO MODAIS
 function modalEditarPreco(button) {
     var idPrecoEdicao = button.getAttribute('data-id');
+    const produtoId = button.getAttribute('data-produto-id');
+
+    console.log(produtoId)
     $('#modalEditarPreco').modal('show');
     document.getElementById('idPrecoEdicao').value = idPrecoEdicao;
     document.getElementById("precoAtual").value = "";
 
     applyCleave('#precoAtual');
+
+    const produtoSelect = document.getElementById('produtoPrecoEdicao');
+    if (produtoSelect) {
+        produtoSelect.value = produtoId;
+        produtoSelect.disabled = true;
+    }
+
 
     const precoAtualField = document.getElementById('precoAtual');
     if (precoAtualField && precoAtualField.value) {

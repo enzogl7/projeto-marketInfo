@@ -12,11 +12,12 @@
 
                     <div class="form-group">
                         <label for="produtoPrecoEdicao">Produto</label>
-                        <select class="form-control"id="produtoPrecoEdicao" name="produtoPrecoEdicao" required>
+                        <select class="form-control" id="produtoPrecoEdicao" name="produtoPrecoEdicao" required>
                             <option value="" disabled selected>Selecione o produto</option>
                             <option th:each="produto : ${produtos}"
                                     th:value="${produto.id}"
-                                    th:text="${produto.nome + ' - ' + produto.marca}"></option>
+                                    th:text="${produto.nome + ' - ' + produto.marca}"
+                                    th:selected="${produto.id == produtoAtual}">></option>
                         </select>
                     </div>
 
