@@ -9,4 +9,8 @@ public class LoginController {
     public String login() {
         return "/login/login";
     }
+    @GetMapping("/registro")
+    public String registro() {
+        return "/login/registro";
+    }
 }
