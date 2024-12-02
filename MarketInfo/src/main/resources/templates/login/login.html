@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarketInfo - Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/cadastrarProdutos.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+<div class="form-box">
+    <h3>Bem-vindo!</h3>
+    <form id="formLogin" action="/login" method="POST">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text"
+                   id="username" name="username" class="form-control" placeholder="Digite o seu username" required>
+        </div>
+
+        <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password"
+                   id="senha" name="senha" class="form-control" placeholder="Digite sua senha" required>
+        </div>
+        <button type="submit" class="btn-submit">Entrar</button>
+        <p style="text-align: center; padding-top: 15px" class="text-muted">
+            <a href="/registro">Não possui conta? registre-se!</a>
+        </p>
+    </form>
+    <p th:if="${param.error}">Usuário ou senha inválidos!</p>
+    <p th:if="${param.logout}">Logout realizado com sucesso!</p>
+</div>
+
+</body>
+</html>
