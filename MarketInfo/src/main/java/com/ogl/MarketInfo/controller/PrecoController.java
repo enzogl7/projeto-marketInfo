@@ -2,6 +2,7 @@ package com.ogl.MarketInfo.controller;
 
 import com.ogl.MarketInfo.model.Preco;
 import com.ogl.MarketInfo.model.Produtos;
+import com.ogl.MarketInfo.service.EstoqueService;
 import com.ogl.MarketInfo.service.PrecoService;
 import com.ogl.MarketInfo.service.ProdutosService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class PrecoController {
@@ -23,6 +28,8 @@ public class PrecoController {
     @Autowired
     private ProdutosService produtosService;
 
+    @Autowired
+    private EstoqueService estoqueService;
 
     @GetMapping("/gerenciamentoPrecos")
     public String gerenciamentoPrecos() {
@@ -61,6 +68,7 @@ public class PrecoController {
     public String listarPrecos(Model model) {
         model.addAttribute("precos", precoService.listarTodos());
         model.addAttribute("produtos", produtosService.listarTodos());
+
         return "/preco/listar_precos";
     }
 

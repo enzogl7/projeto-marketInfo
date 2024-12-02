@@ -37,4 +37,15 @@ public class EstoqueService {
         }
         return false;
     }
+
+    public boolean isEstoqueCritico(Long produtoId) {
+        Optional<Estoque> estoque = estoqueRepository.findByProdutoId(produtoId);
+
+        if (estoque.isPresent()) {
+            Estoque e = estoque.get();
+            return e.getQtdeEstoqueAtual() <= e.getQtdeEstoqueMinimo() + 10;
+        }
+
+        return false;
+    }
 }

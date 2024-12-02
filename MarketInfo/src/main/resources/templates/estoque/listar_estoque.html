@@ -43,10 +43,10 @@
                             <span th:text="${estoque.qtdeEstoqueAtual}"></span>
                             <i class="fas fa-exclamation-triangle text-warning ml-2"
                                th:if="${estoque.qtdeEstoqueAtual > estoque.qtdeEstoqueMinimo && estoque.qtdeEstoqueAtual <= estoque.qtdeEstoqueMinimo + 5}"
-                               title="Estoque próximo do mínimo! Considere reabastecer."></i>
+                               title="Estoque próximo do mínimo! Considere reabastecer e/ou aumentar seu preço."></i>
                             <i class="fas fa-exclamation-triangle text-danger ml-2"
                                th:if="${estoque.qtdeEstoqueAtual <= estoque.qtdeEstoqueMinimo}"
-                               title="Estoque abaixo do mínimo! Reabastecimento necessário."></i>
+                               title="Estoque abaixo do mínimo! Reabastecimento necessário e/ou aumento de seu preço."></i>
                         </td>
                         <td>
                             <button class="btn btn-warning btn-sm" id="edicaoEstoque"
