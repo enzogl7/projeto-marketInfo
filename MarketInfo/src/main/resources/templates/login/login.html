@@ -19,7 +19,7 @@
     <div th:if="${mensagem}" class="alert alert-danger">
         <p th:text="${mensagem}"></p>
     </div>
-    <form id="formLogin" action="/login" method="POST">
+    <form id="formLogin" action="/logar" method="post">
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text"
@@ -39,6 +39,7 @@
     <p th:if="${param.error}">Usuário ou senha inválidos!</p>
     <p th:if="${param.logout}">Logout realizado com sucesso!</p>
 </div>
+
 
 </body>
 </html>
