@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Collections;
 import java.util.Map;
@@ -65,33 +66,42 @@ public class LoginController {
 
     @PostMapping("/logar")
     public String logar(@RequestParam("username") String username,
-                                   @RequestParam("senha") String senha) {
-
+                       @RequestParam("senha") String senha, RedirectAttributes redirectAttributes) {
+        Optional<Usuario> usuario = usuarioRepository.findByUsername(username);
         try {
-            UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(username, senha);
+            if (usuario.isPresent()) {
+                if (passwordEncoder.matches(senha, usuario.get().getPassword())) {
+                    UsernamePasswordAuthenticationToken authenticationToken =
+                            new UsernamePasswordAuthenticationToken(username, senha);
 
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-            if (authentication != null && authentication.isAuthenticated()) {
-                return "/home/home";
+                    if (authentication != null && authentication.isAuthenticated()) {
+                        return "/home/home";
+                    }
+                }
+            } else {
+                redirectAttributes.addFlashAttribute("mensagem", "Usuário/senha incorretos.");
+                return "redirect:/login";
             }
+
         } catch (Exception e) {
-            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("mensagem", "Ocorreu um erro.");
             return "/login/login";
         }
+        redirectAttributes.addFlashAttribute("mensagem", "Ocorreu um erro.");
         return "redirect:/login";
     }
 
     @PostMapping("/registrar")
     @ResponseBody
-    public ResponseEntity<?> registrar(@RequestBody Map<String, String> payload) {
+    public ResponseEntity<?> registrar(@RequestBody Map<String, String> payload, RedirectAttributes redirectAttributes) {
         String username = payload.get("username");
         String email = payload.get("email");
         String senha = payload.get("senha");
 
         if (usuarioRepository.findByUsername(username).isPresent()) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Este usuário já existe!"));
+            redirectAttributes.addFlashAttribute("mensagem", "Este usuário já existe!");
         }
 
         Usuario usuario = new Usuario();
@@ -106,7 +116,8 @@ public class LoginController {
 
         usuarioRepository.save(usuario);
 
-        return ResponseEntity.ok(Map.of("message", "Usuário cadastrado com sucesso!"));
+        redirectAttributes.addFlashAttribute("mensagemSucesso", "Usuário criado com sucesso!");
+        return ResponseEntity.ok(Map.of("redirectUrl", "/login"));
     }
 
 }

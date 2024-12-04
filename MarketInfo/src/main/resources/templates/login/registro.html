@@ -19,6 +19,7 @@
   <div th:if="${mensagem}" class="alert alert-danger">
     <p th:text="${mensagem}"></p>
   </div>
+
   <form id="registerForm">
     <div class="form-group">
       <div class="form-group">
@@ -43,39 +44,9 @@
       <a href="/login">Já possui conta? Entrar</a>
     </p>
   </form>
-  <p th:if="${param.error}">Usuário ou senha inválidos!</p>
-  <p th:if="${param.logout}">Logout realizado com sucesso!</p>
 </div>
 
-<script>
-  document.getElementById('registerForm').addEventListener('submit', async function (event) {
-    event.preventDefault();
-
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const senha = document.getElementById('senha').value;
-
-    try {
-      const response = await fetch('/registrar', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email, senha })
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        alert(result.message || 'Usuário registrado com sucesso!');
-        window.location.href = '/login';
-      } else {
-        const error = await response.json();
-        alert(error.message || 'Erro ao registrar usuário!');
-      }
-    } catch (e) {
-      alert('Erro de conexão. Tente novamente mais tarde!');
-    }
-  });
-
-</script>
+<script src="/static/assets/js/registro.js"></script>
 
 </body>
 </html>
