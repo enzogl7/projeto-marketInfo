@@ -35,12 +35,13 @@ public class SecurityConfig {
                                 "/assets/css/**",
                                 "/assets/js/**"
                         ).permitAll()
+                        .requestMatchers("/home", "/cadastrarProdutos", "/listarProdutos", "/gerenciamentoEstoque", "/gerenciamentoPrecos").authenticated()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin()
                     .loginPage("/login")
-                    .permitAll()
+                .permitAll()
                 .and()
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login?logout")
