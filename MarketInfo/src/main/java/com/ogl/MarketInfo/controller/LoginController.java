@@ -79,6 +79,9 @@ public class LoginController {
                     if (authentication != null && authentication.isAuthenticated()) {
                         return "/home/home";
                     }
+                } else {
+                    redirectAttributes.addFlashAttribute("mensagem", "Usuário/senha incorretos.");
+                    return "redirect:/login";
                 }
             } else {
                 redirectAttributes.addFlashAttribute("mensagem", "Usuário/senha incorretos.");
@@ -94,14 +97,20 @@ public class LoginController {
     }
 
     @PostMapping("/registrar")
-    @ResponseBody
-    public ResponseEntity<?> registrar(@RequestBody Map<String, String> payload, RedirectAttributes redirectAttributes) {
-        String username = payload.get("username");
-        String email = payload.get("email");
-        String senha = payload.get("senha");
+    public String registrar(@RequestParam String username,
+                               @RequestParam String senha,
+                               @RequestParam String email,
+                               RedirectAttributes redirectAttributes) {
 
         if (usuarioRepository.findByUsername(username).isPresent()) {
-            redirectAttributes.addFlashAttribute("mensagem", "Este usuário já existe!");
+            redirectAttributes.addFlashAttribute("mensagem", "Este username já existe!");
+            return "redirect:/registro";
+
+        }
+
+        if(usuarioRepository.findByEmail(email).isPresent()) {
+            redirectAttributes.addFlashAttribute("mensagem", "Email já cadastrado!");
+            return "redirect:/registro";
         }
 
         Usuario usuario = new Usuario();
@@ -117,7 +126,6 @@ public class LoginController {
         usuarioRepository.save(usuario);
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Usuário criado com sucesso!");
-        return ResponseEntity.ok(Map.of("redirectUrl", "/login"));
+        return "redirect:/login";
     }
-
 }

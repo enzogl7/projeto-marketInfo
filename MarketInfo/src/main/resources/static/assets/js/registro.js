@@ -15,21 +15,15 @@ document.getElementById('registerForm').addEventListener('submit', async functio
         return;
     }
 
-try {
-    const response = await fetch('/registrar', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email, senha })
-    });
 
-    if (response.ok) {
-        const result = await response.json();
-    } else {
-        const error = await response.json();
-        alert(error.message || 'Erro ao registrar usuário!');
+    try {
+        const response = await fetch('/registrar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, email, senha })
+        });
+
+    } catch (e) {
+        alert('Erro de conexão. Tente novamente mais tarde!');
     }
-} catch (e) {
-    alert('Erro de conexão. Tente novamente mais tarde!');
-}
-
 });
