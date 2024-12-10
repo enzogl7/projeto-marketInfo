@@ -77,7 +77,8 @@ public class LoginController {
                     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
                     if (authentication != null && authentication.isAuthenticated()) {
-                        return "/home/home";
+                        System.out.println("ok");
+                        return "redirect:/home";
                     }
                 } else {
                     redirectAttributes.addFlashAttribute("mensagem", "Usuário/senha incorretos.");
