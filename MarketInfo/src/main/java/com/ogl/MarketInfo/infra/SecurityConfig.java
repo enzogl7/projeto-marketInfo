@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -36,21 +37,19 @@ public class SecurityConfig {
                                 "/assets/css/**",
                                 "/assets/js/**"
                         ).permitAll()
-                        .requestMatchers("/home", "/cadastrarProdutos", "/listarProdutos", "/gerenciamentoEstoque", "/gerenciamentoPrecos").authenticated()
+                        .requestMatchers("/home", "/cadastrarProdutos", "/listarProdutos", "/gerenciamentoEstoque", "/gerenciamentoPrecos").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-                .formLogin()
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/home", true)
-                .permitAll()
-                .and()
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 )
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/registrar", "/login", "/logar")
+                        .ignoringRequestMatchers("/registrar", "/login", "/logar", "/home")
+                )
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 );
 
         return http.build();

@@ -67,34 +67,37 @@ public class LoginController {
     @PostMapping("/logar")
     public String logar(@RequestParam("username") String username,
                        @RequestParam("senha") String senha, RedirectAttributes redirectAttributes) {
-        Optional<Usuario> usuario = usuarioRepository.findByUsername(username);
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByUsername(username);
         try {
-            if (usuario.isPresent()) {
-                if (passwordEncoder.matches(senha, usuario.get().getPassword())) {
-                    UsernamePasswordAuthenticationToken authenticationToken =
-                            new UsernamePasswordAuthenticationToken(username, senha);
-
-                    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-                    if (authentication != null && authentication.isAuthenticated()) {
-                        System.out.println("ok");
-                        return "redirect:/home";
-                    }
-                } else {
+            if (usuarioOptional.isPresent()) {
+                if (!passwordEncoder.matches(senha, usuarioOptional.get().getPassword())) {
                     redirectAttributes.addFlashAttribute("mensagem", "Usuário/senha incorretos.");
                     return "redirect:/login";
                 }
             } else {
-                redirectAttributes.addFlashAttribute("mensagem", "Usuário/senha incorretos.");
+                redirectAttributes.addFlashAttribute("mensagem", "Usuário não encontrado.");
                 return "redirect:/login";
             }
 
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("mensagem", "Ocorreu um erro.");
+            // sucesso
+            Usuario usuario = usuarioOptional.get();
+
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(usuario.getUsername(), senha, usuario.getAuthorities());
+
+            Authentication authentication = authenticationManager.authenticate(authenticationToken);
+
+            System.out.println("AUTHENTICATION: " + authentication);
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            return "redirect:/home";
+        }
+         catch (Exception e) {
+             System.out.println("Erro de autenticação: " + e.getMessage());
+             redirectAttributes.addFlashAttribute("mensagem", "Ocorreu um erro.");
             return "/login/login";
         }
-        redirectAttributes.addFlashAttribute("mensagem", "Ocorreu um erro.");
-        return "redirect:/login";
     }
 
     @PostMapping("/registrar")
@@ -104,7 +107,7 @@ public class LoginController {
                                RedirectAttributes redirectAttributes) {
 
         if (usuarioRepository.findByUsername(username).isPresent()) {
-            redirectAttributes.addFlashAttribute("mensagem", "Este username já existe!");
+            redirectAttributes.addFlashAttribute("mensagem", "Este usuário já existe!");
             return "redirect:/registro";
 
         }
