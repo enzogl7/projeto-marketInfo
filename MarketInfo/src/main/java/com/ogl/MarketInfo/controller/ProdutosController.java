@@ -49,7 +49,7 @@ public class ProdutosController {
         produtosService.salvar(produto);
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Produto cadastrado com sucesso!");
-        return "redirect:/cadastrarProdutos";
+        return "redirect:/produtos/cadastrarProdutos";
     }
 
     @GetMapping("/listarProdutos")
@@ -75,7 +75,7 @@ public class ProdutosController {
         produtosService.salvar(produto);
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Produto editado com sucesso!");
-        return "redirect:/listarProdutos";
+        return "redirect:/produtos/listarProdutos";
     }
 
     @PostMapping("/excluirProduto")
@@ -84,7 +84,7 @@ public class ProdutosController {
         produtosService.excluir(Long.valueOf(idProdutoExclusao));
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Produto excluído com sucesso!");
-        return "redirect:/listarProdutos";
+        return "redirect:/produtos/listarProdutos";
     }
 
 }

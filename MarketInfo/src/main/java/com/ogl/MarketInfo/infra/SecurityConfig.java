@@ -56,7 +56,7 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/registrar", "/login", "/logar", "/home")
+                        .ignoringRequestMatchers("/registrar", "/login", "/logar", "/home", "/produtos/**", "/preco/**", "/estoque/**")
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
