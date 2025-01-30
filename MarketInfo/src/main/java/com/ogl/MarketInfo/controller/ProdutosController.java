@@ -1,17 +1,19 @@
 package com.ogl.MarketInfo.controller;
 
 import com.ogl.MarketInfo.model.Categoria;
+import com.ogl.MarketInfo.model.Estoque;
 import com.ogl.MarketInfo.model.Produtos;
 import com.ogl.MarketInfo.model.Usuario;
+import com.ogl.MarketInfo.service.EstoqueService;
+import com.ogl.MarketInfo.service.PrecoService;
 import com.ogl.MarketInfo.service.ProdutosService;
 import com.ogl.MarketInfo.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
@@ -26,6 +28,12 @@ public class ProdutosController {
 
     @Autowired
     UsuarioService usuarioService;
+
+    @Autowired
+    EstoqueService estoqueService;
+
+    @Autowired
+    PrecoService precoService;
 
     @GetMapping("/cadastrarProdutos")
     public String cadastrarProdutos() {
@@ -81,12 +89,28 @@ public class ProdutosController {
     }
 
     @PostMapping("/excluirProduto")
-    public String excluirProduto(@RequestParam("idProdutoExclusao")String idProdutoExclusao,
-                                 RedirectAttributes redirectAttributes)  {
-        produtosService.excluir(Long.valueOf(idProdutoExclusao));
+    public ResponseEntity excluirProduto(@RequestParam("idProdutoExclusao") String idProdutoExclusao) {
+        try {
+            Produtos produtoExclusao = produtosService.buscarPorId(Long.valueOf(idProdutoExclusao));
 
-        redirectAttributes.addFlashAttribute("mensagemSucesso", "Produto excluído com sucesso!");
-        return "redirect:/produtos/listarProdutos";
+            // verifica se o produto está vinculado à tabela de estoque ou preços
+            Boolean produtoVinculadoATabelaEstoque = estoqueService.existeEstoqueParaEsseProduto(produtoExclusao);
+            Boolean produtoVinculadoATabelaPreco = precoService.existePrecoParaEsseProduto(produtoExclusao);
+
+            if (produtoVinculadoATabelaEstoque) {
+                return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+            }
+            if (produtoVinculadoATabelaPreco) {
+                return ResponseEntity.status(HttpStatus.SEE_OTHER).build();
+            }
+
+            produtosService.excluir(Long.valueOf(idProdutoExclusao));
+
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
+
 
 }
