@@ -1,12 +1,5 @@
-$(document).ready(function () {
-    applyCleave('#preco')
-});
-
 // FORMATAÇÃO PREÇO E FUNÇÃO CHECKBOX
 document.addEventListener('DOMContentLoaded', function () {
-    applyCleave('#preco');
-    applyCleave('#precoAtual');
-    applyCleave('#pesquisaPreco');
     configureCheckbox("semDataFinal", "dataFinal", "dataFinalContainer");
     configureCheckbox("semDataFinalEdicao", "dataFinalEdicao", "dataFinalEdicaoContainer");
 });
@@ -35,21 +28,23 @@ document.getElementById('pesquisaPreco').addEventListener('submit', function(eve
     precoInputPesquisa.value = precoValorPesquisa;
 });
 
-function applyCleave(inputSelector) {
-    if (document.querySelector(inputSelector)) {
-        new Cleave(inputSelector, {
-            numeral: true,
-            numeralThousandsGroupStyle: 'thousand',
-            prefix: 'R$ ',
-            noImmediatePrefix: true,
-            decimalMark: ',',
-            delimiters: ['.', ',']
-        });
+function formatarPreco(input) {
+    let valor = input.value;
+
+    valor = valor.replace(/\D/g, '');
+
+    if (valor.length > 2) {
+        valor = valor.replace(/(\d)(\d{2})$/, '$1,$2');
     }
+
+    valor = valor.replace(/(\d)(?=(\d{3})+(\,|$))/g, '$1.');
+
+    input.value = valor ? 'R$ ' + valor : '';
+
 }
 
+
 function configureCheckbox(checkboxId, inputId, containerId) {
-    console.log("RODOU BOSTA")
     const checkboxElement = document.getElementById(checkboxId);
     const inputElement = document.getElementById(inputId);
     const containerElement = document.getElementById(containerId);

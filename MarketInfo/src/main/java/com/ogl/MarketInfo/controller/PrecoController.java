@@ -55,6 +55,7 @@ public class PrecoController {
             redirectAttributes.addFlashAttribute("mensagem", "Produto já possui preço cadastrado!");
             return "redirect:/preco/gerenciamentoPrecos";
         }
+        preco = preco.replace(',', '.');
 
         Preco p = new Preco();
         p.setProduto(produtos);
@@ -90,6 +91,8 @@ public class PrecoController {
         Produtos produto = produtosService.buscarPorId(Long.valueOf(produtoPrecoEdicao));
         try {
             precoAtual = precoAtual.replace("R$", "").trim();
+            precoAtual = precoAtual.replace(',', '.');
+
             Preco p = precoService.buscaPorId(Long.valueOf(idPrecoEdicao));
             p.setProduto(produto);
             p.setPrecoAtual(Double.parseDouble(precoAtual));
