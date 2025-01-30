@@ -36,6 +36,51 @@ function modalEditarProduto(button) {
     document.getElementById('idProdutoEdicao').value = idProdutoEdicao;
 }
 
+function salvarEdicaoProduto() {
+    var idProdutoEdicao = document.getElementById('idProdutoEdicao').value;
+    var nomeProdutoEdicao = document.getElementById('nomeProdutoEdicao').value;
+    var categoriaEdicao = document.getElementById('categoriaEdicao').value;
+    var marcaEdicao = document.getElementById('marcaEdicao').value;
+
+    $.ajax({
+        url: '/produtos/editarProduto',
+        type: 'POST',
+        data: {
+            idProdutoEdicao: idProdutoEdicao,
+            nomeProdutoEdicao: nomeProdutoEdicao,
+            categoriaEdicao: categoriaEdicao,
+            marcaEdicao: marcaEdicao
+        },
+        complete: function(xhr, status) {
+            switch (xhr.status) {
+                case 200:
+                    $('#modalEditarProduto').modal('hide')
+                    Swal.fire({
+                        title: "Pronto!",
+                        text: "O produto foi editado com sucesso!",
+                        icon: "success",
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/produtos/listarProdutos";
+                        }
+                    });
+                    break;
+                case 500:
+                    $('#modalEditarProduto').modal('hide')
+                    Swal.fire({
+                        title: "Erro!",
+                        text: "Ocorreu um erro ao editar este produto.",
+                        icon: "error"
+                    });
+                    break;
+                default:
+                    alert("Erro desconhecido: " + status);
+            }
+        }
+    });
+}
+
 function confirmarExclusao(button) {
     var idProdutoExclusao = button.getAttribute('data-id')
     Swal.fire({
@@ -56,7 +101,6 @@ function confirmarExclusao(button) {
 }
 
 function excluirProduto(idButton) {
-    console.log(idButton)
     $.ajax({
         url: '/produtos/excluirProduto',
         type: 'POST',

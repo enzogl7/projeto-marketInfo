@@ -70,22 +70,24 @@ public class ProdutosController {
     }
 
     @PostMapping("/editarProduto")
-    public String editarProduto(@RequestParam("idProdutoEdicao") String idProdutoEdicao,
+    public ResponseEntity editarProduto(@RequestParam("idProdutoEdicao") String idProdutoEdicao,
                                 @RequestParam("nomeProdutoEdicao") String nomeProdutoEdicao,
-                                @RequestParam("categoriaEdicao") Categoria categoriaEdicao,
-                                @RequestParam("marcaEdicao")String marcaEdicao,
-                                RedirectAttributes redirectAttributes)  {
+                                @RequestParam("categoriaEdicao") String categoriaEdicao,
+                                @RequestParam("marcaEdicao")String marcaEdicao)  {
+        try {
+            Produtos produto = produtosService.buscarPorId(Long.valueOf(idProdutoEdicao));
+            produto.setNome(nomeProdutoEdicao);
+            produto.setCategoria(Categoria.valueOf(categoriaEdicao));
+            produto.setMarca(marcaEdicao);
+            produto.setDataCadastro(produto.getDataCadastro());
+            produto.setDataUltimaEdicao(LocalDate.now());
+            produtosService.salvar(produto);
+            return ResponseEntity.ok().build();
 
-        Produtos produto = produtosService.buscarPorId(Long.valueOf(idProdutoEdicao));
-        produto.setNome(nomeProdutoEdicao);
-        produto.setCategoria(categoriaEdicao);
-        produto.setMarca(marcaEdicao);
-        produto.setDataCadastro(produto.getDataCadastro());
-        produto.setDataUltimaEdicao(LocalDate.now());
-        produtosService.salvar(produto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
 
-        redirectAttributes.addFlashAttribute("mensagemSucesso", "Produto editado com sucesso!");
-        return "redirect:/produtos/listarProdutos";
     }
 
     @PostMapping("/excluirProduto")

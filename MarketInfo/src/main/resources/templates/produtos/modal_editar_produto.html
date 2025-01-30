@@ -6,8 +6,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editarProdutoForm" action="/produtos/editarProduto" method="post">
-
                     <input type="hidden" id="idProdutoEdicao" name="idProdutoEdicao">
 
                     <div class="form-group">
@@ -40,20 +38,15 @@
                     </select>
                     </div>
 
-
                     <div class="form-group">
                         <label for="marcaEdicao">Marca</label>
                         <input type="text" id="marcaEdicao" name="marcaEdicao" class="form-control" placeholder="Digite a marca do produto" required>
                     </div>
 
-
-
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary" style="background-color: #ff6f00;">Salvar</button>
+                <button type="submit" class="btn btn-primary" style="background-color: #ff6f00;" onclick="salvarEdicaoProduto()">Salvar</button>
             </div>
-                </form>
-
             </div>
         </div>
     </div>
