@@ -28,7 +28,7 @@ public class Produtos {
     private LocalDate dataUltimaEdicao;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    @JoinColumn(name = "usuario", referencedColumnName = "id")
     private Usuario usuario;
 
     public Long getId() {

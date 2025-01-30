@@ -55,7 +55,9 @@ public class ProdutosController {
     @GetMapping("/listarProdutos")
     public String listarProdutos(Model model) {
         List<Produtos> produtos = produtosService.listarTodos();
+        List<Usuario> usuarios = usuarioService.findAll();
         model.addAttribute("produtos", produtos);
+        model.addAttribute("usuarios", usuarios);
         return "/produtos/listar_produtos";
     }
 
