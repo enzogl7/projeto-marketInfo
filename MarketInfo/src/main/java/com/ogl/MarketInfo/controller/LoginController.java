@@ -4,13 +4,17 @@ import com.ogl.MarketInfo.model.Role;
 import com.ogl.MarketInfo.model.Usuario;
 import com.ogl.MarketInfo.repository.RoleRepository;
 import com.ogl.MarketInfo.repository.UsuarioRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -66,7 +70,10 @@ public class LoginController {
 
     @PostMapping("/logar")
     public String logar(@RequestParam("email") String email,
-                       @RequestParam("senha") String senha, RedirectAttributes redirectAttributes) {
+                       @RequestParam("senha") String senha,
+                        RedirectAttributes redirectAttributes,
+                        HttpServletRequest request,
+                        HttpServletResponse response) {
         Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
         try {
             if (usuarioOptional.isPresent()) {
@@ -90,6 +97,12 @@ public class LoginController {
             System.out.println("AUTHENTICATION: " + authentication);
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
+            context.setAuthentication(authentication);
+
+            HttpSessionSecurityContextRepository securityContextRepository = new HttpSessionSecurityContextRepository();
+            securityContextRepository.saveContext(context, request, response);
 
             return "redirect:/home";
         }

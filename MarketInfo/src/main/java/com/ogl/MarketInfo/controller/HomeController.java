@@ -9,11 +9,7 @@ import java.security.Principal;
 @Controller
 public class HomeController {
     @GetMapping("/home")
-    public String home(Model model, Principal principal) {
-        if (principal != null) {
-            System.out.println("Principal: " + principal.getName());
-            model.addAttribute("username", principal.getName());
-        }
+    public String home() {
         return "/home/home";
     }
 }

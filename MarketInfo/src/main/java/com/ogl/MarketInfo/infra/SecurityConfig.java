@@ -37,7 +37,11 @@ public class SecurityConfig {
                                 "/assets/css/**",
                                 "/assets/js/**"
                         ).permitAll()
-                        .requestMatchers("/home", "/cadastrarProdutos", "/listarProdutos", "/gerenciamentoEstoque", "/gerenciamentoPrecos").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/home",
+                                "/cadastrarProdutos",
+                                "/listarProdutos",
+                                "/gerenciamentoEstoque",
+                                "/gerenciamentoPrecos").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
@@ -50,8 +54,7 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                )
-                .anonymous(anonymous -> anonymous.disable());
+                );
 
         return http.build();
     }
