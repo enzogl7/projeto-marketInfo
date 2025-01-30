@@ -6,6 +6,7 @@ import com.ogl.MarketInfo.service.EstoqueService;
 import com.ogl.MarketInfo.service.PrecoService;
 import com.ogl.MarketInfo.service.ProdutosService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,38 +76,37 @@ public class PrecoController {
     }
 
     @PostMapping("/editarPreco")
-    public String editarPreco(@RequestParam("idPrecoEdicao")String idPrecoEdicao,
-                              @RequestParam("produtoPrecoEdicao")Produtos produtoPrecoEdicao,
+    public ResponseEntity editarPreco(@RequestParam("idPrecoEdicao")String idPrecoEdicao,
+                              @RequestParam("produtoPrecoEdicao")String produtoPrecoEdicao,
                               @RequestParam("precoAtual")String precoAtual,
                               @RequestParam("dataInicioEdicao")String dataInicioEdicao,
                               @RequestParam("dataFinalEdicao")String dataFinalEdicao,
-                              @RequestParam("motivoAlteracaoPreco") String motivoAlteracaoPreco,
-                              RedirectAttributes redirectAttributes,
-                              Model model) {
+                              @RequestParam("motivoAlteracaoPreco") String motivoAlteracaoPreco) {
 
-        precoAtual = precoAtual.replace("R$", "").trim();
-
-
-        Preco p = precoService.buscaPorId(Long.valueOf(idPrecoEdicao));
-        p.setProduto(produtoPrecoEdicao);
-        p.setPrecoAtual(Double.parseDouble(precoAtual));
-        p.setDataInicioVigor(LocalDate.parse(dataInicioEdicao));
-        p.setDataFimVigor(LocalDate.parse(dataFinalEdicao));
-        p.setMotivoAlteracao(motivoAlteracaoPreco);
-        p.setDataAlteracao(LocalDate.now());
-        precoService.salvar(p);
-
-
-        redirectAttributes.addFlashAttribute("mensagemSucesso", "Preço editado com sucesso!");
-        return "redirect:/preco/gerenciamentoPrecos";
+        Produtos produto = produtosService.buscarPorId(Long.valueOf(produtoPrecoEdicao));
+        try {
+            precoAtual = precoAtual.replace("R$", "").trim();
+            Preco p = precoService.buscaPorId(Long.valueOf(idPrecoEdicao));
+            p.setProduto(produto);
+            p.setPrecoAtual(Double.parseDouble(precoAtual));
+            p.setDataInicioVigor(LocalDate.parse(dataInicioEdicao));
+            p.setDataFimVigor(LocalDate.parse(dataFinalEdicao));
+            p.setMotivoAlteracao(motivoAlteracaoPreco);
+            p.setDataAlteracao(LocalDate.now());
+            precoService.salvar(p);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping("/excluirPreco")
-    public String excluirPreco(@RequestParam("idPrecoExclusao")String idPrecoExclusao,
-                               RedirectAttributes redirectAttributes) {
-        precoService.excluirPorId(idPrecoExclusao);
-
-        redirectAttributes.addFlashAttribute("mensagemSucesso", "Preço excluído com sucesso!");
-        return "redirect:/preco/gerenciamentoPrecos";
+    public ResponseEntity excluirPreco(@RequestParam("idPrecoExclusao")String idPrecoExclusao) {
+        try {
+            precoService.excluirPorId(idPrecoExclusao);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

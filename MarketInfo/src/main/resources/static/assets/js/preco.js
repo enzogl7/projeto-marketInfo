@@ -126,11 +126,108 @@ function modalEditarPreco(button) {
         precoAtualField.value = 'R$ ' + precoAtualField.value;
     }
 }
-
-function modalExcluirPreco(button) {
-    var idPrecoExclusao = button.getAttribute('data-id');
-    $('#modalExcluirPreco').modal('show');
-    document.getElementById('idPrecoExclusao').value = idPrecoExclusao;
-}
 //FIM MODAIS
+function confirmacaoExcluirPreco(button) {
+    var idPrecoExclusao = button.getAttribute('data-id');
 
+    Swal.fire({
+        title: 'Tem certeza que deseja excluir a precificação desse produto?',
+        text: "Essa ação não pode ser desfeita!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sim, excluir.',
+        cancelButtonText: 'Não, voltar.',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            excluirPreco(idPrecoExclusao);
+        } else {
+            Swal.fire('Cancelado', 'A precificação não foi excluída', 'info');
+        }
+    });
+}
+
+function excluirPreco(idPrecoExclusaoButton) {
+    $.ajax({
+        url: '/preco/excluirPreco',
+        type: 'POST',
+        data: {
+            idPrecoExclusao: idPrecoExclusaoButton
+        },
+        complete: function(xhr, status) {
+            switch (xhr.status) {
+                case 200:
+                    Swal.fire({
+                        title: "Pronto!",
+                        text: "O preço foi excluído com sucesso!",
+                        icon: "success",
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/preco/listarPrecos";
+                        }
+                    });
+                    break;
+                case 500:
+                    Swal.fire({
+                        title: "Erro!",
+                        text: "Ocorreu um erro ao excluir este preço.",
+                        icon: "error"
+                    });
+                    break;
+
+                default:
+                    alert("Erro desconhecido: " + status);
+            }
+        }
+    });
+}
+
+function salvarEdicaoPreco() {
+    var idPrecoEdicao = document.getElementById('idPrecoEdicao').value;
+    var produtoPrecoEdicao = document.getElementById('produtoPrecoEdicao').value;
+    var precoAtual = document.getElementById('precoAtual').value;
+    var dataInicioEdicao = document.getElementById('dataInicioEdicao').value;
+    var dataFinalEdicao = document.getElementById('dataFinalEdicao').value;
+    var motivoAlteracaoPreco = document.getElementById('motivoAlteracaoPreco').value;
+
+    $.ajax({
+        url: '/preco/editarPreco',
+        type: 'POST',
+        data: {
+            idPrecoEdicao: idPrecoEdicao,
+            produtoPrecoEdicao: produtoPrecoEdicao,
+            precoAtual: precoAtual,
+            dataInicioEdicao: dataInicioEdicao,
+            dataFinalEdicao: dataFinalEdicao,
+            motivoAlteracaoPreco: motivoAlteracaoPreco
+        },
+        complete: function(xhr, status) {
+            switch (xhr.status) {
+                case 200:
+                    $('#modalEditarPreco').modal('hide')
+                    Swal.fire({
+                        title: "Pronto!",
+                        text: "O preço foi editado com sucesso!",
+                        icon: "success",
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/preco/listarPrecos";
+                        }
+                    });
+                    break;
+                case 500:
+                    $('#modalEditarPreco').modal('hide')
+                    Swal.fire({
+                        title: "Erro!",
+                        text: "Ocorreu um erro ao editar este preço.",
+                        icon: "error"
+                    });
+                    break;
+                default:
+                    alert("Erro desconhecido: " + status);
+            }
+        }
+    });
+}

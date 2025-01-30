@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listagem de preços</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/assets/css/listar_produtos.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="/assets/css/listar_produtos.css" rel="stylesheet">
 </head>
 <body>
 
@@ -47,6 +46,8 @@
                             <i class="fas fa-sort"></i>
                         </button>
                     </th>
+                    <th>Preço atual</th>
+                    <th>Motivo alteração</th>
                     <th>
                         Data início vigor
                         <button class="btn btn-link btn-sm" onclick="ordenarTabela(2, 'data')">
@@ -59,8 +60,6 @@
                             <i class="fas fa-sort"></i>
                         </button>
                     </th>
-                    <th>Preço atual</th>
-                    <th>Motivo alteração</th>
                     <th>Data alteração</th>
                     <th>Ações</th>
                 </tr>
@@ -69,15 +68,16 @@
                 <th:block th:each="preco : ${precos}">
                     <tr>
                         <td th:text="${preco.produto.nome + ' - ' + preco.produto.marca}"></td>
+
                         <td th:text="'R$ ' + ${preco.preco}"></td>
-                        <td th:text="${preco.dataInicioVigor}"></td>
-                        <td th:text="${preco.dataFimVigor}"></td>
                         <td th:text="${preco.precoAtual > 0
                             ? preco.precoAtualFormatado + ' (R$ ' + preco.diferencaFormatada + ')'
                             : '---'}">
                         </td>
                         <td th:text="${preco.motivoAlteracao != null && preco.motivoAlteracao != ''
                          ? preco.motivoAlteracao : '---'}"></td>
+                        <td th:text="${preco.dataInicioVigor}"></td>
+                        <td th:text="${preco.dataFimVigor}"></td>
                         <td th:text="${preco.dataAlteracao != null && preco.dataAlteracao != ''
                          ? preco.dataAlteracao : '---'}"></td>
                         <td>
@@ -86,7 +86,7 @@
                                     th:data-produto-id="${preco.produto.id}"
                                     onclick="modalEditarPreco(this)">Editar</button>
                             <button class="btn btn-danger btn-sm" id="exclusaoEstoque"
-                                    th:data-id="${preco.id}" onclick="modalExcluirPreco(this)">Excluir</button>
+                                    th:data-id="${preco.id}" onclick="confirmacaoExcluirPreco(this)">Excluir</button>
                         </td>
                     </tr>
                 </th:block>
@@ -97,10 +97,11 @@
 </div>
 
 <div th:replace="/preco/modal_editar_preco"></div>
-<div th:replace="/preco/modal_excluir_preco"></div>
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.all.min.js"></script>
 <script src="/assets/js/preco.js"></script>
 </body>
 </html>

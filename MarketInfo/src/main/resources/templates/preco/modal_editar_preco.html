@@ -6,8 +6,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editarPrecoForm" action="/preco/editarPreco" method="post">
-
                     <input type="hidden" id="idPrecoEdicao" name="idPrecoEdicao">
 
                     <div class="form-group">
@@ -47,10 +45,8 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" style="background-color: #ff6f00;">Salvar</button>
+                        <button type="submit" class="btn btn-primary" style="background-color: #ff6f00;" onclick="salvarEdicaoPreco()">Salvar</button>
                     </div>
-                </form>
-
             </div>
         </div>
     </div>
