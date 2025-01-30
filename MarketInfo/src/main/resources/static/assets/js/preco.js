@@ -132,8 +132,6 @@ function modalEditarPreco(button) {
     document.getElementById('idPrecoEdicao').value = idPrecoEdicao;
     document.getElementById("precoAtual").value = "";
 
-    applyCleave('#precoAtual');
-
     const produtoSelect = document.getElementById('produtoPrecoEdicao');
     if (produtoSelect) {
         produtoSelect.value = produtoId;
