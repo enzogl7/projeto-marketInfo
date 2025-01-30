@@ -69,7 +69,7 @@
                         <button class="btn btn-warning btn-sm" id="edicaoProduto"
                                 th:data-id="${produto.id}" onclick="modalEditarProduto(this)">Editar</button>
                         <button class="btn btn-danger btn-sm" id="exclusaoProduto"
-                                th:data-id="${produto.id}" onclick="confirmarExclusao(this)">Excluir</button>
+                                th:data-id="${produto.id}" onclick="confirmarExclusaoProduto(this)">Excluir</button>
                     </td>
                 </tr>
             </th:block>
@@ -80,7 +80,6 @@
 </div>
 
 <div th:replace="/produtos/modal_editar_produto"></div>
-<div th:replace="/produtos/modal_excluir_produto"></div>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

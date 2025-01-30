@@ -81,7 +81,7 @@ function salvarEdicaoProduto() {
     });
 }
 
-function confirmarExclusao(button) {
+function confirmarExclusaoProduto(button) {
     var idProdutoExclusao = button.getAttribute('data-id')
     Swal.fire({
         title: 'Tem certeza que deseja excluir este produto?',

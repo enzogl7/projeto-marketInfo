@@ -6,6 +6,7 @@ import com.ogl.MarketInfo.model.Produtos;
 import com.ogl.MarketInfo.service.EstoqueService;
 import com.ogl.MarketInfo.service.ProdutosService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,29 +66,33 @@ public class EstoqueController {
     }
 
     @PostMapping("/editarEstoque")
-    public String editarEstoque(@RequestParam("idEstoqueEdicao") String idEstoqueEdicao,
-                                @RequestParam("produtoEstoqueEdicao") Produtos produtoEstoqueEdicao,
-                                @RequestParam("estoqueMinimoEdicao") String estoqueMinimoEdicao,
-                                @RequestParam("estoqueAtualEdicao") String estoqueAtualEdicao,
-                                RedirectAttributes redirectAttributes) {
+    public ResponseEntity editarEstoque(@RequestParam("idEstoqueEdicao") String idEstoqueEdicao,
+                                                   @RequestParam("produtoEstoqueEdicao") Produtos produtoEstoqueEdicao,
+                                                   @RequestParam("estoqueMinimoEdicao") String estoqueMinimoEdicao,
+                                                   @RequestParam("estoqueAtualEdicao") String estoqueAtualEdicao) {
 
-        Estoque estoque = estoqueService.findById(Long.valueOf(idEstoqueEdicao));
-        estoque.setProduto(produtoEstoqueEdicao);
-        estoque.setQtdeEstoqueMinimo(Integer.valueOf(estoqueMinimoEdicao));
-        estoque.setQtdeEstoqueAtual(Integer.valueOf(estoqueAtualEdicao));
-        estoqueService.salvar(estoque);
+        try {
+            Estoque estoque = estoqueService.findById(Long.valueOf(idEstoqueEdicao));
+            estoque.setProduto(produtoEstoqueEdicao);
+            estoque.setQtdeEstoqueMinimo(Integer.valueOf(estoqueMinimoEdicao));
+            estoque.setQtdeEstoqueAtual(Integer.valueOf(estoqueAtualEdicao));
+            estoqueService.salvar(estoque);
 
-        redirectAttributes.addFlashAttribute("mensagemSucesso", "Estoque editado com sucesso!");
-        return "redirect:/estoque/gerenciamentoEstoque";
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping("/excluirEstoque")
-    public String excluirEstoque(@RequestParam("idEstoqueExclusao") String idEstoqueExclusao,
-                                 RedirectAttributes redirectAttributes) {
-        estoqueService.excluirPorId(Long.valueOf(idEstoqueExclusao));
+    public ResponseEntity excluirEstoque(@RequestParam("idEstoqueExclusao") String idEstoqueExclusao) {
+        try {
+            estoqueService.excluirPorId(Long.valueOf(idEstoqueExclusao));
+            return ResponseEntity.ok().build();
+        } catch(Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
 
-        redirectAttributes.addFlashAttribute("mensagemSucesso", "Estoque excluído com sucesso!");
-        return "redirect:/estoque/gerenciamentoEstoque";
     }
 
 

@@ -6,36 +6,33 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editarEstoqueForm" action="/estoque/editarEstoque" method="post">
+                <input type="hidden" id="idEstoqueEdicao" name="idEstoqueEdicao">
 
-                    <input type="hidden" id="idEstoqueEdicao" name="idEstoqueEdicao">
+                <div class="form-group">
+                    <label for="produtoEstoqueEdicao">Produto</label>
+                    <select class="form-control"id="produtoEstoqueEdicao" name="produtoEstoqueEdicao" required>
+                        <option value="" disabled selected>Selecione o produto</option>
+                        <option th:each="produto : ${produtos}"
+                                th:value="${produto.id}"
+                                th:text="${produto.nome + ' - ' + produto.marca}"></option>
+                    </select>
+                </div>
 
-                    <div class="form-group">
-                        <label for="produtoEstoqueEdicao">Produto</label>
-                        <select class="form-control"id="produtoEstoqueEdicao" name="produtoEstoqueEdicao" required>
-                            <option value="" disabled selected>Selecione o produto</option>
-                            <option th:each="produto : ${produtos}"
-                                    th:value="${produto.id}"
-                                    th:text="${produto.nome + ' - ' + produto.marca}"></option>
-                        </select>
-                    </div>
+                <div class="form-group">
+                    <label for="estoqueMinimoEdicao">Estoque mínimo</label>
+                    <input type="number" id="estoqueMinimoEdicao" name="estoqueMinimoEdicao" class="form-control" placeholder="Informe o valor mínimo para estoque" required>
+                </div>
 
-                    <div class="form-group">
-                        <label for="estoqueMinimoEdicao">Estoque mínimo</label>
-                        <input type="number" id="estoqueMinimoEdicao" name="estoqueMinimoEdicao" class="form-control" placeholder="Informe o valor mínimo para estoque" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="estoqueAtualEdicao">Estoque atual</label>
-                        <input type="number" id="estoqueAtualEdicao" name="estoqueAtualEdicao" class="form-control" placeholder="Informe o valor atual do estoque" required>
-                    </div>
+                <div class="form-group">
+                    <label for="estoqueAtualEdicao">Estoque atual</label>
+                    <input type="number" id="estoqueAtualEdicao" name="estoqueAtualEdicao" class="form-control" placeholder="Informe o valor atual do estoque" required>
+                </div>
 
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" style="background-color: #ff6f00;">Salvar</button>
-                    </div>
-                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" style="background-color: #ff6f00;" onclick="salvarEdicaoEstoque()">Salvar</button>
+                </div>
 
             </div>
         </div>
