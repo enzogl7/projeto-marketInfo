@@ -15,7 +15,7 @@
                         <option th:each="produto : ${produtos}"
                                 th:value="${produto.id}"
                                 th:text="${produto.nome + ' - ' + produto.marca}"
-                                th:selected="${produto.id == produtoAtual}">></option>
+                                th:selected="${produto.id == produtoAtual}"></option>
                     </select>
                 </div>
 

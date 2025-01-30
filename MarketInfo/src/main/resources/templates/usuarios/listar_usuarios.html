@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listagem de usuários</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.min.css" rel="stylesheet">
+  <link href="/assets/css/listar_produtos.css" rel="stylesheet">
+</head>
+<body>
+
+
+
+<div class="container">
+  <div class="table-box">
+    <p class="text-muted" id ="voltar"><a href="/home">< Voltar</a></p>
+    <h3>Listagem de usuários</h3>
+    <div th:if="${mensagemSucesso}" class="alert alert-success">
+      <p th:text="${mensagemSucesso}"></p>
+    </div>
+    <div th:if="${mensagem}" class="alert alert-danger">
+      <p th:text="${mensagem}"></p>
+    </div>
+
+    <div class="form-row mb-3">
+      <div class="col-sm-5">
+        <label for="pesquisaEmailUsuario">Pesquisar por email</label>
+        <input type="text" class="form-control" id="pesquisaEmailUsuario" placeholder="Digite o email do usuário">
+      </div>
+      <div class="col-sm-5">
+        <label for="pesquisaNomeUsuario">Pesquisar por nome</label>
+        <input type="text" class="form-control" id="pesquisaNomeUsuario" placeholder="Digite o nome do usuário">
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped ">
+        <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Perfil</th>
+          <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody id="tabelaUsuarios">
+        <th:block th:each="usuario : ${usuarios}">
+          <tr>
+            <td th:text="${usuario.username}"></td>
+            <td>
+              <th:block th:each="role, iterStat : ${usuario.roles}">
+                <span th:text="${role.roleName == 'ROLE_USER' ? 'Usuário' : (role.roleName == 'ROLE_ADMIN' ? 'Administrador' : role.roleName)}"></span>
+                <span th:if="${!iterStat.last}">, </span>
+              </th:block>
+            </td>
+            <td>
+              <button class="btn btn-warning btn-sm" id="edicaoUsuario"
+                      th:data-id="${usuario.id}"
+                      th:data-email="${usuario.email}"
+                      th:data-nome="${usuario.username}"
+                      onclick="modalEditarUsuario(this)">Editar</button>
+              <button class="btn btn-danger btn-sm" id="exclusaoUsuario"
+                      th:data-id="${usuario.id}"
+                      onclick="confirmacaoExcluirUsuario(this)">Excluir</button>
+            </td>
+          </tr>
+        </th:block>
+        </tbody>
+      </table>
+      <div th:replace="/usuarios/modal_editar_usuario"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.all.min.js"></script>
+<script src="/assets/js/usuarios.js"></script>
+</body>
+</html>
+</title>
+</head>
+<body>
+</body>
+</html>

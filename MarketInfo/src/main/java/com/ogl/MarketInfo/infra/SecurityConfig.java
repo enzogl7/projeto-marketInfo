@@ -47,7 +47,8 @@ public class SecurityConfig {
                                 "/home",
                                 "/produtos/**",
                                 "/preco/**",
-                                "/estoque/**").hasAnyRole("USER", "ADMIN")
+                                "/estoque/**",
+                                "/usuario/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
@@ -56,7 +57,7 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/registrar", "/login", "/logar", "/home", "/produtos/**", "/preco/**", "/estoque/**")
+                        .ignoringRequestMatchers("/registrar", "/login", "/logar", "/home", "/produtos/**", "/preco/**", "/estoque/**", "/usuario/**")
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)

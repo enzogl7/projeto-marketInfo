@@ -3,6 +3,8 @@ package com.ogl.MarketInfo.service;
 import com.ogl.MarketInfo.model.Usuario;
 import com.ogl.MarketInfo.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ import java.util.List;
 public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     public Usuario getUsuarioLogado() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -25,5 +30,22 @@ public class UsuarioService {
 
     public List<Usuario> findAll() {
         return usuarioRepository.findAll();
+    }
+
+    public List<Usuario> findAllComRoles() {
+        return usuarioRepository.findAllComRoles();
+    }
+
+    public Usuario findById(Long id) {
+        return usuarioRepository.findById(id).get();
+    }
+
+    public void save(Usuario usuario) {
+        usuarioRepository.save(usuario);
+    }
+
+    public void associarRoleAoUsuario(Long userId, Long roleId) {
+        String sql = "INSERT INTO usuario_roles (usuario_id, role_id) VALUES (?, ?) ON CONFLICT DO NOTHING";
+        jdbcTemplate.update(sql, userId, roleId);
     }
 }
