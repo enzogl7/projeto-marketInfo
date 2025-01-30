@@ -1,3 +1,5 @@
+document.getElementById("pesquisaNomeProdutoEstoque").addEventListener("keyup", filtrarTabela);
+
 function modalEditarEstoque(button) {
     var idEstoqueEdicao = button.getAttribute('data-id')
     $('#modalEditarEstoque').modal('show')
@@ -69,7 +71,6 @@ function salvarEdicaoEstoque() {
 }
 
 function excluirEstoque(idEstoqueExclusaoButton) {
-
     $.ajax({
         url: '/estoque/excluirEstoque',
         type: 'POST',
@@ -103,5 +104,22 @@ function excluirEstoque(idEstoqueExclusaoButton) {
             }
         }
     });
+}
 
+function filtrarTabela() {
+    var nomeProdutoEstoque = document.getElementById("pesquisaNomeProdutoEstoque").value.toLowerCase();
+    var table = document.querySelector(".table");
+    var rows = table.querySelectorAll("tbody tr");
+
+    rows.forEach(function(row) {
+        var nomeProduto = row.querySelector("td:nth-child(1)").textContent.toLowerCase();
+
+        var nomeMatch = nomeProduto.indexOf(nomeProdutoEstoque) > -1 || nomeProdutoEstoque === "";
+
+        if (nomeMatch) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
 }
