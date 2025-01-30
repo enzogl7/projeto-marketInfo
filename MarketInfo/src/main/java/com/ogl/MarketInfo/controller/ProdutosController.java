@@ -2,7 +2,9 @@ package com.ogl.MarketInfo.controller;
 
 import com.ogl.MarketInfo.model.Categoria;
 import com.ogl.MarketInfo.model.Produtos;
+import com.ogl.MarketInfo.model.Usuario;
 import com.ogl.MarketInfo.service.ProdutosService;
+import com.ogl.MarketInfo.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +16,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
 import java.util.List;
 
-@Controller
+@Controller("/produtos")
 public class ProdutosController {
 
     @Autowired
     private ProdutosService produtosService;
+
+    @Autowired
+    UsuarioService usuarioService;
 
     @GetMapping("/cadastrarProdutos")
     public String cadastrarProdutos() {
@@ -37,6 +42,8 @@ public class ProdutosController {
         produto.setMarca(marca);
         produto.setDataCadastro(LocalDate.now());
         produto.setDataUltimaEdicao(null);
+        Usuario usuarioLogado = usuarioService.getUsuarioLogado();
+        produto.setUsuario(usuarioLogado);
         produtosService.salvar(produto);
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Produto cadastrado com sucesso!");

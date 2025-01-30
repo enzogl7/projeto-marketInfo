@@ -27,6 +27,10 @@ public class Produtos {
     @Column(nullable = true)
     private LocalDate dataUltimaEdicao;
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    private Usuario usuario;
+
     public Long getId() {
         return id;
     }
@@ -73,5 +77,13 @@ public class Produtos {
 
     public void setDataUltimaEdicao(LocalDate dataUltimaEdicao) {
         this.dataUltimaEdicao = dataUltimaEdicao;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

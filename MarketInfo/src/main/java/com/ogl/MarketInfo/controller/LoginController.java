@@ -94,8 +94,6 @@ public class LoginController {
 
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
-            System.out.println("AUTHENTICATION: " + authentication);
-
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             SecurityContext context = SecurityContextHolder.createEmptyContext();

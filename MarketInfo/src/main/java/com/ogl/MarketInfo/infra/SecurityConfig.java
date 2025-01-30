@@ -43,11 +43,11 @@ public class SecurityConfig {
                                 "/assets/css/**",
                                 "/assets/js/**"
                         ).permitAll()
-                        .requestMatchers("/home",
-                                "/cadastrarProdutos",
-                                "/listarProdutos",
-                                "/gerenciamentoEstoque",
-                                "/gerenciamentoPrecos").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(
+                                "/home",
+                                "/produtos/**",
+                                "/preco/**",
+                                "/estoque/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
