@@ -65,13 +65,13 @@ public class LoginController {
 
 
     @PostMapping("/logar")
-    public String logar(@RequestParam("username") String username,
+    public String logar(@RequestParam("email") String email,
                        @RequestParam("senha") String senha, RedirectAttributes redirectAttributes) {
-        Optional<Usuario> usuarioOptional = usuarioRepository.findByUsername(username);
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
         try {
             if (usuarioOptional.isPresent()) {
                 if (!passwordEncoder.matches(senha, usuarioOptional.get().getPassword())) {
-                    redirectAttributes.addFlashAttribute("mensagem", "Usuário/senha incorretos.");
+                    redirectAttributes.addFlashAttribute("mensagem", "Senha incorreta.");
                     return "redirect:/login";
                 }
             } else {

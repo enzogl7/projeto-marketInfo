@@ -25,6 +25,10 @@ public class UsuarioDetailsService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 usuario.getUsername(),
                 usuario.getPassword(),
+                usuario.isEnabled(),
+                true,
+                true,
+                true,
                 usuario.getAuthorities()
         );
     }
