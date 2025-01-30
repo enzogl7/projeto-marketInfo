@@ -1,25 +1,14 @@
-// FORMATAÇÃO PREÇO
-$(document).ready(
+$(document).ready(function () {
     applyCleave('#preco')
-)
+});
 
+// FORMATAÇÃO PREÇO E FUNÇÃO CHECKBOX
 document.addEventListener('DOMContentLoaded', function () {
     applyCleave('#preco');
     applyCleave('#precoAtual');
     applyCleave('#pesquisaPreco');
-
-    const habilitarDataFinalCheckbox = document.getElementById("semDataFinal");
-    const dataFinalContainer = document.getElementById("dataFinalContainer");
-
-    habilitarDataFinalCheckbox.addEventListener("change", function () {
-        if (this.checked) {
-            dataFinalContainer.style.display = "block";
-            dataFinalInput.setAttribute("required", "true");
-        } else {
-            dataFinalContainer.style.display = "none";
-            dataFinalInput.removeAttribute("required");
-        }
-    });
+    configureCheckbox("semDataFinal", "dataFinal", "dataFinalContainer");
+    configureCheckbox("semDataFinalEdicao", "dataFinalEdicao", "dataFinalEdicaoContainer");
 });
 
 document.getElementById('formPreco').addEventListener('submit', function(event) {
@@ -58,7 +47,27 @@ function applyCleave(inputSelector) {
         });
     }
 }
-// FIM FORMATAÇÃO PREÇO
+
+function configureCheckbox(checkboxId, inputId, containerId) {
+    console.log("RODOU BOSTA")
+    const checkboxElement = document.getElementById(checkboxId);
+    const inputElement = document.getElementById(inputId);
+    const containerElement = document.getElementById(containerId);
+
+    if (checkboxElement) {
+        checkboxElement.addEventListener("change", function () {
+            if (this.checked) {
+                containerElement.style.display = "block";
+                inputElement.setAttribute("required", "true");
+            } else {
+                containerElement.style.display = "none";
+                inputElement.removeAttribute("required");
+            }
+        });
+    }
+}
+// FIM FORMATAÇÃO PREÇO E FUNÇÃO CHECKBOX
+
 
 // INICIO ORDENACAO TABELA
 let ordemAscendente = true;
@@ -127,7 +136,6 @@ function modalEditarPreco(button) {
     $('#modalEditarPreco').modal('show');
     document.getElementById('idPrecoEdicao').value = idPrecoEdicao;
     document.getElementById("precoAtual").value = "";
-    console.log("PRODUTOPRECOEDICAO: " + $('#produtoPrecoEdicao'))
 
     applyCleave('#precoAtual');
 
@@ -136,7 +144,6 @@ function modalEditarPreco(button) {
         produtoSelect.value = produtoId;
         produtoSelect.disabled = true;
     }
-
 
     const precoAtualField = document.getElementById('precoAtual');
     if (precoAtualField && precoAtualField.value) {

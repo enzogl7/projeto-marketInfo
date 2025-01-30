@@ -94,7 +94,11 @@ public class PrecoController {
             p.setProduto(produto);
             p.setPrecoAtual(Double.parseDouble(precoAtual));
             p.setDataInicioVigor(LocalDate.parse(dataInicioEdicao));
-            p.setDataFimVigor(LocalDate.parse(dataFinalEdicao));
+            if (dataFinalEdicao == "") {
+                p.setDataFimVigor(null);
+            } else {
+                p.setDataFimVigor(LocalDate.parse(dataFinalEdicao));
+            }
             p.setMotivoAlteracao(motivoAlteracaoPreco);
             p.setDataAlteracao(LocalDate.now());
             precoService.salvar(p);

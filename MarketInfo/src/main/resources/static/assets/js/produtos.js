@@ -14,7 +14,6 @@ function filtrarTabela() {
         var nome = row.querySelector("td:nth-child(1)").textContent.toLowerCase();
         var marca = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
         var usuario = row.querySelector("td:nth-child(6)").textContent.toLowerCase();
-        console.log(usuario)
 
         var nomeMatch = nome.indexOf(nomeFilter) > -1 || nomeFilter === "";
         var marcaMatch = marca.indexOf(marcaFilter) > -1 || marcaFilter === "";
