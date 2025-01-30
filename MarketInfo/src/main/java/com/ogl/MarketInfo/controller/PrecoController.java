@@ -52,7 +52,7 @@ public class PrecoController {
                                       RedirectAttributes redirectAttributes) {
         if (precoService.existePrecoParaEsseProduto(produtos)) {
             redirectAttributes.addFlashAttribute("mensagem", "Produto já possui preço cadastrado!");
-            return "redirect:/gerenciamentoPrecos";
+            return "redirect:/preco/gerenciamentoPrecos";
         }
 
         Preco p = new Preco();
@@ -63,7 +63,7 @@ public class PrecoController {
         precoService.salvar(p);
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Preço cadastrado com sucesso!");
-        return "redirect:/gerenciamentoPrecos";
+        return "redirect:/preco/gerenciamentoPrecos";
     }
 
     @GetMapping("/listarPrecos")
@@ -98,7 +98,7 @@ public class PrecoController {
 
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Preço editado com sucesso!");
-        return "redirect:/gerenciamentoPrecos";
+        return "redirect:/preco/gerenciamentoPrecos";
     }
 
     @PostMapping("/excluirPreco")
@@ -107,6 +107,6 @@ public class PrecoController {
         precoService.excluirPorId(idPrecoExclusao);
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Preço excluído com sucesso!");
-        return "redirect:/gerenciamentoPrecos";
+        return "redirect:/preco/gerenciamentoPrecos";
     }
 }

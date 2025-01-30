@@ -107,10 +107,10 @@ function modalEditarPreco(button) {
     var idPrecoEdicao = button.getAttribute('data-id');
     const produtoId = button.getAttribute('data-produto-id');
 
-    console.log(produtoId)
     $('#modalEditarPreco').modal('show');
     document.getElementById('idPrecoEdicao').value = idPrecoEdicao;
     document.getElementById("precoAtual").value = "";
+    console.log("PRODUTOPRECOEDICAO: " + $('#produtoPrecoEdicao'))
 
     applyCleave('#precoAtual');
 

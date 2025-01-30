@@ -44,7 +44,7 @@ public class EstoqueController {
 
         if (estoqueService.existeEstoqueParaEsseProduto(produtos)) {
             redirectAttributes.addFlashAttribute("mensagem", "Este produto já possui estoque cadastrado!");
-            return "redirect:/gerenciamentoEstoque";
+            return "redirect:/estoque/gerenciamentoEstoque";
         }
 
         Estoque estoque = new Estoque();
@@ -54,7 +54,7 @@ public class EstoqueController {
         estoqueService.salvar(estoque);
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Estoque cadastrado com sucesso!");
-        return "redirect:/gerenciamentoEstoque";
+        return "redirect:/estoque/gerenciamentoEstoque";
     }
 
     @GetMapping("/listarEstoque")
@@ -78,7 +78,7 @@ public class EstoqueController {
         estoqueService.salvar(estoque);
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Estoque editado com sucesso!");
-        return "redirect:/gerenciamentoEstoque";
+        return "redirect:/estoque/gerenciamentoEstoque";
     }
 
     @PostMapping("/excluirEstoque")
@@ -87,7 +87,7 @@ public class EstoqueController {
         estoqueService.excluirPorId(Long.valueOf(idEstoqueExclusao));
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Estoque excluído com sucesso!");
-        return "redirect:/gerenciamentoEstoque";
+        return "redirect:/estoque/gerenciamentoEstoque";
     }
 
 
