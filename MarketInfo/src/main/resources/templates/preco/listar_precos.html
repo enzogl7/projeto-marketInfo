@@ -15,7 +15,7 @@
 
 <div class="container">
     <div class="table-box">
-        <p class="text-muted" id ="voltar"><a href="/gerenciamentoPrecos">< Voltar</a></p>
+        <p class="text-muted" id ="voltar"><a href="/preco/gerenciamentoPrecos">< Voltar</a></p>
         <h3>Listagem de preços</h3>
         <div th:if="${mensagemSucesso}" class="alert alert-success">
             <p th:text="${mensagemSucesso}"></p>
@@ -74,12 +74,10 @@
                             ? preco.precoAtualFormatado + ' (R$ ' + preco.diferencaFormatada + ')'
                             : '---'}">
                         </td>
-                        <td th:text="${preco.motivoAlteracao != null && preco.motivoAlteracao != ''
-                         ? preco.motivoAlteracao : '---'}"></td>
+                        <td th:text="${preco.motivoAlteracao != null && preco.motivoAlteracao != '' ? preco.motivoAlteracao : '---'}"></td>
                         <td th:text="${preco.dataInicioVigor}"></td>
-                        <td th:text="${preco.dataFimVigor}"></td>
-                        <td th:text="${preco.dataAlteracao != null && preco.dataAlteracao != ''
-                         ? preco.dataAlteracao : '---'}"></td>
+                        <td th:text="${preco.dataFimVigor != null && preco.dataFimVigor != '' ? preco.dataFimVigor : '---'}"></td>
+                        <td th:text="${preco.dataAlteracao != null && preco.dataAlteracao != '' ? preco.dataAlteracao : '---'}"></td>
                         <td>
                             <button class="btn btn-warning btn-sm" id="edicaoEstoque"
                                     th:data-id="${preco.id}"

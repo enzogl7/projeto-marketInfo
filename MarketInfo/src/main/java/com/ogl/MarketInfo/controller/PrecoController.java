@@ -60,7 +60,11 @@ public class PrecoController {
         p.setProduto(produtos);
         p.setPreco(Double.parseDouble(preco));
         p.setDataInicioVigor(LocalDate.parse(dataInicio));
-        p.setDataFimVigor(LocalDate.parse(dataFinal));
+        if (dataFinal == "") {
+            p.setDataFimVigor(null);
+        } else {
+            p.setDataFimVigor(LocalDate.parse(dataFinal));
+        }
         precoService.salvar(p);
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Preço cadastrado com sucesso!");

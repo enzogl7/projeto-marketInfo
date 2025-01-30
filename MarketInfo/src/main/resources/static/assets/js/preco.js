@@ -1,3 +1,65 @@
+// FORMATAÇÃO PREÇO
+$(document).ready(
+    applyCleave('#preco')
+)
+
+document.addEventListener('DOMContentLoaded', function () {
+    applyCleave('#preco');
+    applyCleave('#precoAtual');
+    applyCleave('#pesquisaPreco');
+
+    const habilitarDataFinalCheckbox = document.getElementById("semDataFinal");
+    const dataFinalContainer = document.getElementById("dataFinalContainer");
+
+    habilitarDataFinalCheckbox.addEventListener("change", function () {
+        if (this.checked) {
+            dataFinalContainer.style.display = "block";
+            dataFinalInput.setAttribute("required", "true");
+        } else {
+            dataFinalContainer.style.display = "none";
+            dataFinalInput.removeAttribute("required");
+        }
+    });
+});
+
+document.getElementById('formPreco').addEventListener('submit', function(event) {
+    var precoInput = document.getElementById('preco');
+    var precoValor = precoInput.value;
+
+    precoValor = precoValor.replace('R$', '').replace(/\D/g, '');
+    precoInput.value = precoValor;
+});
+
+document.getElementById('editarPrecoForm').addEventListener('submit', function(event) {
+    var precoInputEdicao = document.getElementById('precoAtual');
+    var precoValorEdicao = precoInputEdicao.value;
+
+    precoValorEdicao = precoValorEdicao.replace('R$', '').replace(/\D/g, '');
+    precoInputEdicao.value = precoValorEdicao;
+});
+
+document.getElementById('pesquisaPreco').addEventListener('submit', function(event) {
+    var precoInputPesquisa = document.getElementById('pesquisaPreco');
+    var precoValorPesquisa = precoInputPesquisa.value;
+
+    precoValorPesquisa = precoValorPesquisa.replace('R$', '').replace(/\D/g, '');
+    precoInputPesquisa.value = precoValorPesquisa;
+});
+
+function applyCleave(inputSelector) {
+    if (document.querySelector(inputSelector)) {
+        new Cleave(inputSelector, {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand',
+            prefix: 'R$ ',
+            noImmediatePrefix: true,
+            decimalMark: ',',
+            delimiters: ['.', ',']
+        });
+    }
+}
+// FIM FORMATAÇÃO PREÇO
+
 // INICIO ORDENACAO TABELA
 let ordemAscendente = true;
 
@@ -57,51 +119,6 @@ function filtrarTabelaPrecos() {
 }
 // FIM FILTRO/PESQUISA TABELA
 
-//FORMATAÇÃO DO INPUT DE PREÇO
-document.addEventListener('DOMContentLoaded', function () {
-    applyCleave('#preco');
-    applyCleave('#precoAtual');
-    applyCleave('#pesquisaPreco')
-});
-
-function applyCleave(inputSelector) {
-    if (document.querySelector(inputSelector)) {
-        new Cleave(inputSelector, {
-            numeral: true,
-            numeralThousandsGroupStyle: 'thousand',
-            prefix: 'R$ ',
-            noImmediatePrefix: true,
-            decimalMark: ',',
-            delimiters: ['.', ',']
-        });
-    }
-}
-
-document.getElementById('formPreco').addEventListener('submit', function(event) {
-    var precoInput = document.getElementById('preco');
-    var precoValor = precoInput.value;
-
-    precoValor = precoValor.replace('R$', '').replace(/\D/g, '');
-    precoInput.value = precoValor;
-});
-
-document.getElementById('editarPrecoForm').addEventListener('submit', function(event) {
-    var precoInputEdicao = document.getElementById('precoAtual');
-    var precoValorEdicao = precoInputEdicao.value;
-
-    precoValorEdicao = precoValorEdicao.replace('R$', '').replace(/\D/g, '');
-    precoInputEdicao.value = precoValorEdicao;
-});
-
-document.getElementById('pesquisaPreco').addEventListener('submit', function(event) {
-    var precoInputPesquisa = document.getElementById('pesquisaPreco');
-    var precoValorPesquisa = precoInputPesquisa.value;
-
-    precoValorPesquisa = precoValorPesquisa.replace('R$', '').replace(/\D/g, '');
-    precoInputPesquisa.value = precoValorPesquisa;
-});
-// FIM FORMATAÇÃO DE PREÇO
-
 // INICIO MODAIS
 function modalEditarPreco(button) {
     var idPrecoEdicao = button.getAttribute('data-id');
@@ -127,6 +144,7 @@ function modalEditarPreco(button) {
     }
 }
 //FIM MODAIS
+
 function confirmacaoExcluirPreco(button) {
     var idPrecoExclusao = button.getAttribute('data-id');
 
