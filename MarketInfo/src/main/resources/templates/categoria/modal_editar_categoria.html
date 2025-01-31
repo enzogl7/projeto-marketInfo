@@ -1,0 +1,34 @@
+<div id="modalEditarCategoria" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog  modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: #ff6f00">Edição de categoria</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="idCategoriaEdicao" name="idCategoriaEdicao">
+
+                <div class="form-group">
+                    <label for="nomeCategoriaEdicao">Nome da categoria</label>
+                    <input type="text" id="nomeCategoriaEdicao" name="nomeCategoriaEdicao" class="form-control" placeholder="Digite o nome da categoria" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descricaoCategoriaEdicao">Descrição</label>
+                    <input type="text" id="descricaoCategoriaEdicao" name="descricaoCategoriaEdicao" class="form-control" placeholder="Digite a descrição da categoria">
+                    <span class="text-muted" style="font-size: 12px; padding-top: 0px; margin-top: 0px">*Pode ser vazia.</span>
+                </div>
+
+                <div class="custom-control custom-switch" style="padding-bottom: 10px; margin-bottom: 10px">
+                    <input type="checkbox" class="custom-control-input" id="categoriaCheckboxEdicao" name="categoriaCheckboxEdicao" checked>
+                    <label class="custom-control-label" for="categoriaCheckboxEdicao">Categoria está ativa?</label>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" style="background-color: #ff6f00;" onclick="salvarEdicaoCategoria()">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

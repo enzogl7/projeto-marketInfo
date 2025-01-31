@@ -5,6 +5,8 @@ import com.ogl.MarketInfo.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -23,4 +25,11 @@ public class CategoriaService {
     public Categoria findById(Long id) {
         return categoriaRepository.findById(id).get();
     }
+
+    public List<Categoria> findAllAtivo() {
+        List<Categoria> categoriasAtivas = categoriaRepository.findAllWhereStatusTrue();
+        Collections.sort(categoriasAtivas, Comparator.comparing(Categoria::getNome));
+        return categoriasAtivas;
+    }
+
 }

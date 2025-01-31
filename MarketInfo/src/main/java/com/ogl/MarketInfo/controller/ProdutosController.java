@@ -41,7 +41,7 @@ public class ProdutosController {
 
     @GetMapping("/cadastrarProdutos")
     public String cadastrarProdutos(Model model) {
-        model.addAttribute("categorias", categoriaService.findAll());
+        model.addAttribute("categorias", categoriaService.findAllAtivo());
         return "/produtos/cadastrar_produtos";
     }
 
@@ -72,7 +72,7 @@ public class ProdutosController {
         List<Usuario> usuarios = usuarioService.findAll();
         model.addAttribute("produtos", produtos);
         model.addAttribute("usuarios", usuarios);
-        model.addAttribute("categorias", categoriaService.findAll());
+        model.addAttribute("categorias", categoriaService.findAllAtivo());
         return "/produtos/listar_produtos";
     }
 
