@@ -18,7 +18,7 @@ function salvarEdicaoUsuario() {
     var emailEdicaoUsuario = document.getElementById('emailEdicaoUsuario').value;
     var nomeEdicaoUsuario = document.getElementById('nomeEdicaoUsuario').value;
     var senhaEdicaoUsuario = document.getElementById('senhaEdicaoUsuario').value;
-    var selectRoleEdicaoUsuario = document.getElementById('selectRoleEdicaoUsuario').value;
+    var selectRoleEdicaoUsuario = $('#selectRoleEdicaoUsuario').val();
     var checkboxUsuarioAtivo = document.getElementById('checkboxUsuarioAtivo').checked;
 
     $.ajax({

@@ -65,4 +65,16 @@ public class UsuarioService {
         return rolesTabela;
     }
 
+    public void removerRoleDoUsuario(Long usuarioId, Long roleId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        usuario.getRoles().removeIf(role -> role.getId().equals(roleId));
+
+        usuarioRepository.save(usuario);
+    }
+
+    public void removerRolesDoUsuario(Long usuarioId) {
+        String deleteSql = "DELETE FROM usuario_roles WHERE usuario_id = ?";
+        jdbcTemplate.update(deleteSql, usuarioId);
+    }
 }

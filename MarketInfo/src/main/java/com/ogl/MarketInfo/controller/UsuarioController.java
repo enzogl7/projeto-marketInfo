@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @Controller
 @RequestMapping("/usuario")
@@ -41,20 +43,32 @@ public class UsuarioController {
                                         @RequestParam("emailEdicaoUsuario")String emailEdicaoUsuario,
                                         @RequestParam("nomeEdicaoUsuario")String nomeEdicaoUsuario,
                                         @RequestParam("senhaEdicaoUsuario")String senhaEdicaoUsuario,
-                                        @RequestParam("selectRoleEdicaoUsuario")String selectRoleEdicaoUsuario,
+                                        @RequestParam("selectRoleEdicaoUsuario") List<Long> selectRoleEdicaoUsuario,
                                         @RequestParam("checkboxUsuarioAtivo") boolean checkboxUsuarioAtivo) {
         try {
             Usuario usuario = usuarioService.findById(Long.valueOf(idUsuarioEdicao));
-            Role role = roleService.findById(Long.valueOf(selectRoleEdicaoUsuario));
 
             usuario.setEmail(emailEdicaoUsuario);
             usuario.setUsername(nomeEdicaoUsuario);
-            usuario.setPassword(passwordEncoder.encode(senhaEdicaoUsuario));
             usuario.setEnabled(checkboxUsuarioAtivo);
+            usuarioService.removerRolesDoUsuario(usuario.getId());
 
-            usuarioService.associarRoleAoUsuario(usuario.getId(), Long.valueOf(selectRoleEdicaoUsuario));
+            for (Long roleId : selectRoleEdicaoUsuario) {
+                usuarioService.associarRoleAoUsuario(usuario.getId(), roleId);
+            }
+            // TODO -> ERRO AQUI
+            for (Role roleExistente : usuario.getRoles()) {
+                if (!selectRoleEdicaoUsuario.contains(roleExistente.getId())) {
+                    usuarioService.removerRoleDoUsuario(usuario.getId(), roleExistente.getId());
+                }
+            }
+            if (senhaEdicaoUsuario != "") {
+                usuario.setPassword(passwordEncoder.encode(senhaEdicaoUsuario));
+            } else {
+                usuario.setPassword(usuario.getPassword());
+            }
+
             usuarioService.save(usuario);
-
             return ResponseEntity.ok().build();
         }
         catch (Exception e) {

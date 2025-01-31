@@ -21,18 +21,16 @@
                 <div class="form-row mb-3">
                     <div class="col-sm-6">
                         <label for="senhaEdicaoUsuario">Senha</label>
-                        <input type="password" id="senhaEdicaoUsuario" name="senhaEdicaoUsuario" class="form-control" required>
+                        <input type="password" id="senhaEdicaoUsuario" name="senhaEdicaoUsuario" class="form-control" placeholder="Digite a nova senha" required>
+                        <span class="text-muted" style="font-size: 12px">*Caso a senha não seja informada, será mantida a senha atual desse usuário.</span>
                     </div>
                     <div class="col-sm-6">
-                        <label for="selectRoleEdicaoUsuario" style="padding-bottom: 5px">
-                            Perfil
-                            <select class="js-example-basic-multiple form-control"
-                                    style="width: 75%; padding-top: 10px" id="selectRoleEdicaoUsuario" multiple="multiple" required>
-                                <option th:each="role : ${rolesSelect}"
-                                        th:value="${role.id}"
-                                        th:text="${role.roleName == 'ROLE_USER' ? 'Usuário' : (role.roleName == 'ROLE_ADMIN' ? 'Administrador' : role.roleName)}"></option>
-                            </select>
-                        </label>
+                        <label for="selectRoleEdicaoUsuario">Perfil</label>
+                        <select class="js-example-basic-multiple form-control" style="width: 100%" id="selectRoleEdicaoUsuario" name="roles[]" multiple="multiple" required>
+                            <option th:each="role : ${rolesSelect}"
+                                    th:value="${role.id}"
+                                    th:text="${role.roleName == 'ROLE_USER' ? 'Usuário' : (role.roleName == 'ROLE_ADMIN' ? 'Administrador' : role.roleName)}"></option>
+                        </select>
                     </div>
                 </div>
 
@@ -59,12 +57,11 @@
 <script>
     $(document).ready(function() {
         $('#modalEditarUsuario').on('shown.bs.modal', function () {
+            console.log("RODOU ON SHOW MODAL")
             $('#selectRoleEdicaoUsuario').select2({
                 placeholder: "Selecione o perfil",
                 allowClear: true
             });
-
-            $('.select2-container').css('width', '100%');
         });
     });
 </script>
