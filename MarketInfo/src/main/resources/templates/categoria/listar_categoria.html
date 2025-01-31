@@ -57,8 +57,8 @@
                     <tr>
                         <td th:text="${categoria.nome}"></td>
                         <td th:text="${categoria.descricao != '' ? categoria.descricao : '---'}"></td>
-                        <td th:text="${categoria.dataCriacao}"></td>
-                        <td th:text="${categoria.dataAtualizacao != null ? categoria.dataAtualizacao : '---'}"></td>
+                        <td class="data-criacao" th:text="${categoria.dataCriacao}"></td>
+                        <td class="data-atualizacao" th:text="${categoria.dataAtualizacao != null ? categoria.dataAtualizacao : '---'}"></td>
                         <td>
                           <span th:if="${categoria.status}" class="text-success">
                             <i class="bi bi-check-circle-fill"></i>
@@ -93,5 +93,17 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/js/categorias.js"></script>
+<script>
+    function formatarDataISOParaBR(dataISO) {
+        if (!dataISO || dataISO === '---') return '---';
+        const partes = dataISO.split('-');
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
+    }
+
+    document.querySelectorAll('.data-criacao, .data-atualizacao').forEach(td => {
+        const dataOriginal = td.textContent.trim();
+        td.textContent = formatarDataISOParaBR(dataOriginal);
+    });
+</script>
 </body>
 </html>
