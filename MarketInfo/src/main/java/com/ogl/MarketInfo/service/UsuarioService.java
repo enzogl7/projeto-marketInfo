@@ -1,5 +1,6 @@
 package com.ogl.MarketInfo.service;
 
+import com.ogl.MarketInfo.model.Role;
 import com.ogl.MarketInfo.model.Usuario;
 import com.ogl.MarketInfo.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -48,4 +50,19 @@ public class UsuarioService {
         String sql = "INSERT INTO usuario_roles (usuario_id, role_id) VALUES (?, ?) ON CONFLICT DO NOTHING";
         jdbcTemplate.update(sql, userId, roleId);
     }
+
+    public List<String> findAllRolesUsuarios() {
+        List<String> rolesTabela = new ArrayList<>();
+
+        List<Usuario> usuarioList = usuarioRepository.findAll();
+
+        for (Usuario usuario : usuarioList) {
+            for (Role role : usuario.getRoles()) {
+                rolesTabela.add(role.getRoleName());
+            }
+        }
+
+        return rolesTabela;
+    }
+
 }

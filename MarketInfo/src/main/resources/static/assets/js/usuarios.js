@@ -1,3 +1,7 @@
+document.getElementById("pesquisaEmailUsuario").addEventListener("keyup", filtrarTabela);
+document.getElementById("pesquisaNomeUsuario").addEventListener("keyup", filtrarTabela);
+document.getElementById("selectPesquisaPerfilUsuario").addEventListener("change", filtrarTabela);
+
 function modalEditarUsuario(button) {
     var idUsuarioEdicao = button.getAttribute('data-id');
     var emailUsuarioEdicao = button.getAttribute("data-email");
@@ -54,6 +58,38 @@ function salvarEdicaoUsuario() {
                 default:
                     alert("Erro desconhecido: " + status);
             }
+        }
+    });
+}
+
+function filtrarTabela() {
+    var nomeFilter = document.getElementById("pesquisaNomeUsuario").value.toLowerCase();
+    var emailFilter = document.getElementById("pesquisaEmailUsuario").value.toLowerCase();
+    var perfilFilter = document.getElementById("selectPesquisaPerfilUsuario").value.toLowerCase();
+    if (perfilFilter == "role_user") {
+        perfilFilter = "usuário"
+    }
+    if (perfilFilter == "role_admin") {
+        perfilFilter = "administrador"
+    }
+
+    var table = document.querySelector(".table");
+    var rows = table.querySelectorAll("tbody tr");
+
+    rows.forEach(function(row) {
+        var nome = row.querySelector("td:nth-child(1)").textContent.toLowerCase();
+        var email = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+        var perfil= row.querySelector("td:nth-child(3)").textContent.toLowerCase();
+
+        var nomeMatch = nome.indexOf(nomeFilter) > -1 || nomeFilter === "";
+        var emailMatch = email.indexOf(emailFilter) > -1 || emailFilter === "";
+        var perfilMatch = perfil.indexOf(perfilFilter) > -1 || perfilFilter === "";
+
+
+        if (nomeMatch && emailMatch && perfilMatch) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
         }
     });
 }
