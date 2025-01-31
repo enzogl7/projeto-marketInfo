@@ -48,7 +48,8 @@ public class SecurityConfig {
                                 "/produtos/**",
                                 "/preco/**",
                                 "/estoque/**",
-                                "/usuario/**").hasAnyRole("USER", "ADMIN")
+                                "/usuario/**",
+                                "/categoria/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

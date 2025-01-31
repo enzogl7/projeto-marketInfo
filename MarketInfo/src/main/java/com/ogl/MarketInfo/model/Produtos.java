@@ -15,7 +15,8 @@ public class Produtos {
     @Column
     private String nome;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "categoria")
     private Categoria categoria;
 
     @Column

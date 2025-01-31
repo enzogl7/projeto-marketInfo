@@ -1,7 +1,6 @@
 package com.ogl.MarketInfo.controller;
 
 import com.ogl.MarketInfo.model.Categoria;
-import com.ogl.MarketInfo.model.Estoque;
 import com.ogl.MarketInfo.model.Produtos;
 import com.ogl.MarketInfo.model.Usuario;
 import com.ogl.MarketInfo.service.EstoqueService;
@@ -54,7 +53,7 @@ public class ProdutosController {
 
         Produtos produto = new Produtos();
         produto.setNome(nomeProduto);
-        produto.setCategoria(categoria);
+        // TODO -> AJUSTAR CATEGORIA produto.setCategoria(categoria);
         produto.setMarca(marca);
         produto.setDataCadastro(LocalDate.now());
         produto.setDataUltimaEdicao(null);
@@ -83,7 +82,7 @@ public class ProdutosController {
         try {
             Produtos produto = produtosService.buscarPorId(Long.valueOf(idProdutoEdicao));
             produto.setNome(nomeProdutoEdicao);
-            produto.setCategoria(Categoria.valueOf(categoriaEdicao));
+           // TODO -> AJUSTAR produto.setCategoria((categoriaEdicao));
             produto.setMarca(marcaEdicao);
             produto.setDataCadastro(produto.getDataCadastro());
             produto.setDataUltimaEdicao(LocalDate.now());
