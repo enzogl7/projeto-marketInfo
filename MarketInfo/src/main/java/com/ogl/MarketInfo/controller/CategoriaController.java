@@ -4,7 +4,10 @@ import com.ogl.MarketInfo.model.Categoria;
 import com.ogl.MarketInfo.model.Produtos;
 import com.ogl.MarketInfo.model.Usuario;
 import com.ogl.MarketInfo.service.CategoriaService;
+import com.ogl.MarketInfo.service.ProdutosService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +26,9 @@ public class CategoriaController {
 
     @Autowired
     private CategoriaService categoriaService;
+
+    @Autowired
+    private ProdutosService produtosService;
 
     @GetMapping("/gerenciamentoCategoria")
     public String gerenciamentoCategoria() {
@@ -70,18 +76,39 @@ public class CategoriaController {
                                           @RequestParam("descricaoCategoriaEdicao") String descricaoCategoriaEdicao,
                                           @RequestParam(value = "categoriaCheckboxEdicao", required = false) Boolean categoriaCheckboxEdicao) {
 
-        try {
-            Categoria categoria = categoriaService.findById(Long.valueOf(idCategoriaEdicao));
-            categoria.setNome(nomeCategoriaEdicao);
-            categoria.setDescricao(descricaoCategoriaEdicao);
-            categoria.setDataAtualizacao(LocalDate.now());
-            categoria.setStatus(categoriaCheckboxEdicao != null && categoriaCheckboxEdicao);
+        Boolean categoriaVinculadaAAlgumProduto = produtosService.categoriaVinculadaAAlgumProduto(Long.valueOf(idCategoriaEdicao));
+        Categoria categoria = categoriaService.findById(Long.valueOf(idCategoriaEdicao));
 
-            categoriaService.salvar(categoria);
-            return ResponseEntity.ok().build();
+        try {
+            if (categoriaVinculadaAAlgumProduto && categoriaCheckboxEdicao == false) {
+                return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+            } else {
+                categoria.setNome(nomeCategoriaEdicao);
+                categoria.setDescricao(descricaoCategoriaEdicao);
+                categoria.setDataAtualizacao(LocalDate.now());
+                categoria.setStatus(categoriaCheckboxEdicao != null && categoriaCheckboxEdicao);
+                categoriaService.salvar(categoria);
+                return ResponseEntity.ok().build();
+            }
+
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
 
+    }
+
+    @PostMapping("/excluircategoria")
+    public ResponseEntity excluirCategoria(@RequestParam("idCategoriaExclusao") String idCategoriaExclusao) {
+        Boolean categoriaVinculadaAAlgumProduto = produtosService.categoriaVinculadaAAlgumProduto(Long.valueOf(idCategoriaExclusao));
+
+        try {
+            if (categoriaVinculadaAAlgumProduto) {
+                return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+            }
+            categoriaService.deletar(Long.valueOf(idCategoriaExclusao));
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

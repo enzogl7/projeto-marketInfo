@@ -13,4 +13,7 @@ public interface ProdutosRepository extends JpaRepository<Produtos, Integer> {
 
     @Query(value = "select * from Produtos where usuario = :idUsuario", nativeQuery = true)
     List<Produtos> findProdutosByUsuario(@Param("idUsuario") Long idUsuario);
+
+    @Query(value = "select * from produtos where categoria = :idCategoria", nativeQuery = true)
+    List<Produtos> findProdutosByCategoria(@Param("idCategoria") Long idCategoria);
 }

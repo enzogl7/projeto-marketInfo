@@ -36,4 +36,12 @@ public class ProdutosService {
         }
         return false;
     }
+
+    public boolean categoriaVinculadaAAlgumProduto(Long idCategoria) {
+        List<Produtos> produtosVinculadosACategoria = produtosRepository.findProdutosByCategoria(idCategoria);
+        if (!produtosVinculadosACategoria.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -1,6 +1,7 @@
 package com.ogl.MarketInfo.service;
 
 import com.ogl.MarketInfo.model.Categoria;
+import com.ogl.MarketInfo.model.Produtos;
 import com.ogl.MarketInfo.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,10 @@ public class CategoriaService {
         List<Categoria> categoriasAtivas = categoriaRepository.findAllWhereStatusTrue();
         Collections.sort(categoriasAtivas, Comparator.comparing(Categoria::getNome));
         return categoriasAtivas;
+    }
+
+    public void deletar(Long idCategoria) {
+        categoriaRepository.deleteById(idCategoria);
     }
 
 }
