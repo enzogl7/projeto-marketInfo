@@ -4,7 +4,6 @@ import com.ogl.MarketInfo.model.Role;
 import com.ogl.MarketInfo.model.Usuario;
 import com.ogl.MarketInfo.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -76,5 +75,25 @@ public class UsuarioService {
     public void removerRolesDoUsuario(Long usuarioId) {
         String deleteSql = "DELETE FROM usuario_roles WHERE usuario_id = ?";
         jdbcTemplate.update(deleteSql, usuarioId);
+    }
+
+    public void excluirUsuario(Long usuarioId) {
+        usuarioRepository.deleteById(usuarioId);
+    }
+
+    public Usuario findByUsername(String username) {
+        return usuarioRepository.findByUsername(username).get();
+    }
+
+    public List<String> getRolesUsuarioLogado() {
+        List<String> nomeRolesUsuario = new ArrayList<>();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Usuario usuarioLogado = findByUsername(username);
+        List<Role> rolesUsuarioLogado = usuarioLogado.getRoles();
+        for (Role role : rolesUsuarioLogado) {
+            nomeRolesUsuario.add(role.getRoleName());
+        }
+        return nomeRolesUsuario;
     }
 }

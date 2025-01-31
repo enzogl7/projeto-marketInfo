@@ -93,3 +93,119 @@ function filtrarTabela() {
         }
     });
 }
+
+function confirmacaoExcluirUsuario(button) {
+    var idUsuarioExclusao = button.getAttribute('data-id')
+    Swal.fire({
+        title: 'Tem certeza que deseja excluir este usuário?',
+        text: "Essa ação não pode ser desfeita!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sim, excluir este usuário.',
+        cancelButtonText: 'Não, voltar.',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            excluirUsuario(idUsuarioExclusao);
+        } else {
+            Swal.fire('Cancelado', 'O produto não foi excluído', 'info');
+        }
+    });
+}
+
+function excluirUsuario(idButton) {
+    $.ajax({
+        url: '/usuario/excluirusuario',
+        type: 'POST',
+        data: {
+            idUsuarioExclusao: idButton
+        },
+        complete: function(xhr, status) {
+            switch (xhr.status) {
+                case 200:
+                    Swal.fire({
+                        title: "Pronto!",
+                        text: "O usuário foi excluído com sucesso!",
+                        icon: "success",
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/usuario/listausuario";
+                        }
+                    });
+                    break;
+                case 304:
+                    Swal.fire({
+                        title: "Ops!",
+                        text: "Não foi possível excluir este usuário pois ele possui vínculo à algum produto. Deseja inativá-lo?",
+                        icon: "warning",
+                        showDenyButton: true,
+                        confirmButtonText: 'Sim, inativar',
+                        cancelButtonText: 'Não, voltar',
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            inativarUsuario(idButton)
+                        } else {
+                            Swal.fire({
+                                title: "Cancelado",
+                                text: "O usuário não foi inativado ou excluido.",
+                                icon: "info",
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = "/usuario/listausuario";
+                                }
+                            })
+                        }
+                    })
+                    break;
+                case 500:
+                    Swal.fire({
+                        title: "Erro!",
+                        text: "Ocorreu um erro ao excluir este usuário.",
+                        icon: "error"
+                    });
+                    break;
+                default:
+                    alert("Erro desconhecido: " + status);
+            }
+        }
+    });
+}
+
+function inativarUsuario(idButton) {
+    $.ajax({
+        url: '/usuario/inativarusuario',
+        type: 'POST',
+        data: {
+            idUsuarioInativacao: idButton
+        },
+        complete: function(xhr, status) {
+            switch (xhr.status) {
+                case 200:
+                    Swal.fire({
+                        title: "Pronto!",
+                        text: "O usuário foi inativado com sucesso!",
+                        icon: "success",
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/usuario/listausuario";
+                        }
+                    });
+                    break;
+                case 500:
+                    Swal.fire({
+                        title: "Erro!",
+                        text: "Ocorreu um erro ao inativar este usuário.",
+                        icon: "error"
+                    });
+                    break;
+
+                default:
+                    alert("Erro desconhecido: " + status);
+            }
+        }
+    });
+}

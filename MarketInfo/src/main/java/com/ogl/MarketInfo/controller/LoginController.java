@@ -136,7 +136,7 @@ public class LoginController {
 
         Role roleUser = roleRepository.findByRoleName("ROLE_USER")
                 .orElseThrow(() -> new IllegalArgumentException("Role USER não encontrada"));
-        usuario.setRoles(Collections.singleton(roleUser));
+        usuario.setRoles(Collections.singletonList(roleUser));
 
         usuarioRepository.save(usuario);
 

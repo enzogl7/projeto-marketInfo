@@ -2,10 +2,14 @@ package com.ogl.MarketInfo.controller;
 
 import com.ogl.MarketInfo.model.Role;
 import com.ogl.MarketInfo.model.Usuario;
+import com.ogl.MarketInfo.service.ProdutosService;
 import com.ogl.MarketInfo.service.RoleService;
 import com.ogl.MarketInfo.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,8 +35,14 @@ public class UsuarioController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private ProdutosService produtosService;
+
     @GetMapping("/listausuario")
     public String listaUsuario(Model model) {
+
+        System.out.println("ROLE LOGADA: " + usuarioService.getRolesUsuarioLogado());
+        model.addAttribute("roleLogada", usuarioService.getRolesUsuarioLogado());
         model.addAttribute("usuarios", usuarioService.findAllComRoles());
         model.addAttribute("rolesSelect", roleService.findAll());
         return "usuarios/listar_usuarios";
@@ -56,12 +66,7 @@ public class UsuarioController {
             for (Long roleId : selectRoleEdicaoUsuario) {
                 usuarioService.associarRoleAoUsuario(usuario.getId(), roleId);
             }
-            // TODO -> ERRO AQUI
-            for (Role roleExistente : usuario.getRoles()) {
-                if (!selectRoleEdicaoUsuario.contains(roleExistente.getId())) {
-                    usuarioService.removerRoleDoUsuario(usuario.getId(), roleExistente.getId());
-                }
-            }
+
             if (senhaEdicaoUsuario != "") {
                 usuario.setPassword(passwordEncoder.encode(senhaEdicaoUsuario));
             } else {
@@ -73,6 +78,35 @@ public class UsuarioController {
         }
         catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/excluirusuario")
+    public ResponseEntity excluirUsuario(@RequestParam("idUsuarioExclusao")String idUsuario) {
+        Boolean usuarioPossuiVinculoAAlgumProduto = produtosService.usuarioPossuiVinculoAAlgumProduto(Long.valueOf(idUsuario));
+        try {
+            if (usuarioPossuiVinculoAAlgumProduto) {
+                return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+            }
+            usuarioService.removerRolesDoUsuario(Long.valueOf(idUsuario));
+            usuarioService.excluirUsuario(Long.valueOf(idUsuario));
+            return ResponseEntity.ok().build();
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/inativarusuario")
+    public ResponseEntity inativarUsuario(@RequestParam("idUsuarioInativacao")String idUsuarioInativacao) {
+        try {
+            Usuario usuario = usuarioService.findById(Long.valueOf(idUsuarioInativacao));
+            usuario.setEnabled(false);
+            usuarioService.save(usuario);
+            return ResponseEntity.ok().build();
+        }
+        catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
