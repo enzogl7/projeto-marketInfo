@@ -17,25 +17,25 @@
     <h1 class="display-4 mb-4 text-center">MarketInfo - Gestão de produtos</h1>
     <div class="content-box">
         <div class="button-grid">
-            <button id="cadastrarProdutos"
+            <button id="gerenciarProdutos"
                     class="btn btn-info btn-lg mb-3"
-                    onclick="window.location.href='/produtos/cadastrarProdutos';">Cadastrar produtos</button>
-
-            <button id="listarProdutos"
-                    class="btn btn-info btn-lg mb-3"
-                    onclick="window.location.href='/produtos/listarProdutos';">Listar produtos</button>
+                    onclick="window.location.href='/produtos/gerenciamentoProdutos';">Gerenciamento de produtos</button>
 
             <button id="gerenciarEstoque"
                     class="btn btn-info btn-lg mb-3"
                     onclick="window.location.href='/estoque/gerenciamentoEstoque';">Gerenciamento de estoque</button>
 
             <button id="gerenciarPrecos"
-                    class="btn btn-info btn-lg"
+                    class="btn btn-info btn-lg mb-3"
                     onclick="window.location.href='/preco/gerenciamentoPrecos';">Gerenciamento de preços</button>
 
             <button id="listarUsuarios"
                     class="btn btn-info btn-lg mb-3"
                     onclick="window.location.href='/usuario/listausuario';">Listar usuários</button>
+
+            <button id="gerenciarCategorias"
+                    class="btn btn-info btn-lg mb-3" th:if="${roleLogada.contains('ROLE_ADMIN')}"
+                    onclick="window.location.href='/categoria/gerenciamentoCategoria';">Categorias</button>
 
         </div>
     </div>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciamento de produtos</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/css/home.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+
+<div class="container">
+  <p class="text-muted" id ="voltar"><a href="/home" style="text-decoration: none;
+    color: #ff6f00; ">< Voltar</a></p>
+  <h1 class="display-4 mb-4 text-center">Gerenciamento de produtos</h1>
+  <div th:if="${mensagemSucesso}" class="alert alert-success">
+    <p th:text="${mensagemSucesso}"></p>
+  </div>
+  <div th:if="${mensagem}" class="alert alert-danger">
+    <p th:text="${mensagem}"></p>
+  </div>
+  <div class="content-box">
+    <div class="button-grid">
+      <button id="cadastrarProdutos"
+              class="btn btn-info btn-lg mb-3"
+              onclick="window.location.href='/produtos/cadastrarProdutos';">Cadastrar produtos</button>
+
+      <button id="listarProdutos"
+              class="btn btn-info btn-lg mb-3"
+              onclick="window.location.href='/produtos/listarProdutos';">Listar produtos</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

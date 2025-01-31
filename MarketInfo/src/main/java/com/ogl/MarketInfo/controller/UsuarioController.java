@@ -40,8 +40,6 @@ public class UsuarioController {
 
     @GetMapping("/listausuario")
     public String listaUsuario(Model model) {
-
-        System.out.println("ROLE LOGADA: " + usuarioService.getRolesUsuarioLogado());
         model.addAttribute("roleLogada", usuarioService.getRolesUsuarioLogado());
         model.addAttribute("usuarios", usuarioService.findAllComRoles());
         model.addAttribute("rolesSelect", roleService.findAll());

@@ -35,10 +35,16 @@ public class ProdutosController {
     @Autowired
     PrecoService precoService;
 
+    @GetMapping("/gerenciamentoProdutos")
+    public String gerenciamentoPrecos() {
+        return "produtos/gerenciamento_produtos";
+    }
+
     @GetMapping("/cadastrarProdutos")
     public String cadastrarProdutos() {
         return "/produtos/cadastrar_produtos";
     }
+
 
     @PostMapping("/salvarCadastroProduto")
     public String salvarCadastroProduto(@RequestParam("nomeProduto") String nomeProduto,
