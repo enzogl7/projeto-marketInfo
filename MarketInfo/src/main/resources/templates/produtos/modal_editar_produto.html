@@ -17,24 +17,9 @@
                         <label for="categoriaEdicao">Categoria</label>
                         <select id="categoriaEdicao" name="categoriaEdicao" class="form-control" required>
                         <option value="" disabled selected>Selecione a categoria</option>
-                        <option value="ALIMENTOS">Alimentos</option>
-                        <option value="BEBIDAS">Bebidas</option>
-                        <option value="HIGIENE">Higiene</option>
-                        <option value="LIMPEZA">Limpeza</option>
-                        <option value="VESTUARIO">Vestuário</option>
-                        <option value="CASA">Casa</option>
-                        <option value="PET">Pet</option>
-                        <option value="FARMACIA">Farmácia</option>
-                        <option value="ELETRONICOS">Eletrônicos</option>
-                        <option value="FRUTAS">Frutas</option>
-                        <option value="VERDURAS">Verduras</option>
-                        <option value="LEGUMES">Legumes</option>
-                        <option value="CARNES">Carnes</option>
-                        <option value="DOCES">Doces</option>
-                        <option value="CAFÉ">Café</option>
-                        <option value="CHÁ">Chá</option>
-                        <option value="SAUDAVEIS">Saudáveis</option>
-                        <option value="INSUMOS PARA COZINHA">Insumos de Cozinha</option>
+                            <option th:each="categoria : ${categorias}"
+                                    th:value="${categoria.id}"
+                                    th:text="${categoria.nome}"></option>
                     </select>
                     </div>
 

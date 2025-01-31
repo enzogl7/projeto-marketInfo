@@ -3,10 +3,7 @@ package com.ogl.MarketInfo.controller;
 import com.ogl.MarketInfo.model.Categoria;
 import com.ogl.MarketInfo.model.Produtos;
 import com.ogl.MarketInfo.model.Usuario;
-import com.ogl.MarketInfo.service.EstoqueService;
-import com.ogl.MarketInfo.service.PrecoService;
-import com.ogl.MarketInfo.service.ProdutosService;
-import com.ogl.MarketInfo.service.UsuarioService;
+import com.ogl.MarketInfo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,13 +31,17 @@ public class ProdutosController {
     @Autowired
     PrecoService precoService;
 
+    @Autowired
+    CategoriaService categoriaService;
+
     @GetMapping("/gerenciamentoProdutos")
     public String gerenciamentoPrecos() {
         return "produtos/gerenciamento_produtos";
     }
 
     @GetMapping("/cadastrarProdutos")
-    public String cadastrarProdutos() {
+    public String cadastrarProdutos(Model model) {
+        model.addAttribute("categorias", categoriaService.findAll());
         return "/produtos/cadastrar_produtos";
     }
 
@@ -53,7 +54,7 @@ public class ProdutosController {
 
         Produtos produto = new Produtos();
         produto.setNome(nomeProduto);
-        // TODO -> AJUSTAR CATEGORIA produto.setCategoria(categoria);
+        produto.setCategoria(categoria);
         produto.setMarca(marca);
         produto.setDataCadastro(LocalDate.now());
         produto.setDataUltimaEdicao(null);
@@ -71,6 +72,7 @@ public class ProdutosController {
         List<Usuario> usuarios = usuarioService.findAll();
         model.addAttribute("produtos", produtos);
         model.addAttribute("usuarios", usuarios);
+        model.addAttribute("categorias", categoriaService.findAll());
         return "/produtos/listar_produtos";
     }
 
@@ -79,10 +81,11 @@ public class ProdutosController {
                                 @RequestParam("nomeProdutoEdicao") String nomeProdutoEdicao,
                                 @RequestParam("categoriaEdicao") String categoriaEdicao,
                                 @RequestParam("marcaEdicao")String marcaEdicao)  {
+        Categoria categoria = categoriaService.findById(Long.valueOf(categoriaEdicao));
         try {
             Produtos produto = produtosService.buscarPorId(Long.valueOf(idProdutoEdicao));
             produto.setNome(nomeProdutoEdicao);
-           // TODO -> AJUSTAR produto.setCategoria((categoriaEdicao));
+            produto.setCategoria(categoria);
             produto.setMarca(marcaEdicao);
             produto.setDataCadastro(produto.getDataCadastro());
             produto.setDataUltimaEdicao(LocalDate.now());

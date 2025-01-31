@@ -61,7 +61,7 @@
                 <tr>
                     <td th:text="${produto.nome}"></td>
                     <td th:text="${produto.marca}"></td>
-                    <td th:text="${produto.categoria}"></td>
+                    <td th:text="${produto.categoria.nome}"></td>
                     <td th:text="${produto.dataCadastro}"></td>
                     <td th:text="${produto.dataUltimaEdicao != null ? produto.dataUltimaEdicao : '---'}"></td>
                     <td th:text="${produto.usuario != null ? produto.usuario.username : '---'}"></td>
