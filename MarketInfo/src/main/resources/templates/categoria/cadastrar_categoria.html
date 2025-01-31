@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro de produtos</title>
+  <title>Cadastro de categoria</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link href="/assets/css/cadastrarProdutos.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -12,29 +12,36 @@
 <body>
 
 <div class="form-box">
+  <input type="hidden" name="categoriaCheckbox" value="false">
+
   <p class="text-muted" id ="voltar"><a href="/categoria/gerenciamentoCategoria">< Voltar</a></p>
-  <h3>Cadastrar nova categoria</h3>
-  <div th:if="${mensagemSucesso}" class="alert alert-success">
-    <p th:text="${mensagemSucesso}"></p>
-  </div>
-  <div th:if="${mensagem}" class="alert alert-danger">
-    <p th:text="${mensagem}"></p>
-  </div>
-
-  <form id="formProduto" action="/produtos/salvarCadastroProduto" method="POST">
-    <div class="form-group">
-      <label for="nomeProduto">Nome do Produto</label>
-      <input type="text" id="nomeProduto" name="nomeProduto" class="form-control" placeholder="Digite o nome do produto" required>
+    <h3>Cadastrar nova categoria</h3>
+    <div th:if="${mensagemSucesso}" class="alert alert-success">
+      <p th:text="${mensagemSucesso}"></p>
+    </div>
+    <div th:if="${mensagem}" class="alert alert-danger">
+      <p th:text="${mensagem}"></p>
     </div>
 
-    <div class="form-group">
-      <label for="nomeCategoria">Nome</label>
-      <input type="text" class="form-control" id="nomeCategoria" placeholder="Insira o nome da categoria">
-    </div>
+    <form id="formCategoria" action="/categoria/salvarCadastroCategoria" method="POST">
+      <div class="form-group">
+        <label for="nomeCategoria">Nome</label>
+        <input type="text" class="form-control" id="nomeCategoria" name="nomeCategoria" placeholder="Insira o nome da categoria" required autofocus>
+      </div>
 
+      <div class="form-group">
+        <label for="descricaoCategoria">Descrição</label>
+        <input type="text" id="descricaoCategoria" name="descricaoCategoria" class="form-control" placeholder="Digite a descrição da categoria">
+        <span class="text-muted" style="font-size: 12px; padding-top: 0px; margin-top: 0px">*Pode ser vazia.</span>
+      </div>
 
-    <button type="submit" class="btn-submit">Criar categoria</button>
-  </form>
+      <div class="custom-control custom-switch" style="padding-bottom: 10px; margin-bottom: 10px">
+        <input type="checkbox" class="custom-control-input" id="categoriaCheckbox" name="categoriaCheckbox" checked>
+        <label class="custom-control-label" for="categoriaCheckbox">Categoria está ativa?</label>
+      </div>
+
+      <button type="submit" class="btn-submit">Criar categoria</button>
+    </form>
 </div>
 
 </body>

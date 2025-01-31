@@ -48,9 +48,9 @@ public class SecurityConfig {
                                 "/produtos/**",
                                 "/preco/**",
                                 "/estoque/**",
-                                "/usuario/**",
-                                "/categoria/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                                "/usuario/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(
+                                "/categoria/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
@@ -58,7 +58,7 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/registrar", "/login", "/logar", "/home", "/produtos/**", "/preco/**", "/estoque/**", "/usuario/**")
+                        .ignoringRequestMatchers("/registrar", "/login", "/logar", "/home", "/produtos/**", "/preco/**", "/estoque/**", "/usuario/**", "/categoria/**")
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
