@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MarketInfo - Home</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link href="/assets/css/home.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
@@ -13,7 +14,11 @@
 
 
 <div class="container">
+    <i class="fas fa-user"></i>
+    <span id="user-name" th:text="${usuario.username}"></span>
+    <br>
     <a href="/login">< Sair</a>
+
     <h1 class="display-4 mb-4 text-center">MarketInfo - Gestão de produtos</h1>
     <div class="content-box">
         <div class="button-grid">
@@ -29,13 +34,20 @@
                     class="btn btn-info btn-lg mb-3"
                     onclick="window.location.href='/preco/gerenciamentoPrecos';">Gerenciamento de preços</button>
 
-            <button id="listarUsuarios"
-                    class="btn btn-info btn-lg mb-3"
-                    onclick="window.location.href='/usuario/listausuario';">Listar usuários</button>
+            <!-- TODO -> Pensar em mais algum gerenciamento para usuário !-->
 
+            <!-- SESSÃO ADMINSITRATIVA !-->
             <button id="gerenciarCategorias"
                     class="btn btn-info btn-lg mb-3" th:if="${roleLogada.contains('ROLE_ADMIN')}"
-                    onclick="window.location.href='/categoria/gerenciamentoCategoria';">Categorias</button>
+                    onclick="window.location.href='/categoria/gerenciamentoCategoria';">Gerenciamento de categorias</button>
+
+            <button id="gerenciarPerfis"
+                    class="btn btn-info btn-lg mb-3" th:if="${roleLogada.contains('ROLE_ADMIN')}"
+                    onclick="window.location.href='/perfil/gerenciamentoPerfis';">Gerenciamento de perfis</button>
+
+            <button id="listarUsuarios"
+                    class="btn btn-info btn-lg mb-3" th:if="${roleLogada.contains('ROLE_ADMIN')}"
+                    onclick="window.location.href='/usuario/listausuario';">Listar usuários</button>
 
         </div>
     </div>
