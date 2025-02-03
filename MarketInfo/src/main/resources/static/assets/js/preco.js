@@ -4,28 +4,25 @@ document.addEventListener('DOMContentLoaded', function () {
     configureCheckbox("semDataFinalEdicao", "dataFinalEdicao", "dataFinalEdicaoContainer");
 });
 
+function limparPrecoParaEnvio(valor) {
+    if (!valor) return '';
+    valor = valor.replace('R$', '').replace(/\./g, '').replace(',', '.').trim();
+    return valor;
+}
+
 document.getElementById('formPreco').addEventListener('submit', function(event) {
     var precoInput = document.getElementById('preco');
-    var precoValor = precoInput.value;
-
-    precoValor = precoValor.replace('R$', '').replace(/\D/g, '');
-    precoInput.value = precoValor;
+    precoInput.value = limparPrecoParaEnvio(precoInput.value);
 });
 
 document.getElementById('editarPrecoForm').addEventListener('submit', function(event) {
     var precoInputEdicao = document.getElementById('precoAtual');
-    var precoValorEdicao = precoInputEdicao.value;
-
-    precoValorEdicao = precoValorEdicao.replace('R$', '').replace(/\D/g, '');
-    precoInputEdicao.value = precoValorEdicao;
+    precoInputEdicao.value = limparPrecoParaEnvio(precoInputEdicao.value);
 });
 
 document.getElementById('pesquisaPreco').addEventListener('submit', function(event) {
     var precoInputPesquisa = document.getElementById('pesquisaPreco');
-    var precoValorPesquisa = precoInputPesquisa.value;
-
-    precoValorPesquisa = precoValorPesquisa.replace('R$', '').replace(/\D/g, '');
-    precoInputPesquisa.value = precoValorPesquisa;
+    precoInputPesquisa.value = limparPrecoParaEnvio(precoInputPesquisa.value);
 });
 
 function formatarPreco(input) {
