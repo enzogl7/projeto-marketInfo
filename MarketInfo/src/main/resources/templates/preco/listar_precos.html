@@ -29,10 +29,6 @@
                 <label for="pesquisaNomePreco">Pesquisar por Nome</label>
                 <input type="text" class="form-control" id="pesquisaNomePreco" placeholder="Digite o nome do produto">
             </div>
-            <div class="col-sm-5">
-                <label for="pesquisaPreco">Pesquisar por preço</label>
-                <input type="text" class="form-control" id="pesquisaPreco" placeholder="Digite o valor">
-            </div>
         </div>
 
         <div class="table-responsive">
@@ -77,7 +73,7 @@
                         <td th:text="${preco.motivoAlteracao != null && preco.motivoAlteracao != '' ? preco.motivoAlteracao : '---'}"></td>
                         <td class="data-inicio" th:text="${preco.dataInicioVigor}"></td>
                         <td class="data-fim" th:text="${preco.dataFimVigor != null && preco.dataFimVigor != '' ? preco.dataFimVigor : '---'}"></td>
-                        <td class="dataAlteracao" th:text="${preco.dataAlteracao != null && preco.dataAlteracao != '' ? preco.dataAlteracao : '---'}"></td>
+                        <td class="data-alteracao" th:text="${preco.dataAlteracao != null && preco.dataAlteracao != '' ? preco.dataAlteracao : '---'}"></td>
                         <td>
                             <button class="btn btn-warning btn-sm" id="edicaoEstoque"
                                     th:data-id="${preco.id}"
@@ -108,7 +104,7 @@
         return `${partes[2]}/${partes[1]}/${partes[0]}`;
     }
 
-    document.querySelectorAll('.data-inicio, .data-fim, .data-atualizacao').forEach(td => {
+    document.querySelectorAll('.data-inicio, .data-fim, .data-alteracao').forEach(td => {
         const dataOriginal = td.textContent.trim();
         td.textContent = formatarDataISOParaBR(dataOriginal);
     });
