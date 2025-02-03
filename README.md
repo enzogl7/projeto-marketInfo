@@ -1,5 +1,5 @@
 <h1>Projeto MarketInfo</h1>
-<h2>Aplicação web desenvolvida para gerenciar as operações essenciais de supermercados, proporcionando uma interface intuitiva e recursos completos para controlar produtos, estoques e preços, além de ferramentas administrativas robustas para gerenciar categorias, perfis de usuários e permissões de acesso.</h2>
+Aplicação web desenvolvida para gerenciar as operações essenciais de supermercados, proporcionando uma interface intuitiva e recursos completos para controlar produtos, estoques e preços, além de ferramentas administrativas robustas para gerenciar categorias, perfis de usuários e permissões de acesso.
 
 - Principais Funcionalidades:
   - Sistema de Autenticação: Login seguro e criação de contas para controle de acesso.
