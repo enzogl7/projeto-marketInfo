@@ -1,4 +1,5 @@
-Aplicação web desenvolvida para gerenciar as operações essenciais de supermercados, proporcionando uma interface intuitiva e recursos completos para controlar produtos, estoques e preços, além de ferramentas administrativas robustas para gerenciar categorias, perfis de usuários e permissões de acesso.
+<h1>Projeto MarketInfo</h1>
+<h2>Aplicação web desenvolvida para gerenciar as operações essenciais de supermercados, proporcionando uma interface intuitiva e recursos completos para controlar produtos, estoques e preços, além de ferramentas administrativas robustas para gerenciar categorias, perfis de usuários e permissões de acesso.</h2>
 
 - Principais Funcionalidades:
   - Sistema de Autenticação: Login seguro e criação de contas para controle de acesso.
@@ -16,3 +17,5 @@ Aplicação web desenvolvida para gerenciar as operações essenciais de superme
    - Banco de Dados: PostgreSQL, JPA
    - Frontend: Thymeleaf, HTML, CSS, JavaScript
    - Segurança: Spring Security para autenticação e controle de permissões
+
+<a href="https://youtu.be/S74wnw-LgHA">Demonstração da aplicação em vídeo<a>
