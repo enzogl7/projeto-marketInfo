@@ -47,11 +47,11 @@ public class SecurityConfig {
                                 "/home",
                                 "/produtos/**",
                                 "/preco/**",
-                                "/estoque/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(
+                                "/estoque/**",
                                 "/categoria/**",
                                 "/usuario/**",
-                                "/perfil/**").hasRole("ADMIN")
+                                "/perfil/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout

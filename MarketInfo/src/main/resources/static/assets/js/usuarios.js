@@ -22,14 +22,19 @@ function modalEditarUsuario(button) {
 
     $('#selectRoleEdicaoUsuario option').each(function () {
         const optionText = $(this).text().trim();
-        const roleName = roleNames.find(role => roleMap[role] === optionText);
+
+        const roleName = roleNames.find(role =>
+            roleMap[role] === optionText || role === optionText
+        );
+
         if (roleName) {
             selectedValues.push($(this).val());
         }
     });
-    roleSelect.val(selectedValues).trigger('change');
 
+    roleSelect.val(selectedValues).trigger('change');
 }
+
 
 function salvarEdicaoUsuario() {
     var idUsuarioEdicao = document.getElementById('idUsuarioEdicao').value;

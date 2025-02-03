@@ -71,7 +71,11 @@ public class PerfilController {
         try {
             Role role = roleService.findById(Long.valueOf(idPerfilEdicao));
             role.setRoleName(nomePerfilEdicao);
-            role.setDescricao(descricaoPerfilEdicao);
+            if (descricaoPerfilEdicao == "") {
+                role.setDescricao(null);
+            } else {
+                role.setDescricao(descricaoPerfilEdicao);
+            }
             roleService.salvar(role);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
