@@ -1,10 +1,10 @@
 Aplicação web desenvolvida para gerenciar as operações essenciais de supermercados, proporcionando uma interface intuitiva e recursos completos para controlar produtos, estoques e preços, além de ferramentas administrativas robustas para gerenciar categorias, perfis de usuários e permissões de acesso.
 
-Principais Funcionalidades:
-- Sistema de Autenticação: Login seguro e criação de contas para controle de acesso.
-- Gerenciamento de Produtos: Cadastro, listagem, edição e exclusão de produtos.
-- Controle de Estoques: Registro, edição, listagem e exclusão de estoques vinculados a produtos.
-- Gestão de Preços: Cadastro, edição, listagem e exclusão de preços de produtos.
+- Principais Funcionalidades:
+  - Sistema de Autenticação: Login seguro e criação de contas para controle de acesso.
+  - Gerenciamento de Produtos: Cadastro, listagem, edição e exclusão de produtos.
+  - Controle de Estoques: Registro, edição, listagem e exclusão de estoques vinculados a produtos.
+  - Gestão de Preços: Cadastro, edição, listagem e exclusão de preços de produtos.
 
 - Funções administrativas:
   - Administração de Categorias: Criação, listagem, edição e exclusão de categorias para organização de produtos.
