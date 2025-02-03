@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MarketInfo - Home</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="/assets/css/home.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
@@ -38,16 +38,28 @@
 
             <!-- SESSÃO ADMINSITRATIVA !-->
             <button id="gerenciarCategorias"
-                    class="btn btn-info btn-lg mb-3" th:if="${roleLogada.contains('ROLE_ADMIN')}"
-                    onclick="window.location.href='/categoria/gerenciamentoCategoria';">Gerenciamento de categorias</button>
+                    class="btn btn-info btn-lg mb-3 d-flex align-items-center justify-content-center"
+                    th:if="${roleLogada.contains('ROLE_ADMIN')}"
+                    onclick="window.location.href='/categoria/gerenciamentoCategoria';">
+                <i class="fa-solid fa-user-tie text-white me-2" title="Opção administrativa"></i>
+                <span>Gerenciamento de categorias</span>
+            </button>
 
             <button id="gerenciarPerfis"
-                    class="btn btn-info btn-lg mb-3" th:if="${roleLogada.contains('ROLE_ADMIN')}"
-                    onclick="window.location.href='/perfil/gerenciamentoPerfis';">Gerenciamento de perfis</button>
+                    class="btn btn-info btn-lg mb-3 d-flex align-items-center justify-content-center"
+                    th:if="${roleLogada.contains('ROLE_ADMIN')}"
+                    onclick="window.location.href='/perfil/gerenciamentoPerfis';">
+                <i class="fa-solid fa-user-tie text-white me-2" title="Opção administrativa"></i>
+                <span>Gerenciamento de perfis</span>
+            </button>
 
             <button id="listarUsuarios"
-                    class="btn btn-info btn-lg mb-3" th:if="${roleLogada.contains('ROLE_ADMIN')}"
-                    onclick="window.location.href='/usuario/listausuario';">Listar usuários</button>
+                    class="btn btn-info btn-lg mb-3 d-flex align-items-center justify-content-center"
+                    th:if="${roleLogada.contains('ROLE_ADMIN')}"
+                    onclick="window.location.href='/usuario/listausuario';">
+                <i class="fa-solid fa-user-tie text-white me-2" title="Opção administrativa"></i>
+                <span>Listar usuários</span>
+            </button>
 
         </div>
     </div>

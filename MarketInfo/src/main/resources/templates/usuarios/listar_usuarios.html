@@ -80,6 +80,7 @@
                     th:data-id="${usuario.id}"
                     th:data-email="${usuario.email}"
                     th:data-nome="${usuario.username}"
+                    th:data-role="${#strings.arrayJoin(usuario.roles.![roleName], ',')}"
                     onclick="modalEditarUsuario(this)">Editar
               </span>
               <span th:if="${roleLogada.contains('ROLE_ADMIN')}"

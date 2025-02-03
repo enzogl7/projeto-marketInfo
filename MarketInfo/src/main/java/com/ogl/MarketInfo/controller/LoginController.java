@@ -88,6 +88,10 @@ public class LoginController {
 
             // sucesso
             Usuario usuario = usuarioOptional.get();
+            if (!usuario.isEnabled()) {
+                redirectAttributes.addFlashAttribute("mensagem", "Este usuário está inativo.");
+                return "redirect:/login";
+            }
 
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(usuario.getUsername(), senha, usuario.getAuthorities());

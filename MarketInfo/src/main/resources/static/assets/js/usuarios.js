@@ -6,11 +6,29 @@ function modalEditarUsuario(button) {
     var idUsuarioEdicao = button.getAttribute('data-id');
     var emailUsuarioEdicao = button.getAttribute("data-email");
     var nomeEdicaoUsuario = button.getAttribute("data-nome");
+    const roleNames = button.dataset.role.split(',');
+    const roleMap = {
+        'ROLE_USER': 'Usuário',
+        'ROLE_ADMIN': 'Administrador'
+    };
 
     $('#modalEditarUsuario').modal('show');
     document.getElementById('idUsuarioEdicao').value = idUsuarioEdicao;
     document.getElementById('emailEdicaoUsuario').value = emailUsuarioEdicao;
     document.getElementById('nomeEdicaoUsuario').value = nomeEdicaoUsuario;
+    const roleSelect = $('#selectRoleEdicaoUsuario');
+    roleSelect.val([]).trigger('change');
+    const selectedValues = [];
+
+    $('#selectRoleEdicaoUsuario option').each(function () {
+        const optionText = $(this).text().trim();
+        const roleName = roleNames.find(role => roleMap[role] === optionText);
+        if (roleName) {
+            selectedValues.push($(this).val());
+        }
+    });
+    roleSelect.val(selectedValues).trigger('change');
+
 }
 
 function salvarEdicaoUsuario() {
