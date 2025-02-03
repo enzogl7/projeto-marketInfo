@@ -19,4 +19,8 @@ public class RoleService {
     public List<Role> findAll() {
         return roleRepository.findAll();
     }
+
+    public void salvar(Role role) {
+        roleRepository.save(role);
+    }
 }

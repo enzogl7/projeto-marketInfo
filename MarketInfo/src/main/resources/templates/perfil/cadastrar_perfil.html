@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de categoria</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/cadastrarProdutos.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+<div class="form-box">
+    <p class="text-muted" id ="voltar"><a href="/perfis/perfil/gerenciamentoPerfis">< Voltar</a></p>
+    <h3>Cadastrar novo perfil</h3>
+    <div th:if="${mensagemSucesso}" class="alert alert-success">
+        <p th:text="${mensagemSucesso}"></p>
+    </div>
+    <div th:if="${mensagem}" class="alert alert-danger">
+        <p th:text="${mensagem}"></p>
+    </div>
+
+    <form id="formCategoria" action="/perfil/salvarCadastroPerfil" method="POST">
+        <div class="form-group">
+            <label for="nomePerfil">Nome</label>
+            <input type="text" class="form-control" id="nomePerfil" name="nomePerfil" placeholder="Insira o nome do perfil" required autofocus>
+        </div>
+
+        <div class="form-group">
+            <label for="descricaoPerfil">Descrição</label>
+            <input type="text" id="descricaoPerfil" name="descricaoPerfil" class="form-control" placeholder="Digite a descrição do perfil. Ex.: permissões.">
+            <span class="text-muted" style="font-size: 12px; padding-top: 0px; margin-top: 0px">*Pode ser vazia.</span>
+        </div>
+
+        <button type="submit" class="btn-submit">Criar Perfil</button>
+    </form>
+</div>
+<script src="/assets/js/perfil.js"></script>
+</body>
+</html>
