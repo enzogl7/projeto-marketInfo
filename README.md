@@ -12,7 +12,7 @@ Aplicação web desenvolvida para gerenciar as operações essenciais de superme
   - Listagem e Edição de Usuários: Permite que administradores editem dados dos usuários, como nome, e-mail, senha e roles atribuídas, além de ativar ou inativar usuários conforme necessário.
 
 - Tecnologias Utilizadas:
-  Backend: Spring Boot (Java), Hibernate (ORM)
-  Banco de Dados: PostgreSQL, JPA
-  Frontend: Thymeleaf, HTML, CSS, JavaScript
-  Segurança: Spring Security para autenticação e controle de permissões
+ - Backend: Spring Boot (Java), Hibernate (ORM)
+ - Banco de Dados: PostgreSQL, JPA
+ - Frontend: Thymeleaf, HTML, CSS, JavaScript
+ - Segurança: Spring Security para autenticação e controle de permissões
