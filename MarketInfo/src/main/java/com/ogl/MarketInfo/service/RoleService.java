@@ -23,4 +23,16 @@ public class RoleService {
     public void salvar(Role role) {
         roleRepository.save(role);
     }
+
+    public void excluir(Long id) {
+        roleRepository.deleteById(id);
+    }
+
+    public Boolean perfilPossuiVinculoAAlgumUsuario(Long id) {
+        List<Long> usuariosVinculados = roleRepository.findUsuariosVinculados(id);
+        if (usuariosVinculados.size() > 0) {
+            return true;
+        }
+        return false;
+    }
 }

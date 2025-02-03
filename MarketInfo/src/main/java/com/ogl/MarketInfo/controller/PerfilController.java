@@ -2,7 +2,10 @@ package com.ogl.MarketInfo.controller;
 
 import com.ogl.MarketInfo.model.Role;
 import com.ogl.MarketInfo.service.RoleService;
+import com.ogl.MarketInfo.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +20,7 @@ public class PerfilController {
 
     @Autowired
     private RoleService roleService;
+
 
     @GetMapping("/gerenciamentoPerfis")
     public String gerenciamentoPerfis() {
@@ -44,6 +48,20 @@ public class PerfilController {
     public String listarPerfil(Model model) {
         model.addAttribute("perfis", roleService.findAll());
         return "/perfil/listar_perfil";
+    }
+
+    @PostMapping("/excluirperfil")
+    public ResponseEntity excluirperfil(@RequestParam("idPerfilExclusao")String idPerfil) {
+        Boolean perfilPossuiVinculoAAlgumUsuario = roleService.perfilPossuiVinculoAAlgumUsuario(Long.valueOf(idPerfil));
+        try {
+            if (perfilPossuiVinculoAAlgumUsuario) {
+                return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+            }
+            roleService.excluir(Long.valueOf(idPerfil));
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 }
