@@ -28,15 +28,22 @@ public class PerfilController {
         return "perfil/cadastrar_perfil";
     }
 
-        @PostMapping("/salvarCadastroPerfil")
-        public String salvarCadastroPerfil(@RequestParam("nomePerfil") String nomePerfil,
-                                           @RequestParam("descricaoPerfil") String descricaoPerfil,
-                                           RedirectAttributes redirectAttributes) {
-            Role role = new Role();
-            role.setRoleName(nomePerfil);
-            role.setDescricao(descricaoPerfil);
-            roleService.salvar(role);
-            redirectAttributes.addFlashAttribute("mensagemSucesso", "Perfil cadastrado com sucesso!");
-            return "redirect:/perfil/gerenciamentoPerfis";
-        }
+    @PostMapping("/salvarCadastroPerfil")
+    public String salvarCadastroPerfil(@RequestParam("nomePerfil") String nomePerfil,
+                                       @RequestParam("descricaoPerfil") String descricaoPerfil,
+                                       RedirectAttributes redirectAttributes) {
+        Role role = new Role();
+        role.setRoleName(nomePerfil);
+        role.setDescricao(descricaoPerfil);
+        roleService.salvar(role);
+        redirectAttributes.addFlashAttribute("mensagemSucesso", "Perfil cadastrado com sucesso!");
+        return "redirect:/perfil/gerenciamentoPerfis";
+    }
+
+    @GetMapping("/listarperfil")
+    public String listarPerfil(Model model) {
+        model.addAttribute("perfis", roleService.findAll());
+        return "/perfil/listar_perfil";
+    }
+
 }
