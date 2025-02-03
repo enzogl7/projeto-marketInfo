@@ -64,4 +64,19 @@ public class PerfilController {
         }
     }
 
+    @PostMapping("/editarperfil")
+    public ResponseEntity editarPerfil(@RequestParam("idPerfilEdicao")String idPerfilEdicao,
+                                       @RequestParam("nomePerfilEdicao") String nomePerfilEdicao,
+                                       @RequestParam("descricaoPerfilEdicao") String descricaoPerfilEdicao) {
+        try {
+            Role role = roleService.findById(Long.valueOf(idPerfilEdicao));
+            role.setRoleName(nomePerfilEdicao);
+            role.setDescricao(descricaoPerfilEdicao);
+            roleService.salvar(role);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

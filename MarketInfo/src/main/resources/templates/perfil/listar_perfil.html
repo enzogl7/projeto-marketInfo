@@ -52,19 +52,22 @@
                                 th:data-id="${perfil.id}"
                                 th:data-nome="${perfil.roleName}"
                                 th:data-descricao="${perfil.descricao}"
-                                onclick="modalEditarPerfil(this)">Editar
+                                onclick="modalEditarPerfil(this)"
+                                th:if="${perfil.roleName != 'ROLE_USER' and perfil.roleName != 'ROLE_ADMIN'}">Editar
                           </span>
 
                             <span class="btn btn-danger btn-sm"
                                   id="exclusaoPerfil"
                                   th:data-id="${perfil.id}"
                                   onclick="confirmacaoExclusaoPerfil(this)"
-                                  th:if="${perfil.roleName != 'ROLE_USER' and perfil.roleName != 'ROLE_ADMIN'}">Excluir</span>
+                                  th:if="${perfil.roleName != 'ROLE_USER' and perfil.roleName != 'ROLE_ADMIN'}">Excluir
+                            </span>
                         </td>
                     </tr>
                 </th:block>
                 </tbody>
             </table>
+            <div th:replace="/perfil/modal_editar_perfil"></div>
         </div>
     </div>
 </div>

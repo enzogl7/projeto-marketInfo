@@ -83,3 +83,59 @@ function excluirPerfil(idButton) {
         }
     });
 }
+
+function modalEditarPerfil(button) {
+    var idPerfilEdicao = button.getAttribute('data-id');
+    var nomePerfilEdicao = button.getAttribute('data-nome');
+    var descricaoPerfilEdicao = button.getAttribute('data-descricao');
+
+    $('#modalEditarPerfil').modal('show');
+    document.getElementById('idPerfilEdicao').value = idPerfilEdicao;
+    document.getElementById('nomePerfilEdicao').value = nomePerfilEdicao;
+    document.getElementById('descricaoPerfilEdicao').value = descricaoPerfilEdicao;
+}
+
+function salvarEdicaoPerfil() {
+    var idPerfilEdicao = document.getElementById('idPerfilEdicao').value;
+    var nomePerfilEdicao = document.getElementById('nomePerfilEdicao').value;
+    var descricaoPerfilEdicao = document.getElementById('descricaoPerfilEdicao').value;
+
+    $.ajax({
+        url: '/perfil/editarperfil',
+        type: 'POST',
+        data: {
+            idPerfilEdicao: idPerfilEdicao,
+            nomePerfilEdicao: nomePerfilEdicao,
+            descricaoPerfilEdicao: descricaoPerfilEdicao
+        },
+        complete: function(xhr, status) {
+            switch (xhr.status) {
+                case 200:
+                    $('#modalEditarPerfil').modal('hide')
+                    Swal.fire({
+                        title: "Pronto!",
+                        text: "O perfil foi editado com sucesso!",
+                        icon: "success",
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/perfil/listarperfil";
+                        }
+                    });
+                    break;
+                case 500:
+                    $('#modalEditarPerfil').modal('hide')
+                    Swal.fire({
+                        title: "Erro!",
+                        text: "Ocorreu um erro ao editar este perfil.",
+                        icon: "error"
+                    });
+                    break;
+                default:
+                    alert("Erro desconhecido: " + status);
+            }
+        }
+    });
+}
+
+
