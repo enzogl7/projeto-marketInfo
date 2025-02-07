@@ -28,7 +28,7 @@ public class CategoriaService {
     }
 
     public List<Categoria> findAllAtivo() {
-        List<Categoria> categoriasAtivas = categoriaRepository.findAllWhereStatusTrue();
+        List<Categoria> categoriasAtivas = categoriaRepository.findByStatusTrue();
         Collections.sort(categoriasAtivas, Comparator.comparing(Categoria::getNome));
         return categoriasAtivas;
     }

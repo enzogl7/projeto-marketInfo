@@ -13,9 +13,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findByEmail(String email);
 
-    @Query(value = "select * from usuarios u where u.username = :username", nativeQuery = true)
-    Usuario buscarPorUsername(@Param("username") String username);
-
     @Query(value = "SELECT DISTINCT u.* FROM usuarios u " +
             "JOIN usuario_roles ur ON u.id = ur.usuario_id " +
             "JOIN roles r ON ur.role_id = r.id", nativeQuery = true)

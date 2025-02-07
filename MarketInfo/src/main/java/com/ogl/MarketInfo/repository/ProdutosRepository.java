@@ -10,7 +10,6 @@ import java.util.List;
 public interface ProdutosRepository extends JpaRepository<Produtos, Integer> {
     Produtos findById(Long id);
 
-
     @Query(value = "select * from Produtos where usuario = :idUsuario", nativeQuery = true)
     List<Produtos> findProdutosByUsuario(@Param("idUsuario") Long idUsuario);
 

@@ -1,9 +1,17 @@
 package com.ogl.MarketInfo.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Table(name = "estoque")
 @Entity(name = "Estoque")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Estoque {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,35 +27,4 @@ public class Estoque {
     @Column(name = "qtde_estoque_atual")
     private Integer qtdeEstoqueAtual;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Produtos getProduto() {
-        return produto;
-    }
-
-    public void setProduto(Produtos produto) {
-        this.produto = produto;
-    }
-
-    public Integer getQtdeEstoqueMinimo() {
-        return qtdeEstoqueMinimo;
-    }
-
-    public void setQtdeEstoqueMinimo(Integer qtdeEstoqueMinimo) {
-        this.qtdeEstoqueMinimo = qtdeEstoqueMinimo;
-    }
-
-    public Integer getQtdeEstoqueAtual() {
-        return qtdeEstoqueAtual;
-    }
-
-    public void setQtdeEstoqueAtual(Integer qtdeEstoqueAtual) {
-        this.qtdeEstoqueAtual = qtdeEstoqueAtual;
-    }
 }

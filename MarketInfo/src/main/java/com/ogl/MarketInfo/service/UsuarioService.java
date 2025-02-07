@@ -24,7 +24,7 @@ public class UsuarioService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             String username = authentication.getName();
-            return usuarioRepository.buscarPorUsername(username);
+            return usuarioRepository.findByUsername(username).orElse(null);
         }
         return null;
     }

@@ -12,7 +12,5 @@ import java.util.Optional;
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
     Optional<Categoria> findById(Long id);
 
-    @Query(value = "select * from categoria where status = true", nativeQuery = true)
-    List<Categoria> findAllWhereStatusTrue();
-
+    List<Categoria> findByStatusTrue();
 }
