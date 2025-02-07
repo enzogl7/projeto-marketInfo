@@ -28,7 +28,7 @@ class RoleRepositoryTest {
     EntityManager em;
 
     @Test
-    @DisplayName("findUsuariosVinculados success (encontra usuários com role)")
+    @DisplayName("findUsuariosVinculados success (encontra usuários com a role especificada) // (find users with the especificated role)")
     @Transactional
     void findUsuariosVinculadosSuccess() {
         em.createNativeQuery("INSERT INTO roles (id, role_name) VALUES (1, 'ROLE_USER')").executeUpdate();
@@ -45,7 +45,7 @@ class RoleRepositoryTest {
     }
 
     @Test
-    @DisplayName("findUsuariosVinculados error (não encontra usuários com role)")
+    @DisplayName("findUsuariosVinculados error (não encontra usuários com role especificada) // (doesnt find users with the especificated role)")
     @Transactional
     void findUsuariosVinculadosError() {
         List<Long> resultado = this.roleRepository.findUsuariosVinculados(1L);

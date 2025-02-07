@@ -24,7 +24,7 @@ class ProdutosRepositoryTest {
     EntityManager em;
 
     @Test
-    @DisplayName("findProdutosByUsuario success (encontra produtos por usuario)")
+    @DisplayName("findProdutosByUsuario success (encontra produtos por id do usuario) // (find products by user id)")
     void findProdutosByUsuarioSuccess() {
         em.createNativeQuery("INSERT INTO categoria (id, nome, status) VALUES (1, 'Categoria 1', true)").executeUpdate();
         em.createNativeQuery("INSERT INTO usuarios (id, enabled, password, username, email) VALUES (1, true, 'senha', 'teste', 'teste@teste.com')").executeUpdate();
@@ -35,14 +35,14 @@ class ProdutosRepositoryTest {
     }
 
     @Test
-    @DisplayName("findProdutosByUsuarioError (nao encotra produtos por usuario)")
+    @DisplayName("findProdutosByUsuarioError (nao encotra produtos por usuario) // (doesnt find products for this user id)")
     void findProdutosByUsuarioError() {
         List<Produtos> resultado = this.produtoRepository.findProdutosByUsuario(1L);
         assertThat(resultado.isEmpty()).isTrue();
     }
 
     @Test
-    @DisplayName("findProdutosByCategoriaSuccess (encontra produtos por categoria)")
+    @DisplayName("findProdutosByCategoriaSuccess (encontra produtos pelo id da categoria) // (find products for this category id)")
     void findProdutosByCategoriaSuccess() {
         em.createNativeQuery("INSERT INTO categoria (id, nome, status) VALUES (1, 'Categoria 1', true)").executeUpdate();
         em.createNativeQuery("INSERT INTO produtos (id, marca, nome, categoria) VALUES (1, 'marca', 'nome', 1)").executeUpdate();
@@ -52,7 +52,7 @@ class ProdutosRepositoryTest {
     }
 
     @Test
-    @DisplayName("findProdutosByCategoriaError (não encontra produtos por categoria)")
+    @DisplayName("findProdutosByCategoriaError (não encontra produtos pelo id da categoria) // (doesnt find products for this category id)")
     void findProdutosByCategoriaError() {
         List<Produtos> resultado = this.produtoRepository.findProdutosByCategoria(1L);
         assertThat(resultado.isEmpty()).isTrue();

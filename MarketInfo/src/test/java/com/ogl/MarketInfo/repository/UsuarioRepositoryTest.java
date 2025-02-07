@@ -29,7 +29,7 @@ class UsuarioRepositoryTest {
     EntityManager em;
 
     @Test
-    @DisplayName("FindByUsername success")
+    @DisplayName("FindByUsername success (retorna o usuário pesquisado pois existe) // (returns the searched user because its exists)")
     void findByUsernameSuccess() {
         String username = "teste";
         List<RolesDTO> role = Collections.singletonList(new RolesDTO(1L, "ROLE_USER"));
@@ -40,7 +40,7 @@ class UsuarioRepositoryTest {
     }
 
     @Test
-    @DisplayName("FindByUsername error (user not exists)")
+    @DisplayName("FindByUsername error (não retorna nada pois o usuário pesquisado não existe) // (doesnt returns nothing because the searched user does not exists)")
     void findByUsernameError() {
         String username = "teste";
         Optional<Usuario> resultado = this.usuarioRepository.findByUsername(username);
@@ -48,7 +48,7 @@ class UsuarioRepositoryTest {
     }
 
     @Test
-    @DisplayName("findAllComRoles success")
+    @DisplayName("findAllComRoles success (retorna usuários que possuem roles) // (returns users that have roles)")
     @Transactional
     void findAllComRolesSuccess() {
         // query para inserir dados nas tabela roles usada no join dessa consulta
@@ -83,7 +83,7 @@ class UsuarioRepositoryTest {
     }
 
     @Test
-    @DisplayName("findAllComRoles error (nao existe usuario com roles)")
+    @DisplayName("findAllComRoles error (nao existe usuario com roles) // (doesnt exists users with roles)")
     @Transactional
     void findAllComRolesError() {
         List<Usuario> resultado = usuarioRepository.findAllComRoles();
