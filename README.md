@@ -14,6 +14,9 @@ Aplicação web desenvolvida para gerenciar as operações essenciais de superme
   - Gerenciamento de Perfis: Controle de permissões (roles) com criação, edição e exclusão de perfis de usuário.
   - Listagem e Edição de Usuários: Permite que administradores editem dados dos usuários, como nome, e-mail, senha e roles atribuídas, além de ativar ou inativar usuários conforme necessário.
 
+- Qualidade de Software:
+  - Testes unitários implementados com JUnit e Mockito para validar a lógica de negócio e garantir a integridade das operações essenciais.
+
 - Tecnologias Utilizadas:
    - Backend: Spring Boot (Java), Hibernate (ORM)
    - Banco de Dados: PostgreSQL, JPA
