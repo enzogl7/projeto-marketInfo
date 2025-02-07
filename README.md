@@ -1,4 +1,6 @@
 <h1>Projeto MarketInfo</h1>
+<img src="https://enzogl7.github.io/portfolio/assets/Screenshot_marketInfo.png">
+
 Aplicação web desenvolvida para gerenciar as operações essenciais de supermercados, proporcionando uma interface intuitiva e recursos completos para controlar produtos, estoques e preços, além de ferramentas administrativas robustas para gerenciar categorias, perfis de usuários e permissões de acesso.
 
 - Principais Funcionalidades:
@@ -11,6 +13,9 @@ Aplicação web desenvolvida para gerenciar as operações essenciais de superme
   - Administração de Categorias: Criação, listagem, edição e exclusão de categorias para organização de produtos.
   - Gerenciamento de Perfis: Controle de permissões (roles) com criação, edição e exclusão de perfis de usuário.
   - Listagem e Edição de Usuários: Permite que administradores editem dados dos usuários, como nome, e-mail, senha e roles atribuídas, além de ativar ou inativar usuários conforme necessário.
+
+- Qualidade de Software:
+  - Testes unitários implementados com JUnit e Mockito para validar a lógica de negócio e garantir a integridade das operações essenciais.
 
 - Tecnologias Utilizadas:
    - Backend: Spring Boot (Java), Hibernate (ORM)
