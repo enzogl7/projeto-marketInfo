@@ -35,6 +35,9 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html",
                                 "/login",
                                 "/logar",
                                 "/resources/**",
@@ -59,7 +62,7 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/registrar", "/login", "/logar", "/home", "/produtos/**", "/preco/**", "/estoque/**", "/usuario/**", "/categoria/**", "/perfil/**")
+                        .ignoringRequestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html","/registrar", "/login", "/logar", "/home", "/produtos/**", "/preco/**", "/estoque/**", "/usuario/**", "/categoria/**", "/perfil/**")
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
