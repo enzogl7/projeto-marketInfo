@@ -134,7 +134,7 @@ public class EstoqueController {
 
     @Operation(
             summary = "Obtém a lista de estoques cadastrados.",
-            description = "Retorna a lista de estoques como JSON para ser exibida no Swagger. Na página da aplicação é retornada uma página com a tabela listando com os estoques dos respectivos produtos."
+            description = "Retorna a lista de estoques como JSON para ser exibida no Swagger. Na página da aplicação é retornada uma página com a tabela listando os estoques dos respectivos produtos."
     )
     @ApiResponse(
             responseCode = "200",
