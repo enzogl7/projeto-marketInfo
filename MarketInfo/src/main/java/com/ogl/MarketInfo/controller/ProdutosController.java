@@ -4,6 +4,11 @@ import com.ogl.MarketInfo.model.Categoria;
 import com.ogl.MarketInfo.model.Produtos;
 import com.ogl.MarketInfo.model.Usuario;
 import com.ogl.MarketInfo.service.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +39,9 @@ public class ProdutosController {
     @Autowired
     CategoriaService categoriaService;
 
+    @Autowired
+    ApiRequestService apiRequestService;
+
     @GetMapping("/gerenciamentoProdutos")
     public String gerenciamentoPrecos() {
         return "produtos/gerenciamento_produtos";
@@ -46,11 +54,34 @@ public class ProdutosController {
     }
 
 
+    @Operation(
+            summary = "Cadastra/salva o produto.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Produto cadastrado com sucesso!",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(example = "{\"mensagem\": \"Produto cadastrado com sucesso!\"}"))),
+
+                    @ApiResponse(responseCode = "404", description = "Categoria não encontrada.",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(example = "{\"mensagem\": \"Categoria não encontrada.\"}"))),
+
+                    @ApiResponse(responseCode = "400", description = "Erro ao cadastrar produto.",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(example = "{\"mensagem\": \"Erro ao cadastrar produto.\"}")))
+            }
+    )
     @PostMapping("/salvarCadastroProduto")
-    public String salvarCadastroProduto(@RequestParam("nomeProduto") String nomeProduto,
-                                        @RequestParam("categoria") Categoria categoria,
+    public Object salvarCadastroProduto(@RequestParam("nomeProduto") String nomeProduto,
+                                        @RequestParam("categoriaId") Long categoriaId,
                                         @RequestParam("marca") String marca,
-                                        RedirectAttributes redirectAttributes)  {
+                                        RedirectAttributes redirectAttributes,
+                                        HttpServletRequest request)  {
+        Categoria categoria = categoriaService.findById(categoriaId).orElse(null);
+        if (categoria == null) {
+            if (apiRequestService.isApiRequest(request)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria não encontrada."); // resposta exclusiva do swagger, a partir do front-end é impossível cair nesse if.
+            }
+        }
 
         Produtos produto = new Produtos();
         produto.setNome(nomeProduto);
@@ -63,6 +94,9 @@ public class ProdutosController {
         produtosService.salvar(produto);
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Produto cadastrado com sucesso!");
+        if (apiRequestService.isApiRequest(request)) {
+            return ResponseEntity.ok().body("Produto cadastrado com sucesso!");
+        }
         return "redirect:/produtos/cadastrarProdutos";
     }
 
@@ -81,9 +115,9 @@ public class ProdutosController {
                                 @RequestParam("nomeProdutoEdicao") String nomeProdutoEdicao,
                                 @RequestParam("categoriaEdicao") String categoriaEdicao,
                                 @RequestParam("marcaEdicao")String marcaEdicao)  {
-        Categoria categoria = categoriaService.findById(Long.valueOf(categoriaEdicao));
+        Categoria categoria = categoriaService.findById(Long.valueOf(categoriaEdicao)).orElse(null);
         try {
-            Produtos produto = produtosService.buscarPorId(Long.valueOf(idProdutoEdicao));
+            Produtos produto = produtosService.buscarPorId(Long.valueOf(idProdutoEdicao)).orElse(null);
             produto.setNome(nomeProdutoEdicao);
             produto.setCategoria(categoria);
             produto.setMarca(marcaEdicao);
@@ -101,7 +135,7 @@ public class ProdutosController {
     @PostMapping("/excluirProduto")
     public ResponseEntity excluirProduto(@RequestParam("idProdutoExclusao") String idProdutoExclusao) {
         try {
-            Produtos produtoExclusao = produtosService.buscarPorId(Long.valueOf(idProdutoExclusao));
+            Produtos produtoExclusao = produtosService.buscarPorId(Long.valueOf(idProdutoExclusao)).orElse(null);
 
             // verifica se o produto está vinculado à tabela de estoque ou preços
             Boolean produtoVinculadoATabelaEstoque = estoqueService.existeEstoqueParaEsseProduto(produtoExclusao);

@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProdutosRepository extends JpaRepository<Produtos, Integer> {
-    Produtos findById(Long id);
+    Optional<Produtos> findById(Long id);
 
     @Query(value = "select * from Produtos where usuario = :idUsuario", nativeQuery = true)
     List<Produtos> findProdutosByUsuario(@Param("idUsuario") Long idUsuario);

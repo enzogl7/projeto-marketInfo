@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/categoria")
@@ -136,7 +137,7 @@ public class CategoriaController {
                                           @RequestParam(value = "categoriaCheckboxEdicao", required = false) Boolean categoriaCheckboxEdicao) {
 
         Boolean categoriaVinculadaAAlgumProduto = produtosService.categoriaVinculadaAAlgumProduto(Long.valueOf(idCategoriaEdicao));
-        Categoria categoria = categoriaService.findById(Long.valueOf(idCategoriaEdicao));
+        Categoria categoria = categoriaService.findById(Long.valueOf(idCategoriaEdicao)).orElse(null);
 
         try {
             if (categoriaVinculadaAAlgumProduto && categoriaCheckboxEdicao == false) {

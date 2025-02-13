@@ -4,6 +4,7 @@ import com.ogl.MarketInfo.model.Role;
 import com.ogl.MarketInfo.service.ApiRequestService;
 import com.ogl.MarketInfo.service.RoleService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -14,12 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -34,7 +33,7 @@ public class PerfilController {
 
 
     @Operation(
-            description = "Retorna a página de gerenciamento de perfis (roles)",
+            summary = "Retorna a página de gerenciamento de perfis (roles)",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -53,7 +52,7 @@ public class PerfilController {
     }
 
     @Operation(
-            description = "Retorna a página de cadastro de perfis (roles)",
+            summary = "Retorna a página de cadastro de perfis (roles)",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -72,7 +71,7 @@ public class PerfilController {
     }
 
     @Operation(
-            description = "Cadastra/salva o perfil",
+            summary = "Cadastra/salva o perfil",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Perfil salvo com sucesso. Redireciona para a página de gerenciamento de perfis.",
                             content = @Content(mediaType = "application/json",
@@ -110,20 +109,6 @@ public class PerfilController {
 
     }
 
-    @Operation(
-            description = "Retorna a página de listagem de perfis",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Página de listagem de perfis retornada com sucesso",
-                            content = @Content(mediaType = "text/html")
-                    ),
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "Erro interno do servidor"
-                    )
-            }
-    )
     @GetMapping("/listarperfil")
     public String listarPerfil(Model model) {
         model.addAttribute("perfis", roleService.findAll());
@@ -131,7 +116,25 @@ public class PerfilController {
     }
 
     @Operation(
-            description = "Exclui o perfil.",
+            summary = "Obtém a lista de perfis cadastrados.",
+            description = "Retorna a lista de perfis como JSON para ser exibida no Swagger. Na página da aplicação é retornada uma página com a tabela listando todos os perfis."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Lista de perfis retornada com sucesso",
+            content = @Content(
+                    mediaType = "application/json",
+                    array = @ArraySchema(schema = @Schema(implementation = Role.class))
+            )
+    )
+    @GetMapping("/listarperfis")
+    @ResponseBody
+    public List<Role> listarPerfisJson() {
+        return roleService.findAll();
+    }
+
+    @Operation(
+            summary = "Exclui o perfil.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Perfil excluído com sucesso!",
                             content = @Content(mediaType = "application/json",
@@ -152,8 +155,7 @@ public class PerfilController {
             }
     )
     @PostMapping("/excluirperfil")
-    public ResponseEntity excluirperfil(@RequestParam("idPerfilExclusao")String idPerfil,
-                                        HttpServletRequest request) {
+    public ResponseEntity excluirperfil(@RequestParam("idPerfilExclusao")String idPerfil) {
         Boolean perfilPossuiVinculoAAlgumUsuario = roleService.perfilPossuiVinculoAAlgumUsuario(Long.valueOf(idPerfil));
         Optional<Role> role = roleService.findById(Long.valueOf(idPerfil));
 
@@ -174,29 +176,44 @@ public class PerfilController {
     }
 
     @Operation(
-            description = "Edita o perfil já cadastrado",
+            summary = "Edita o perfil já cadastrado",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Perfil editado com sucesso."),
-                    @ApiResponse(responseCode = "500", description = "Erro interno.")
+                    @ApiResponse(responseCode = "200", description = "Perfil editado com sucesso!",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(example = "{\"mensagem\": \"Perfil editado com sucesso!\"}"))),
+
+                    @ApiResponse(responseCode = "404", description = "Erro ao editar perfil. Perfil não encontrado.",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(example = "{\"mensagem\": \"Erro ao editar perfil. Perfil não encontrado.\"}"))),
+
+                    @ApiResponse(responseCode = "400", description = "Erro ao editar perfil.",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(example = "{\"mensagem\": \"Erro ao editar perfil.\"}")))
             }
     )
     @PostMapping("/editarperfil")
     public ResponseEntity editarPerfil(@RequestParam("idPerfilEdicao")String idPerfilEdicao,
                                        @RequestParam("nomePerfilEdicao") String nomePerfilEdicao,
                                        @RequestParam("descricaoPerfilEdicao") String descricaoPerfilEdicao) {
+
+        Role role = roleService.findById(Long.valueOf(idPerfilEdicao)).orElse(null);
         try {
-            Role role = roleService.findById(Long.valueOf(idPerfilEdicao)).orElseThrow(null);
-            role.setRoleName(nomePerfilEdicao);
+            if (role == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao editar perfil. Perfil não encontrado."); // não encontrou perfil com o id
+            }
+
             if (descricaoPerfilEdicao == "") {
                 role.setDescricao(null);
             } else {
                 role.setDescricao(descricaoPerfilEdicao);
             }
+
+            role.setRoleName(nomePerfilEdicao);
             roleService.salvar(role);
-            return ResponseEntity.status(HttpStatus.OK).build();
+            return ResponseEntity.status(HttpStatus.OK).body("Perfil editado com sucesso!");
         }
         catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("Erro ao editar perfil.");
         }
     }
 }

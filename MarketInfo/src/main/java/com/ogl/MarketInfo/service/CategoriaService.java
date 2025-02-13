@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoriaService {
@@ -23,8 +24,8 @@ public class CategoriaService {
         return categoriaRepository.findAll();
     }
 
-    public Categoria findById(Long id) {
-        return categoriaRepository.findById(id).get();
+    public Optional<Categoria> findById(Long id) {
+        return categoriaRepository.findById(id);
     }
 
     public List<Categoria> findAllAtivo() {

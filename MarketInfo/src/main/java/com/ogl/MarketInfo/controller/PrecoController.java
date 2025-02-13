@@ -88,7 +88,7 @@ public class PrecoController {
                               @RequestParam("dataFinalEdicao")String dataFinalEdicao,
                               @RequestParam("motivoAlteracaoPreco") String motivoAlteracaoPreco) {
 
-        Produtos produto = produtosService.buscarPorId(Long.valueOf(produtoPrecoEdicao));
+        Produtos produto = produtosService.buscarPorId(Long.valueOf(produtoPrecoEdicao)).orElse(null);
         try {
             precoAtual = precoAtual.replace("R$", "").trim();
             precoAtual = precoAtual.replace(',', '.');

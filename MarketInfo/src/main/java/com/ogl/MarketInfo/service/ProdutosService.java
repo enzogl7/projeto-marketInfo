@@ -21,7 +21,7 @@ public class ProdutosService {
         return produtosRepository.findAll();
     }
 
-    public Produtos buscarPorId(Long id) {
+    public Optional<Produtos> buscarPorId(Long id) {
         return produtosRepository.findById(id);
     }
 

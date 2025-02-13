@@ -22,8 +22,8 @@ public class EstoqueService {
         return estoqueRepository.findAll();
     }
 
-    public Estoque findById(Long id) {
-        return estoqueRepository.findById(id).orElse(null);
+    public Optional<Estoque> findById(Long id) {
+        return estoqueRepository.findById(id);
     }
 
     public void excluirPorId(Long id) {

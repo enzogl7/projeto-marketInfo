@@ -69,7 +69,7 @@ public class LoginController {
 
 
     @Operation(
-            description = "Retorna a página de login",
+            summary = "Retorna a página de login",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -88,7 +88,7 @@ public class LoginController {
     }
 
     @Operation(
-            description = "Retorna a página de registro",
+            summary = "Retorna a página de registro",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -107,7 +107,7 @@ public class LoginController {
     }
 
     @Operation(
-            description = "Autentica o usuário com base no email e senha fornecidos.",
+            summary = "Autentica o usuário com base no email e senha fornecidos.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Login realizado com sucesso. Redireciona para a página home.",
                             content = @Content(mediaType = "application/json",
@@ -190,7 +190,7 @@ public class LoginController {
     }
 
     @Operation(
-            description = "Registra/cria o usuário no banco de dados.",
+            summary = "Registra/cria o usuário no banco de dados.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Cadastro realizado com sucesso. Redireciona para a página de login.",
                             content = @Content(mediaType = "application/json",
