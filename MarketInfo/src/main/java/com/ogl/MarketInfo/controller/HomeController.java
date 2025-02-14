@@ -20,7 +20,7 @@ public class HomeController {
     private UsuarioService usuarioService;
 
     @Operation(
-            description = "Retorna a página princiapl",
+            summary = "Retorna a página principal",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
