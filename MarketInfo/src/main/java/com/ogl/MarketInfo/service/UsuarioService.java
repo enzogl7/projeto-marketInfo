@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -37,8 +38,8 @@ public class UsuarioService {
         return usuarioRepository.findAllComRoles();
     }
 
-    public Usuario findById(Long id) {
-        return usuarioRepository.findById(id).get();
+    public Optional<Usuario> findById(Long id) {
+        return usuarioRepository.findById(id);
     }
 
     public void save(Usuario usuario) {
