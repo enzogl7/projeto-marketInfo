@@ -44,6 +44,21 @@ public class Preco {
 
     private LocalDate dataAlteracao;
 
-    // adicionar questao do usuario responsavel futuramente
+    public String getDiferencaFormatada() {
+        if (precoAtual > 0) {
+            double diferenca = precoAtual - preco;
+            DecimalFormat df = new DecimalFormat("#,##0.00");
+            return df.format(diferenca);
+        }
+        return null;
+    }
+    public String getPrecoAtualFormatado() {
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+        return "R$ " + df.format(precoAtual);
+    }
+    public String getPrecoFormatado() {
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+        return "R$ " + df.format(preco);
+    }
 
 }

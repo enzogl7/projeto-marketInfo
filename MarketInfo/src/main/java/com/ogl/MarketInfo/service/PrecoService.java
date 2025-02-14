@@ -35,7 +35,7 @@ public class PrecoService {
         return false;
     }
 
-    public void excluirPorId(String idPrecoExclusao) {
-        precoRepository.deleteById(Long.parseLong(idPrecoExclusao));
+    public void excluirPorId(Long idPrecoExclusao) {
+        precoRepository.deleteById(idPrecoExclusao);
     }
 }
