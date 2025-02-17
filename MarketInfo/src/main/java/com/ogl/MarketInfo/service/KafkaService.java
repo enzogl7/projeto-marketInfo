@@ -24,7 +24,6 @@ public class KafkaService {
                 mailService.enviarEmailNotificacao(email, "Notificação de estoque | MarketInfo - Gestão de mercados", mensagem, "emails/notificacao_estoque");
             }
         }
-        System.out.println("Mensagem recebida: " + mensagem);
     }
 
     @KafkaListener(topics = "produtos-alert", groupId = "market-info")

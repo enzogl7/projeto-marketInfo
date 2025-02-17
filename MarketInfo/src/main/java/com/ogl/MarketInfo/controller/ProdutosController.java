@@ -1,9 +1,6 @@
 package com.ogl.MarketInfo.controller;
 
-import com.ogl.MarketInfo.model.Categoria;
-import com.ogl.MarketInfo.model.Estoque;
-import com.ogl.MarketInfo.model.Produtos;
-import com.ogl.MarketInfo.model.Usuario;
+import com.ogl.MarketInfo.model.*;
 import com.ogl.MarketInfo.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -14,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +41,12 @@ public class ProdutosController {
 
     @Autowired
     ApiRequestService apiRequestService;
+
+    @Autowired
+    private OpcoesMensageriaService opcoesMensageriaService;
+
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
 
     @Operation(
             summary = "Retorna a página de gerenciamento de produtos",
@@ -107,6 +111,8 @@ public class ProdutosController {
                                         RedirectAttributes redirectAttributes,
                                         HttpServletRequest request)  {
         Categoria categoria = categoriaService.findById(categoriaId).orElse(null);
+        OpcoesMensageria opcoesMensageria = opcoesMensageriaService.findAll().stream().findFirst().orElse(null);
+
         if (categoria == null) {
             if (apiRequestService.isApiRequest(request)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria não encontrada."); // resposta exclusiva do swagger, a partir do front-end é impossível cair nesse if.
@@ -122,6 +128,14 @@ public class ProdutosController {
         Usuario usuarioLogado = usuarioService.getUsuarioLogado();
         produto.setUsuario(usuarioLogado);
         produtosService.salvar(produto);
+
+        if (opcoesMensageria != null && opcoesMensageria.isProdutosCadastro()) {
+            kafkaTemplate.send("produtos-alert", "Um novo produto foi cadastrado! Produto: " + produto.getNome()
+                    + " || Categoria: " + (produto.getCategoria().getNome())
+                    + " || Marca: " + (produto.getMarca())
+                    + " || Cadastrado por: " + (usuarioLogado.getEmail()));
+        }
+
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Produto cadastrado com sucesso!");
         if (apiRequestService.isApiRequest(request)) {
@@ -182,6 +196,7 @@ public class ProdutosController {
                                 @RequestParam("marcaEdicao")String marcaEdicao)  {
         Categoria categoria = categoriaService.findById(Long.valueOf(categoriaEdicao)).orElse(null);
         Produtos produto = produtosService.buscarPorId(Long.valueOf(idProdutoEdicao)).orElse(null);
+        OpcoesMensageria opcoesMensageria = opcoesMensageriaService.findAll().stream().findFirst().orElse(null);
         if (produto == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado."); // resposta exclusiva do swagger, a partir do front-end é impossível cair nesse if.
         }
@@ -195,6 +210,14 @@ public class ProdutosController {
             produto.setDataCadastro(produto.getDataCadastro());
             produto.setDataUltimaEdicao(LocalDate.now());
             produtosService.salvar(produto);
+            if (opcoesMensageria != null && opcoesMensageria.isProdutosCadastro()) {
+                kafkaTemplate.send("produtos-alert", "Um produto foi editado! Produto: " + produto.getNome()
+                        + " || Categoria: " + (produto.getCategoria().getNome())
+                        + " || Marca: " + (produto.getMarca())
+                        + " || Data de edição: " + (produto.getDataUltimaEdicao().toString())
+                        + " || Editado por: " + (usuarioService.getUsuarioLogado().getEmail()));
+            }
+
             return ResponseEntity.ok().body("Produto editado com sucesso");
 
         } catch (Exception e) {
