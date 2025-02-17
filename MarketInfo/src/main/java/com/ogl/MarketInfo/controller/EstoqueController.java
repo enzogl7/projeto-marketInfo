@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,9 @@ public class EstoqueController {
 
     @Autowired
     private ApiRequestService apiRequestService;
+
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
 
     @Operation(
             summary = "Retorna a página de gerenciamento de estoque",
@@ -116,6 +120,9 @@ public class EstoqueController {
         estoque.setQtdeEstoqueMinimo(Integer.valueOf(estoqueMinimo));
         estoque.setQtdeEstoqueAtual(Integer.valueOf(estoqueAtual));
         estoqueService.salvar(estoque);
+        kafkaTemplate.send("estoque-alert", "Um novo estoque foi cadastrado! Produto: " + estoque.getProduto().getNome()
+                + " || Quantidade mínima: " + String.valueOf(estoque.getQtdeEstoqueMinimo())
+                + " || Quantidade atual: " + String.valueOf(estoque.getQtdeEstoqueAtual()));
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Estoque cadastrado com sucesso!");
         if (apiRequestService.isApiRequest(request)) {

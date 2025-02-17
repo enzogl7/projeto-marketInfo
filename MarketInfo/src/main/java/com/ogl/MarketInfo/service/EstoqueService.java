@@ -4,6 +4,7 @@ import com.ogl.MarketInfo.model.Estoque;
 import com.ogl.MarketInfo.model.Produtos;
 import com.ogl.MarketInfo.repository.EstoqueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,5 +48,11 @@ public class EstoqueService {
         }
 
         return false;
+    }
+
+    @KafkaListener(topics = "estoque-alert", groupId = "market-info")
+    public void processaEstoque(String mensagem) {
+        // lógica para enviar email
+        System.out.println("Mensagem recebida: " + mensagem);
     }
 }

@@ -16,8 +16,8 @@
     <h3>Cadastrar estoque</h3>
     <form id="formEstoque" action="/estoque/salvarCadastroEstoque" method="POST">
         <div class="form-group">
-            <label for="produtoEstoque">Produto</label>
-            <select class="form-control" id="produtoEstoque" name="produtoEstoque" required>
+            <label for="produtoId">Produto</label>
+            <select class="form-control" id="produtoId" name="produtoId" required>
                 <option value="" disabled selected>Selecione o produto</option>
                 <option th:each="produto : ${produtos}"
                         th:value="${produto.id}" th:text="${produto.nome + ' - ' + produto.marca}"></option>
