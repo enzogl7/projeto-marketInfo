@@ -57,6 +57,8 @@
       <label><input type="checkbox" name="estoqueEdicao"> Edição de estoque</label><br>
       <label><input type="checkbox" name="estoqueMinimo"> Estoques próximos da quantidade mínima</label>
     </div>
+    <span id="erroCheckboxEstoque" style="color: red; display: none; font-size: 0.8rem">Deve ser selecionada pelo menos uma opção</span>
+
 
     <div class="custom-control custom-switch" style="padding-bottom: 10px; margin-bottom: 10px">
       <input type="checkbox" class="custom-control-input" id="alertasProdutos" name="alertasProdutos">
@@ -66,7 +68,7 @@
       <label><input type="checkbox" name="produtosCadastro"> Cadastro de produtos</label><br>
       <label><input type="checkbox" name="produtosEdicao"> Edição de produtos</label>
     </div>
-
+    <span id="erroCheckboxProdutos" style="color: red; display: none; font-size: 0.8rem">Deve ser selecionada pelo menos uma opção</span>
 
     <button type="submit" class="btn-submit">Enviar</button>
   </form>
