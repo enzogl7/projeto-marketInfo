@@ -23,12 +23,12 @@ public class MailService {
     @Autowired
     private SpringTemplateEngine templateEngine;
 
-    public String enviarEmailNotificacao(String destinatario, String assunto, String mensagem) {
+    public String enviarEmailNotificacao(String destinatario, String assunto, String mensagem, String template) {
         try {
             Context context = new Context();
             context.setVariable("mensagem", mensagem);
 
-            String htmlContent = templateEngine.process("emails/notificacao_estoque", context);
+            String htmlContent = templateEngine.process(template, context);
 
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
