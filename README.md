@@ -30,4 +30,5 @@ Aplicação web desenvolvida para gerenciar as operações essenciais de superme
    - Segurança: Spring Security para autenticação e controle de permissões
 
 <a href="https://youtu.be/S74wnw-LgHA">Demonstração da aplicação em vídeo<a>
+<br>
 <a href="https://prnt.sc/Z4S9PVqwm1c6">Exemplo de e-mail enviado automaticamente<a>
