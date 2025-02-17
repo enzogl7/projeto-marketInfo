@@ -18,6 +18,7 @@ Aplicação web desenvolvida para gerenciar as operações essenciais de superme
   - Integração com Kafka: O sistema utiliza o Apache Kafka para processar mensagens de estoque, como alertas de baixo estoque ou atualização de produtos.
   - Envio de E-mails Automatizado: A aplicação envia e-mails para uma lista de destinatários definida, utilizando JavaMailSender. Os e-mails são enviados com conteúdo HTML gerado dinamicamente, incluindo o texto da mensagem recebida via Kafka.
   - Templates de E-mail HTML: Mensagens de estoque e alertas são formatadas em páginas HTML para melhor visualização pelos destinatários.
+  <a href="https://prnt.sc/Z4S9PVqwm1c6">Exemplo de e-mail enviado automaticamente<a>
 
 - Qualidade de Software:
   - Testes unitários implementados com JUnit e Mockito para validar a lógica de negócio e garantir a integridade das operações essenciais.
