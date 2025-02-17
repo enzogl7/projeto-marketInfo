@@ -2,11 +2,10 @@ package com.ogl.MarketInfo.controller;
 
 
 import com.ogl.MarketInfo.model.Estoque;
+import com.ogl.MarketInfo.model.OpcoesMensageria;
 import com.ogl.MarketInfo.model.Produtos;
 import com.ogl.MarketInfo.model.Role;
-import com.ogl.MarketInfo.service.ApiRequestService;
-import com.ogl.MarketInfo.service.EstoqueService;
-import com.ogl.MarketInfo.service.ProdutosService;
+import com.ogl.MarketInfo.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -38,6 +37,13 @@ public class EstoqueController {
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
+
+    @Autowired
+    private OpcoesMensageriaService opcoesMensageriaService;
+
+    @Autowired
+    private UsuarioService usuarioService;
+
 
     @Operation(
             summary = "Retorna a página de gerenciamento de estoque",
@@ -101,6 +107,7 @@ public class EstoqueController {
                                         RedirectAttributes redirectAttributes,
                                         HttpServletRequest request) {
         Produtos produto = produtosService.buscarPorId(produtoId).orElse(null);
+        OpcoesMensageria opcoesMensageria = opcoesMensageriaService.findAll().stream().findFirst().orElse(null);
         if (produto == null) {
             if (apiRequestService.isApiRequest(request)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado."); // resposta exclusiva do swagger, a partir do front-end é impossível cair nesse if.
@@ -120,9 +127,20 @@ public class EstoqueController {
         estoque.setQtdeEstoqueMinimo(Integer.valueOf(estoqueMinimo));
         estoque.setQtdeEstoqueAtual(Integer.valueOf(estoqueAtual));
         estoqueService.salvar(estoque);
-        kafkaTemplate.send("estoque-alert", "Um novo estoque foi cadastrado! Produto: " + estoque.getProduto().getNome()
-                + " || Quantidade mínima: " + String.valueOf(estoque.getQtdeEstoqueMinimo())
-                + " || Quantidade atual: " + String.valueOf(estoque.getQtdeEstoqueAtual()));
+
+        if (opcoesMensageria != null && opcoesMensageria.isEstoqueCadastro()) {
+            kafkaTemplate.send("estoque-alert", "Um novo estoque foi cadastrado! Produto: " + estoque.getProduto().getNome()
+                    + " || Quantidade mínima: " + (estoque.getQtdeEstoqueMinimo())
+                    + " || Quantidade atual: " + (estoque.getQtdeEstoqueAtual())
+                    + " || Cadastrado por: " + (usuarioService.getUsuarioLogado().getEmail()));
+        }
+        if (opcoesMensageria != null && opcoesMensageria.isEstoqueMinimo()) {
+            if (estoqueService.isEstoqueCritico(estoque)) {
+                kafkaTemplate.send("estoque-alert", "Alerta de estoque próximo do fim! Produto: " + estoque.getProduto().getNome()
+                        + " || Quantidade mínima: " + (estoque.getQtdeEstoqueMinimo())
+                        + " || Quantidade atual: " + (estoque.getQtdeEstoqueAtual()));
+            }
+        }
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Estoque cadastrado com sucesso!");
         if (apiRequestService.isApiRequest(request)) {
@@ -180,6 +198,7 @@ public class EstoqueController {
                                                    @RequestParam("estoqueAtualEdicao") String estoqueAtualEdicao) {
         Estoque estoque = estoqueService.findById(Long.valueOf(idEstoqueEdicao)).orElse(null);
         Produtos produto = produtosService.buscarPorId(produtoEstoqueEdicaoId).orElse(null);
+        OpcoesMensageria opcoesMensageria = opcoesMensageriaService.findAll().stream().findFirst().orElse(null);
 
         if (estoque == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Estoque não encontrado."); // resposta exclusiva do swagger, a partir do front-end é impossível cair nesse if.
@@ -193,6 +212,19 @@ public class EstoqueController {
             estoque.setQtdeEstoqueMinimo(Integer.valueOf(estoqueMinimoEdicao));
             estoque.setQtdeEstoqueAtual(Integer.valueOf(estoqueAtualEdicao));
             estoqueService.salvar(estoque);
+            if (opcoesMensageria != null && opcoesMensageria.isEstoqueEdicao()) {
+                kafkaTemplate.send("estoque-alert", "Um estoque foi editado. Produto: " + estoque.getProduto().getNome()
+                        + " || Quantidade mínima: " + (estoque.getQtdeEstoqueMinimo())
+                        + " || Quantidade atual: " + (estoque.getQtdeEstoqueAtual())
+                        + " || Editado por: " + (usuarioService.getUsuarioLogado().getEmail()));
+            }
+            if (opcoesMensageria != null && opcoesMensageria.isEstoqueMinimo()) {
+                if (estoqueService.isEstoqueCritico(estoque)) {
+                    kafkaTemplate.send("estoque-alert", "Alerta de estoque próximo do fim! Produto: " + estoque.getProduto().getNome()
+                            + " || Quantidade mínima: " + (estoque.getQtdeEstoqueMinimo())
+                            + " || Quantidade atual: " + (estoque.getQtdeEstoqueAtual()));
+                }
+            }
 
             return ResponseEntity.ok().body("Estoque editado com sucesso.");
         } catch (Exception e) {

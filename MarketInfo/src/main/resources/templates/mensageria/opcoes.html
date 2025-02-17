@@ -44,7 +44,9 @@
 
       <div class="form-group">
         <label for="emailsNotificacao">Emails para envio de notificações (separados por vírgula)</label>
-        <input type="email" id="emailsNotificacao" name="emailsNotificacao" oninput="validarEmails()" multiple>
+        <input type="email" id="emailsNotificacao" name="emailsNotificacao" oninput="validarEmails()"
+               placeholder="Ex.: joao@email.com, pedro@email.com"
+               th:value="${emailsNotificacao}" multiple>
         <span id="emailErro" style="color: red; display: none;">Os e-mails devem ser separados por vírgula.</span>
       </div>
 

@@ -39,20 +39,11 @@ public class EstoqueService {
         return false;
     }
 
-    public boolean isEstoqueCritico(Long produtoId) {
-        Optional<Estoque> estoque = estoqueRepository.findByProdutoId(produtoId);
+    public boolean isEstoqueCritico(Estoque estoque) {
 
-        if (estoque.isPresent()) {
-            Estoque e = estoque.get();
-            return e.getQtdeEstoqueAtual() <= e.getQtdeEstoqueMinimo() + 10;
+        if (estoque.getQtdeEstoqueAtual() <= estoque.getQtdeEstoqueMinimo() + 10) {
+            return true;
         }
-
         return false;
-    }
-
-    @KafkaListener(topics = "estoque-alert", groupId = "market-info")
-    public void processaEstoque(String mensagem) {
-        // lógica para enviar email
-        System.out.println("Mensagem recebida: " + mensagem);
     }
 }

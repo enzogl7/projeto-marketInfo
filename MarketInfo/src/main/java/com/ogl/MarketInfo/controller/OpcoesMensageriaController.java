@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,7 +50,13 @@ public class OpcoesMensageriaController {
             }
     )
     @GetMapping("/opcoes")
-    public String opcoesMensageria() {
+    public String opcoesMensageria(Model model) {
+        OpcoesMensageria opcoesMensageria = opcoesMensageriaService.findAll().stream().findFirst().orElse(null);
+        if (opcoesMensageria != null) {
+            String emails = String.join(", ", opcoesMensageria.getEmails());
+            model.addAttribute("emailsNotificacao", emails);
+        }
+
         return "mensageria/opcoes";
     }
 
