@@ -16,6 +16,7 @@ Aplicação web desenvolvida para gerenciar as operações essenciais de superme
 
 - Qualidade de Software:
   - Testes unitários implementados com JUnit e Mockito para validar a lógica de negócio e garantir a integridade das operações essenciais.
+  - Possui documentação detalhada da API com Swagger para facilitar a integração e o entendimento dos endpoints.
 
 - Tecnologias Utilizadas:
    - Backend: Spring Boot (Java), Hibernate (ORM)
