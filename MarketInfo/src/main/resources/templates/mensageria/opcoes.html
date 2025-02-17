@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Opções de mensageria </title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.min.css" rel="stylesheet">
+  <link href="/assets/css/cadastrarProdutos.css" rel="stylesheet">
+  <style>
+    #emailList {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    #emailList li {
+      font-size: 0.9rem;
+      padding: 0.3rem 0.6rem;
+      background-color: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 0.3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: auto;
+    }
+    .remove-email {
+      margin-left: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-box">
+  <p class="text-muted" id ="voltar"><a href="/home">< Voltar</a></p>
+  <h3>Opções de mensageria</h3>
+  <div th:if="${mensagemSucesso}" class="alert alert-success">
+    <p th:text="${mensagemSucesso}"></p>
+  </div>
+  <div th:if="${mensagem}" class="alert alert-danger">
+    <p th:text="${mensagem}"></p>
+  </div>
+  <form id="formOpcoesMensageria" action="/mensageria/salvaropcoes" method="POST">
+
+      <div class="form-group">
+        <label for="emailsNotificacao">Emails para envio de notificações (separados por vírgula)</label>
+        <input type="email" id="emailsNotificacao" name="emailsNotificacao" oninput="validarEmails()" multiple>
+        <span id="emailErro" style="color: red; display: none;">Os e-mails devem ser separados por vírgula.</span>
+      </div>
+
+    <div class="custom-control custom-switch" style="padding-bottom: 10px; margin-bottom: 10px">
+      <input type="checkbox" class="custom-control-input" id="alertasEstoque" name="alertasEstoque">
+      <label class="custom-control-label" for="alertasEstoque">Receber alertas de <strong>estoque</strong></label>
+    </div>
+    <div id="opcoesEstoque" style="display: none; margin-left: 20px;">
+      <label><input type="checkbox" name="estoqueCadastro"> Cadastro de estoque</label><br>
+      <label><input type="checkbox" name="estoqueEdicao"> Edição de estoque</label><br>
+      <label><input type="checkbox" name="estoqueMinimo"> Estoques próximos da quantidade mínima</label>
+    </div>
+
+    <div class="custom-control custom-switch" style="padding-bottom: 10px; margin-bottom: 10px">
+      <input type="checkbox" class="custom-control-input" id="alertasProdutos" name="alertasProdutos">
+      <label class="custom-control-label" for="alertasProdutos">Receber alertas de <strong>produtos</strong></label>
+    </div>
+    <div id="opcoesProdutos" style="display: none; margin-left: 20px;">
+      <label><input type="checkbox" name="produtosCadastro"> Cadastro de produtos</label><br>
+      <label><input type="checkbox" name="produtosEdicao"> Edição de produtos</label>
+    </div>
+
+
+    <button type="submit" class="btn-submit">Enviar</button>
+  </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.all.min.js"></script>
+<script src="/assets/js/mensageria.js"></script>
+</body>
+</html>

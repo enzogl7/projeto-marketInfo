@@ -53,7 +53,8 @@ public class SecurityConfig {
                                 "/estoque/**",
                                 "/categoria/**",
                                 "/usuario/**",
-                                "/perfil/**").hasAnyRole("USER", "ADMIN")
+                                "/perfil/**",
+                                "/mensageria/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
@@ -62,7 +63,7 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html","/registrar", "/login", "/logar", "/home", "/produtos/**", "/preco/**", "/estoque/**", "/usuario/**", "/categoria/**", "/perfil/**")
+                        .ignoringRequestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html","/registrar", "/login", "/logar", "/home", "/produtos/**", "/preco/**", "/estoque/**", "/usuario/**", "/categoria/**", "/perfil/**", "/mensageria/**")
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
