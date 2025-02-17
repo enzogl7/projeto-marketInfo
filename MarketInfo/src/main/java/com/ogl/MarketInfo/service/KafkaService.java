@@ -13,9 +13,17 @@ public class KafkaService {
     @Autowired
     private OpcoesMensageriaService opcoesMensageriaService;
 
+    @Autowired
+    private MailService mailService;
+
     @KafkaListener(topics = "estoque-alert", groupId = "market-info")
     public void processaEstoque(String mensagem) {
-        // adicionar logica de envio de email para a lista especificada na opcoesmensageria
+        OpcoesMensageria op = opcoesMensageriaService.findAll().stream().findFirst().orElse(new OpcoesMensageria());
+        if (op != null) {
+            for (String email : op.getEmails()) {
+                mailService.enviarEmailNotificacao(email, "Notificação de estoque | MarketInfo - Gestão de mercados", mensagem);
+            }
+        }
         System.out.println("Mensagem recebida: " + mensagem);
     }
 
