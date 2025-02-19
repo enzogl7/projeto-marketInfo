@@ -1,4 +1,4 @@
-<h1>Projeto MarketInfo</h1>
+<h1>Projeto MarketInfo 🛒</h1>
 <img src="https://enzogl7.github.io/portfolio/assets/Screenshot_marketInfo.png">
 
 Aplicação web desenvolvida para gerenciar as operações essenciais de supermercados, proporcionando uma interface intuitiva e recursos completos para controlar produtos, estoques e preços, além de ferramentas administrativas robustas para gerenciar categorias, perfis de usuários e permissões de acesso.
