@@ -31,7 +31,7 @@ public class KafkaService {
         OpcoesMensageria op = opcoesMensageriaService.findAll().stream().findFirst().orElse(new OpcoesMensageria());
         if (op != null) {
             for (String email : op.getEmails()) {
-                mailService.enviarEmailNotificacao(email, "Notificação de estoque | MarketInfo - Gestão de mercados", mensagem, "emails/notificacao_produtos");
+                mailService.enviarEmailNotificacao(email, "Notificação de produto | MarketInfo - Gestão de mercados", mensagem, "emails/notificacao_produtos");
             }
         }
         System.out.println("Mensagem recebida: " + mensagem);
