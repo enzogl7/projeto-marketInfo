@@ -2,8 +2,10 @@ document.getElementById("pesquisaNomeProdutoEstoque").addEventListener("keyup", 
 
 function modalEditarEstoque(button) {
     var idEstoqueEdicao = button.getAttribute('data-id')
+    var idProdutoEdicao = button.getAttribute('data-produto')
     $('#modalEditarEstoque').modal('show')
     document.getElementById('idEstoqueEdicao').value = idEstoqueEdicao;
+    document.getElementById('produtoEstoqueEdicao').value = idProdutoEdicao;
 }
 
 function confirmarExclusaoEstoque(button) {

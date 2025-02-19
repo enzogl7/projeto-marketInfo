@@ -10,7 +10,7 @@
 
                 <div class="form-group">
                     <label for="produtoEstoqueEdicao">Produto</label>
-                    <select class="form-control"id="produtoEstoqueEdicao" name="produtoEstoqueEdicao" required>
+                    <select class="form-control" id="produtoEstoqueEdicao" name="produtoEstoqueEdicao" required>
                         <option value="" disabled selected>Selecione o produto</option>
                         <option th:each="produto : ${produtos}"
                                 th:value="${produto.id}"

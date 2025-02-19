@@ -52,13 +52,35 @@ public class OpcoesMensageriaController {
     @GetMapping("/opcoes")
     public String opcoesMensageria(Model model) {
         OpcoesMensageria opcoesMensageria = opcoesMensageriaService.findAll().stream().findFirst().orElse(null);
-        if (opcoesMensageria != null) {
+
+        if (opcoesMensageria != null && opcoesMensageria.getEmails() != null) {
             String emails = String.join(", ", opcoesMensageria.getEmails());
             model.addAttribute("emailsNotificacao", emails);
+        } else {
+            model.addAttribute("emailsNotificacao", "");
+        }
+
+        if (opcoesMensageria != null) {
+            model.addAttribute("alertasEstoque", opcoesMensageria.isAlertasEstoques());
+            model.addAttribute("estoqueCadastro", opcoesMensageria.isEstoqueCadastro());
+            model.addAttribute("estoqueEdicao", opcoesMensageria.isEstoqueEdicao());
+            model.addAttribute("estoqueMinimo", opcoesMensageria.isEstoqueMinimo());
+            model.addAttribute("alertasProdutos", opcoesMensageria.isAlertasProdutos());
+            model.addAttribute("produtosCadastro", opcoesMensageria.isProdutosCadastro());
+            model.addAttribute("produtosEdicao", opcoesMensageria.isProdutosEdicao());
+        } else {
+            model.addAttribute("alertasEstoque", false);
+            model.addAttribute("estoqueCadastro", false);
+            model.addAttribute("estoqueEdicao", false);
+            model.addAttribute("estoqueMinimo", false);
+            model.addAttribute("alertasProdutos", false);
+            model.addAttribute("produtosCadastro", false);
+            model.addAttribute("produtosEdicao", false);
         }
 
         return "mensageria/opcoes";
     }
+
 
     @Operation(
             summary = "Cadastra/salva opções de mensageria",
@@ -90,6 +112,8 @@ public class OpcoesMensageriaController {
                         .map(String::trim)
                         .collect(Collectors.toList());
                 op.setEmails(listaEmails);
+            } else {
+                op.setEmails(null); // caso não coloque nenhum email e salve mesmo assim
             }
             op.setAlertasEstoques(alertasEstoque);
             op.setEstoqueCadastro(Objects.requireNonNullElse(estoqueCadastro, false));

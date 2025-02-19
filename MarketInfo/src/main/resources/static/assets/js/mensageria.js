@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('#formOpcoesMensageria');
+    mostrarOpcoes()
 
     form.addEventListener('submit', function(event) {
         const alertasEstoque = document.getElementById('alertasEstoque').checked;
@@ -74,4 +75,12 @@ function validarEmails() {
     } else {
         erro.style.display = 'none';
     }
+}
+
+function mostrarOpcoes() {
+    const alertasEstoque = document.getElementById('alertasEstoque').checked;
+    const alertasProdutos = document.getElementById('alertasProdutos').checked;
+
+    document.getElementById('opcoesEstoque').style.display = alertasEstoque ? 'block' : 'none';
+    document.getElementById('opcoesProdutos').style.display = alertasProdutos ? 'block' : 'none';
 }
